@@ -1,0 +1,18 @@
+Getting new changes, if it doesn't say any lines after git fetch there are no changes
+so no need to rebase
+
+git fetch
+git rebase origin/<branch>
+
+Getting new changes with unsaved working changes
+
+git stash
+git fetch
+git rebase origin/<branch>
+git stash pop
+
+Commiting changes
+
+git gui (or gitg for jake)
+#check for new changes with first example
+git push origin <branch>
