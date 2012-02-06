@@ -1,5 +1,5 @@
-<?php
-//include 'opensql.php';
+<?
+include 'opensql.php';
 
 sql_debug_start_buffering();
 
