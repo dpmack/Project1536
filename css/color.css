@@ -1,0 +1,45 @@
+body
+{
+	background-color: #929292;
+}
+
+#wrapper_inner { 
+	border-color: #898989;
+	background-color: white;
+}
+
+#footer h3 {	
+	border-color: #898989;
+}
+
+#header
+{
+	color: white;
+}
+
+#wrapper_final_header
+{
+	background-color: #393939;
+	border-color: #464646;
+
+}
+
+#logo {background-color: #0655A5;}
+
+#feeds a {color:#4487DB;}
+#feeds h3 {color: #5A5955;font-family:ariel;}
+
+#news {display:none;}
+
+#navmain
+{
+	background-color: #0E0E0E;
+	color: white;
+}
+
+#navmain a:hover {
+	background-color:#898989;
+}
+
+#login {background-color: #333333;}
+
