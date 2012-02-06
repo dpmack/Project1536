@@ -35,7 +35,7 @@ $homework[2]["finished"] = false;
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 	<title>Homework Checklist</title>
-	<link rel=StyleSheet href=".css" type="text/css">
+	<link rel=StyleSheet href="" type="text/css">
 	</head>
 	
 	<body>
