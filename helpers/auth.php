@@ -1,10 +1,8 @@
-<?
+<?php
 include 'opensql.php';
 
-sql_debug_start_buffering();
-
 $username = '';
-$loggedin = false;
+$GLOBALS['loggedIn'] = false;
 $message = "";
 
 define('SALT_LENGTH', 9);
@@ -42,8 +40,7 @@ if (isset($_POST["password"]) && isset($_POST['username']))
 	}
 	elseif(generateHash($_POST['password'],$result['password']) == $result['password'] && $_POST['password'] != '')
 	{
-		$loggedin = true;
-		$type = $result['accounttype'];
+		$GLOBALS['loggedIn'] = true;
 		new_ticket($_POST['username']);
 		$message = "Logged in successfully";
 	}
@@ -63,8 +60,7 @@ if (isset($_COOKIE["login"]))
 		$result = sql_get_single('accounts','username',$username);
 		if ($result['ticket'] == $ticket && $ticket != '' && $ticket != 0)
 		{
-			$loggedin = true;
-			$type = $result['accounttype'];
+			$GLOBALS['loggedIn'] = true;
 			if ($result['ticket']+60*5 < time())
 			{
 				new_ticket($username);
@@ -78,5 +74,12 @@ if (isset($_COOKIE["login"]))
 	};
 }
 
-sql_debug_end_buffering();
+function logout()
+{
+	if (isset($_COOKIE['login']) && $GLOBALS['loggedIn'])
+	{
+		$username = $_COOKIE['login'];
+		sql_set('accounts','username',$username,'ticket',0);
+	}
+}
 ?>
