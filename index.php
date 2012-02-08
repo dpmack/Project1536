@@ -1,9 +1,7 @@
 <?php
-//include "helpers/auth.php";
+include "helpers/auth.php";
 include "templates/header.php";
 include "helpers/embededLogin.php";
-
-$loggedIn = true;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -20,7 +18,7 @@ $loggedIn = true;
 			
 			<div id="login">	
 				<?php 
-					if ($loggedIn)
+					if ($GLOBALS['loggedIn'])
 					{
 						echo loggedInUser();
 					}
@@ -146,5 +144,12 @@ $loggedIn = true;
 </div> <!-- /#wrapper_final -->
 </div> <!-- /#wrapper_inner -->
 </div> <!-- /#wrapper_outer -->
+
+<?php
+if ($GLOBALS['sql_debug'] != 0)
+{
+	include "templates/sqlDebug.php";
+}
+?>
 </body>
 </html>

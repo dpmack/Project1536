@@ -6,7 +6,7 @@ include 'helpers/auth.php';
 <head>
 <title>Login</title>
 <?php
-if ($loggedin)
+if ($GLOBALS['loggedIn'])
 {
 	echo "<META HTTP-EQUIV=Refresh CONTENT='3; URL=success.php'>";
 }
@@ -14,7 +14,7 @@ if ($loggedin)
 </head>
 <body>
 <?php
-if ($loggedin)
+if ($GLOBALS['loggedIn'])
 {
 	echo "Login successful, redirecting in 3 seconds. Or click <a href='success.php'>here</a>";
 }
@@ -24,7 +24,7 @@ else
 	Username:<br />
 	<input name="username" type="text" /><br />
 	Password:<br />
-	<input name="password" id="password" type="password" /><br />
+	<input id="password" type="password" /><br />
 	<button type="button" onclick="btnSubmitClick()">Submit</button>
 </form>';
 }
@@ -42,5 +42,11 @@ else
 	}
 </script>
 
+<?php
+if ($GLOBALS['sql_debug'] != 0)
+{
+	include "templates/sqlDebug.php";
+}
+?>
 </body>
 </html>
