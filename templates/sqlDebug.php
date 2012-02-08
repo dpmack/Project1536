@@ -26,7 +26,7 @@ if ($GLOBALS['sql_debug_buffer'])
 }
 else
 {
-	echo "No SQL excuted";
+	echo "No SQL executed";
 }
 ?></div>
 
