@@ -1,34 +1,22 @@
-<?
+<?php
+include "/config/current.config";
 
 $GLOBALS['sql_debug_buffer'] = "";
-$GLOBALS['sql_debug_buffering'] = 0;
-$GLOBALS['sql_debug'] = 2;
+$GLOBALS['sql_debug'] = $sqlDebugMode;
 
 if($GLOBALS['sql_debug'] != -1 && isset($_GET["sqldebug"]))
 {
 	$GLOBALS['sql_debug'] = floor($_GET["sqldebug"]);
 }
 
-function sql_debug_start_buffering()
-{
-	$GLOBALS['sql_debug_buffering'] = 1;
-}
-
-function sql_debug_end_buffering()
-{	
-	$GLOBALS['sql_debug_buffering'] = 0;
-	echo $GLOBALS['sql_debug_buffer'];
-	$GLOBALS['sql_debug_buffer'] = "";
-}
-
-$link = mysql_connect('mysql3.000webhost.com', 'a5621243_staging', 'stagingl00ps');
+$link = mysql_connect($sqlHost, $sqlUser, $sqlPassword);
 if (!$link) {
     die('Not connected : ' . mysql_error());
 }
 
-$db_selected = mysql_select_db('a5621243_staging');
+$db_selected = mysql_select_db($sqlDB);
 if (!$db_selected) {
-    die ('Can\'t use a5621243_staging : ' . mysql_error());
+    die ('Can\'t use ' . $sqlDB . ' : ' . mysql_error());
 }
 
 function sql_error($query,$error)
@@ -40,14 +28,7 @@ function sql_query($query)
 {
 	if ($GLOBALS['sql_debug'] >= 2)
 	{	
-		if ($GLOBALS['sql_debug_buffering'])
-		{
-			$GLOBALS['sql_debug_buffer'] .= "Executing sql statement:<br />" . $query . "<br /><br />";
-		}
-		else
-		{
-			echo "Executing sql statement:<br />" . $query . "<br /><br />";
-		}
+		$GLOBALS['sql_debug_buffer'] .= "Executing sql statement:<br />" . $query . "<br /><br />";
 	}
 	$result = mysql_query($query);
 	if (!$result)
@@ -142,15 +123,7 @@ function sql_get_single($tablename,$colname,$colvalue)
 	
 	if ($GLOBALS['sql_debug'] >= 3)
 	{
-		if ($GLOBALS['sql_debug_buffering'])
-		{
-			$GLOBALS['sql_debug_buffer'] .= print_r($value, true)."<br /><br />";
-		}
-		else
-		{
-			print_r($value);
-			echo "<br /><br />";
-		}
+		$GLOBALS['sql_debug_buffer'] .= print_r($value, true)."<br /><br />";
 	}
 	return $value;
 };
