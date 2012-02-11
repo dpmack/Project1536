@@ -7,8 +7,8 @@ function embededLogin()
 	<fieldset>
 		<!--<legend>login</legend>-->
 				
-		<label for="studentID">ID</label>
-		<input type="text" id="studentID" name="studentID" value="" />
+		<label for="username">ID</label>
+		<input type="text" id="username" name="username" value="" />
 		<label for="password">Password
 		</label><input type="password" id="password" name="password" value="" />
 		<input type="submit" value="login" />

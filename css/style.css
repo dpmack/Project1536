@@ -102,6 +102,10 @@ margin: 1em .5em .5em;
 
 
 #logo, #login {min-height: 7em;padding:0;}
+#logo a
+{
+	text-decoration: none;
+}
 
 #login {float:right;}
 
