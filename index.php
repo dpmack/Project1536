@@ -1,62 +1,15 @@
 <?php
 include "helpers/auth.php";
-include "templates/header.php";
+include "templates/head.php";
 include "helpers/embededLogin.php";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?php echo buildHeader("Home"); ?>
+<?php echo buildHead("Home"); ?>
 <body>
 
-<div id="wrapper_header">
-	<div id="header">
-		<div id="wrapper_final_header">
-			<div id="logo">
-				<h1>CSThub</h1>
-			</div>
-			
-			<div id="login">	
-				<?php 
-					if ($GLOBALS['loggedIn'])
-					{
-						echo loggedInUser();
-					}
-					else
-					{
-						echo embededLogin();
-					}
-				?>
-			</div>
-		</div> <!-- /#login -->
-		
-		
-		
-		
-	</div> <!-- /#header -->
-</div> <!-- /#wrapper_header -->
-
-
-		<div id="navmain">
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Forums</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Help</a></li>
-			
-			
-			</ul>
-		</div> <!-- /#navmain -->
-		
-
-
-<div id="wrapper_outer">
-<div id="wrapper_inner">
-<div id="wrapper_final">
-
-
-
-
+<?php include "templates/header.php"; ?>
 
 	<ul id="feeds">
 		<li>
@@ -123,27 +76,7 @@ include "helpers/embededLogin.php";
 
 
 
-	<div id="footer">
-	
-		
-		<h3>Help?</h3>
-		<ul>
-			<li><a href="#">about</a></li>
-			<li><a href="#">site map</a></li>
-			<li><a href="#">feedback</a></li>
-			<li><a href="#">d2l</a></li>
-			<li><a href="#">my.bcit.ca</a></li>
-			<li><a href="#">bcit.ca</a></li>
-			<li><a href="#">share.cas.bcit.ca</a></li>
-			<li><a href="#">msdnaa.bcit.ca</a></li>
-		</ul>
-		
-		
-	</div> <!-- /#generalinfo -->
-
-</div> <!-- /#wrapper_final -->
-</div> <!-- /#wrapper_inner -->
-</div> <!-- /#wrapper_outer -->
+	<?php include "templates/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)

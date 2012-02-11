@@ -1,18 +1,23 @@
 <?php
 include 'helpers/auth.php';
+include "templates/head.php";
+include "helpers/embededLogin.php";
 ?>
 
-<html>
-<head>
-<title>Login</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <?php
+$headContent = "";
 if ($GLOBALS['loggedIn'])
 {
-	echo "<META HTTP-EQUIV=Refresh CONTENT='3; URL=success.php'>";
+	$headContent = "<meta http-equiv='Refresh' content='3; URL=success.php'>";
 }
+
+echo buildHead("Login",$headContent);
 ?>
-</head>
 <body>
+<?php include "templates/header.php"; ?>
+
 <?php
 if ($GLOBALS['loggedIn'])
 {
@@ -41,6 +46,8 @@ else
 		fmLogin.submit();
 	}
 </script>
+
+<?php include "templates/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)

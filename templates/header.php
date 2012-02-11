@@ -1,18 +1,45 @@
-<?php
-
-function buildHeader($title, $content="")
-{
-	return '
-	<head>
-		<title>CSTHub - ' . $title . '</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div id="wrapper_header">
+	<div id="header">
+		<div id="wrapper_final_header">
+			<div id="logo">
+				<a href="/">
+					<h1>CSThub</h1>
+				</a>
+			</div>
+			
+			<div id="login">	
+				<?php 
+					if ($GLOBALS['loggedIn'])
+					{
+						echo loggedInUser();
+					}
+					else
+					{
+						echo embededLogin();
+					}
+				?>
+			</div>
+		</div> <!-- /#login -->
 		
-		<link rel="stylesheet" type="text/css" href="css/reset.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/color.css" />
-		' . $content . '
-</head>';
-}
-?>
+		
+		
+		
+	</div> <!-- /#header -->
+</div> <!-- /#wrapper_header -->
 
 
+		<div id="navmain">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Forums</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Help</a></li>
+			
+			
+			</ul>
+		</div> <!-- /#navmain -->
+		
+
+<div id="wrapper_outer">
+<div id="wrapper_inner">
+<div id="wrapper_final">
