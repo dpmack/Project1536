@@ -1,0 +1,10 @@
+<?php
+
+$sqlHost = "localhost";
+$sqlUser = "root";
+$sqlPassword = "<your password>";
+$sqlDB = "a5621243_staging";
+$siteEnv = "development";
+$sqlDebugMode = 2;
+
+?>
