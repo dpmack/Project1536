@@ -3,7 +3,7 @@
 function embededLogin()
 {
 	return '
-<form action="/login.php" method="POST">
+<form id="loginForm" action="" method="POST">
 	<fieldset>
 		<!--<legend>login</legend>-->
 				
@@ -11,7 +11,7 @@ function embededLogin()
 		<input type="text" id="username" name="username" value="" />
 		<label for="password">Password
 		</label><input type="password" id="password" name="password" value="" />
-		<input type="submit" value="login" />
+		<button type="button" onclick="btnSubmitClick()">Submit</button>
 					
 		<p>
 			<a href="/register.html">Register</a>
@@ -19,7 +19,18 @@ function embededLogin()
 		</p>
 					
 	</fieldset>
-</form>';
+</form>
+<script type="text/javascript" src="script/md5.js"></script>
+
+<script type="text/javascript">
+	function btnSubmitClick()
+	{
+		var txtPassword = document.getElementById("password");
+		txtPassword.value = b64_md5(txtPassword.value);
+		var fmLogin = document.getElementById("loginForm");
+		fmLogin.submit();
+	}
+</script>';
 }
 
 function loggedInUser()
