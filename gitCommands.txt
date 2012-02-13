@@ -8,7 +8,7 @@ Getting new changes with unsaved working changes
 
 git stash
 git fetch
-git rebase origin/<branch>
+git rebase origin/<branch>    //apply changes
 git stash pop
 
 Commiting changes
