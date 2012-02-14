@@ -10,26 +10,21 @@ for fileName in os.listdir("."):
         sqlData = f.read()
         f.close()
 
-        if not("CREATE DATABASE" in sqlData):
-            sqlData = sqlData.split("\n")
-            if "USE" in sqlData[0]:
+        print "Fixing %s ..." % fileName
+        output = ""
+
+        for line in sqlData.split("\n"):
+            if line[:2] == "--":
                 continue
+            output += line+"\n"
 
-            print "Fixing %s ..." % fileName
-            output = "USE a5621243_staging\n"
-
-            for line in sqlData:
-                if line[:2] == "--":
-                    continue
-                output += line+"\n"
-
-            output = output.replace("\r\n","\n")
-            
-            while "\n\n\n" in output:
-                output = output.replace("\n\n\n","\n\n")
-            
-            f = open(fileName,'wb')
-            f.write(output)
-            f.close()
+        output = output.replace("\r\n","\n")
+        
+        while "\n\n\n" in output:
+            output = output.replace("\n\n\n","\n\n")
+        
+        f = open(fileName,'wb')
+        f.write(output)
+        f.close()
 
 print "Done"
