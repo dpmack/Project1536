@@ -12,6 +12,57 @@ USE `a5621243_staging`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+DROP TABLE IF EXISTS `errors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `errors` (
+  `errorID` int(11) NOT NULL AUTO_INCREMENT,
+  `timeStamp` datetime NOT NULL,
+  `alert` text COLLATE latin1_general_ci NOT NULL,
+  `debug` text COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`errorID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `errors` WRITE;
+/*!40000 ALTER TABLE `errors` DISABLE KEYS */;
+/*!40000 ALTER TABLE `errors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `homeworkaccountmapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `homeworkaccountmapping` (
+  `homeworkID` int(11) NOT NULL,
+  `accountID` int(11) NOT NULL,
+  PRIMARY KEY (`homeworkID`,`accountID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `homeworkaccountmapping` WRITE;
+/*!40000 ALTER TABLE `homeworkaccountmapping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homeworkaccountmapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `topics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topics` (
+  `topicID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `forumID` int(11) NOT NULL,
+  `title` varchar(64) COLLATE latin1_general_ci NOT NULL,
+  `isLocked` tinyint(1) NOT NULL DEFAULT '0',
+  `isSticky` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`topicID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `topics` WRITE;
+/*!40000 ALTER TABLE `topics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topics` ENABLE KEYS */;
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS `courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -28,23 +79,6 @@ LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
 INSERT INTO `courses` VALUES (1,1536,2,'Web Development'),(2,1510,2,'Programming Methods');
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
-UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `errors`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `errors` (
-  `errorID` int(11) NOT NULL AUTO_INCREMENT,
-  `timeStamp` datetime NOT NULL,
-  `alert` text COLLATE latin1_general_ci NOT NULL,
-  `debug` text COLLATE latin1_general_ci NOT NULL,
-  PRIMARY KEY (`errorID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `errors` WRITE;
-/*!40000 ALTER TABLE `errors` DISABLE KEYS */;
-/*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `accounts`;
@@ -85,25 +119,6 @@ INSERT INTO `department` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `topics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `topics` (
-  `topicID` int(11) NOT NULL AUTO_INCREMENT,
-  `userID` int(11) NOT NULL,
-  `forumID` int(11) NOT NULL,
-  `title` varchar(64) COLLATE latin1_general_ci NOT NULL,
-  `isLocked` tinyint(1) NOT NULL DEFAULT '0',
-  `isSticky` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`topicID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `topics` WRITE;
-/*!40000 ALTER TABLE `topics` DISABLE KEYS */;
-/*!40000 ALTER TABLE `topics` ENABLE KEYS */;
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `forums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -127,14 +142,13 @@ CREATE TABLE `homework` (
   `courseID` int(11) NOT NULL,
   `assignment` varchar(128) COLLATE latin1_general_ci NOT NULL,
   `dueDate` int(11) NOT NULL,
-  `finished` tinyint(1) NOT NULL,
   PRIMARY KEY (`homeworkID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `homework` WRITE;
 /*!40000 ALTER TABLE `homework` DISABLE KEYS */;
-INSERT INTO `homework` VALUES (1,2,'Assignment 1',1330342400,0),(2,1,'Milestone 2',1328564264,1),(3,2,'troy sucks',149872941,0);
+INSERT INTO `homework` VALUES (1,2,'Assignment 1',1330342400),(2,1,'Milestone 2',1328564264),(3,2,'troy sucks',149872941);
 /*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

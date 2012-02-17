@@ -223,4 +223,13 @@ margin-bottom: 3em;
 	margin-bottom: .5em;
 }
 
+/*
+	
+	general page styles
+	
+*/
 
+h1.first
+{
+	margin-top:0;
+}

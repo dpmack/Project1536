@@ -1,0 +1,20 @@
+.homeworkItem {
+	margin: 1em;
+}
+
+.courseName {
+	margin-left: 1em;
+	font-size: 1.5em;
+}
+
+.assignment {
+	font-size: 1.5em;
+}
+
+.dueDate {
+	margin-left: 3.5em;
+}
+
+.timeTilDue {
+	margin-left: 1em;
+}

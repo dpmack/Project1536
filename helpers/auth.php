@@ -1,9 +1,12 @@
 <?php
+date_default_timezone_set('America/Vancouver');
+
 include 'opensql.php';
 
-$username = '';
+$GLOBALS['username'] = '';
 $GLOBALS['loggedIn'] = false;
-$message = "";
+$GLOBALS['message'] = "";
+$GLOBALS['ticket'] = "";
 
 define('SALT_LENGTH', 9);
 
@@ -23,9 +26,9 @@ function generateHash($plainText, $salt = null)
 
 function new_ticket($name)
 {
-	$ticket = time();
-	sql_set('accounts','username',$name,'ticket',$ticket);
-	setcookie('ticket',$ticket,time()+60*30);
+	$GLOBALS['ticket'] = time();
+	sql_set('accounts','username',$name,'ticket',$GLOBALS['ticket']);
+	setcookie('ticket',$GLOBALS['ticket'],time()+60*30);
 	setcookie('login',$name,time()+60*30);
 };
 
@@ -52,25 +55,25 @@ if (isset($_POST["password"]) && isset($_POST['username']))
 
 if (isset($_COOKIE["login"]))
 {
-	$username = $_COOKIE['login'];
-	$ticket = $_COOKIE['ticket'];
+	$GLOBALS['username'] = mysql_real_escape_string($_COOKIE['login']);
+	$GLOBALS['ticket'] = mysql_real_escape_string($_COOKIE['ticket']);
 
-	if (floor($ticket)+60*30 > time())
+	if (floor($GLOBALS['ticket'])+60*30 > time())
 	{
-		$result = sql_get_single('accounts','username',$username);
-		if ($result['ticket'] == $ticket && $ticket != '' && $ticket != 0)
+		$result = sql_get_single('accounts','username',$GLOBALS['username']);
+		if ($result['ticket'] == $GLOBALS['ticket'] && $GLOBALS['ticket'] != '' && $GLOBALS['ticket'] != 0)
 		{
 			$GLOBALS['loggedIn'] = true;
 			if ($result['ticket']+60*5 < time())
 			{
-				new_ticket($username);
+				new_ticket($GLOBALS['username']);
 			}
 		}
 	}
 	else
 	{
 		$message = "You have been auto logged out due to inactivity";
-		sql_set('accounts','username',$username,'ticket',0);
+		sql_set('accounts','username',$GLOBALS['username'],'ticket',0);
 	};
 }
 
@@ -78,8 +81,8 @@ function logout()
 {
 	if (isset($_COOKIE['login']) && $GLOBALS['loggedIn'])
 	{
-		$username = $_COOKIE['login'];
-		sql_set('accounts','username',$username,'ticket',0);
+		$GLOBALS['username'] = $_COOKIE['login'];
+		sql_set('accounts','username',$GLOBALS['username'],'ticket',0);
 	}
 }
 ?>
