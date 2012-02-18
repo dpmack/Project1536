@@ -12,27 +12,32 @@ body
 	border-color: #898989;
 }
 
-#header
-{
+#header{
 	color: white;
 }
 
-#wrapper_final_header
-{
-	background-color: #393939;
-	border-color: #464646;
-
+#news {
+	    border-color: #898989;
 }
 
-#logo {background-color: #0655A5;}
+#wrapper_final_header{
+	background-color: #393939;
+	border-color: #464646;
+}
 
-#feeds a {color:#4487DB;}
-#feeds h3 {color: #5A5955;font-family:ariel;}
+#logo {
+	background-color: #0655A5;
+}
 
-#news {display:none;}
+#feeds a {
+	color:#4487DB;
+}
+#feeds h3 {
+	color: #5A5955;
+	font-family:ariel;
+}
 
-#navmain
-{
+#navmain {
 	background-color: #0E0E0E;
 	color: white;
 }
@@ -41,5 +46,7 @@ body
 	background-color:#898989;
 }
 
-#login {background-color: #333333;}
+#login {
+	background-color: #333333;
+}
 
