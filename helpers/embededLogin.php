@@ -3,7 +3,7 @@
 function embededLogin()
 {
 	return '
-<form id="loginForm" action="" method="POST">
+<form id="loginForm" action="login.php" method="POST">
 	<fieldset>
 		<!--<legend>login</legend>-->
 				
@@ -14,8 +14,8 @@ function embededLogin()
 		<button type="button" onclick="btnSubmitClick()">Submit</button>
 					
 		<p>
-			<a href="/register.html">Register</a>
-			<a href="/forgotpassword.html">Forgot Password</a>
+			<a href="/register.php">Register</a>
+			<a href="/forgotpassword.php">Forgot Password</a>
 		</p>
 					
 	</fieldset>
