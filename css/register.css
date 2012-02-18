@@ -1,0 +1,29 @@
+legend{
+font-size:2em;
+
+}
+fieldset{
+
+margin-bottom:2em;
+}
+
+#submit{
+    width:120px;
+    height:27px;
+    border:2px solid #ccc;
+	margin-left:1em;
+	margin-top:1em;
+	
+}
+
+#agreeterms{
+margin-top:.5em;
+background-color:red;
+
+}
+
+#terms{
+overflow:auto;
+height: 75px;
+ padding: 10px;
+}

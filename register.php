@@ -7,7 +7,7 @@ include "helpers/embededLogin.php";
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <?php
-$headContent = '';
+$headContent = '<link rel="stylesheet" type="text/css" href="css/register.css" />';
 echo buildHead("Registration",$headContent);
 ?>
 <body>
@@ -31,28 +31,50 @@ if ($GLOBALS['loggedIn'])
 <h1 class="first">Registration</h1>
 <form action="register.php" method="POST">
 	<fieldset>
-		<legend><label for="name">Name</label></legend>
-		<input type="text" name="name" id="name" />
+		<legend><label for="fname">Name</label></legend>
+		<label for="fname">First Name:</label><input type="text" name="fname" id="fname" />
+		<label for="lname">Last Name:</label><input type="text" name="lname" id="lname" />
+
 	</fieldset>
 	
 	<fieldset>
 		<legend><label for="studentID">Student ID</label></legend>
-		<input type="text" name="studentID" id="studentID" />
+		<label for="studentID">ID:</label><input type="text" name="studentID" id="studentID" />
 	</fieldset>
 	
 	<fieldset>
 		<legend><label for="email">Email Address</label></legend>
-		<label for="email">Email Address</label><input type="text" name="email" id="email" />
-		<label for="emailConfirm">Email Address Confirm</label><input type="text" name="emailConfirm" id="emailConfirm" />
+		<label for="email">Email Address:</label><input type="text" name="email" id="email" />
+		<label for="emailConfirm">Email Address Confirm:</label><input type="text" name="emailConfirm" id="emailConfirm" />
 	</fieldset>
 	
 	<fieldset>
 		<legend><label for="password">Password</label></legend>
-		<label for="password">Password</label><input type="password" name="password" id="password" />
-		<label for="passwordConfirm">Password Confirm</label><input type="password" name="passwordConfirm" id="passwordConfirm" />
+		<label for="password">Password:</label><input type="password" name="password" id="password" />
+		<label for="passwordConfirm">Password Confirm:</label><input type="password" name="passwordConfirm" id="passwordConfirm" />
 	</fieldset>
+	<form>
 	
-	<input type="submit" value="Sign up" />
+	<fieldset id="terms">
+	<legend>Terms And Conditions</legend>
+		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+	
+	
+	</fieldset>
+	<input id="agree" type="checkbox" name="terms" value="terms" /> I Agree</div>
+	
+	
+
+
+</form>
+	
+	<div id="accept">
+	<input type="submit" id="submit" value="Sign up" />
+	</div>
 </form>
 
 <?php include "templates/footer.php"; ?>
