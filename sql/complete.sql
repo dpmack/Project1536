@@ -64,6 +64,22 @@ LOCK TABLES `topics` WRITE;
 /*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `accountscoursesmapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `accountscoursesmapping` (
+  `accountID` int(11) NOT NULL,
+  `courseID` int(11) NOT NULL,
+  PRIMARY KEY (`accountID`,`courseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `accountscoursesmapping` WRITE;
+/*!40000 ALTER TABLE `accountscoursesmapping` DISABLE KEYS */;
+INSERT INTO `accountscoursesmapping` VALUES (1,1),(1,2);
+/*!40000 ALTER TABLE `accountscoursesmapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS `courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -151,7 +167,6 @@ LOCK TABLES `homework` WRITE;
 INSERT INTO `homework` VALUES (1,2,'Assignment 1',1330342400),(2,1,'Milestone 2',1328564264),(3,2,'troy sucks',149872941);
 /*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
