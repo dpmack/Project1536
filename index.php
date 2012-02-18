@@ -10,69 +10,57 @@ include "helpers/embededLogin.php";
 <body>
 
 <?php include "templates/header.php"; ?>
+<div class="feed">
+	<div id="homework" >
+		<h3>Homework</h3>
+		<ul>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+		</ul>
+	</div>
+</div> <!-- /#teacherfeed -->
 
-	<ul id="feeds">
-		<li>
-			<div id="teacherfeed">
-			<h3>Homework</h3>
-				<ul>
-				
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					
-				</ul>
-			</div> <!-- /#teacherfeed -->
-		</li>
-		
-		
-		<li>		
-			<div id="userfeed">
-			<h3>Off Topic</h3>
-				<ul>
-				
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					<li><a href="#">[2012.05.01] Item - Thing</a></li>
-					
-				</ul>
-			</div> <!-- /#userfeed -->
-		</li>
-		
-		
-		
-	</ul> <!-- /#feeds -->
+<div class="feed">
+	<div id="recentPosts">
+		<h3>Off Topic</h3>
+		<ul>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+			<li><a href="#">[2012.05.01] Item - Thing</a></li>
+		</ul>
+	</div>
+</div> <!-- /#userfeed -->
 
-	<ul id="news">
-		<li>
-			<div id="adminfeed">
-			<h3>News 1</h3>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-				</p>
-			</div>  <!-- /#adminfeed -->
-		</li>
-		
+<ul id="news">
+	<li>
+		<div class="section">
+		<h3>News 1</h3>
+			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</p>
+		</div>
+	</li>
+	
 
-		<li>
-			<div id="resources">
-				<h3>News 2</h3>
-				<p>
-				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-				</p>
-
-			</div>  <!-- /#resources -->
-		</li>
-	</ul> <!-- /#news -->
+	<li>
+		<div class="section">
+			<h3>News 2</h3>
+			<p>
+			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+			</p>
+		</div>
+	</li>
+</ul> <!-- /#news -->
 
 
 

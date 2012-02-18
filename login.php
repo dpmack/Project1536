@@ -25,13 +25,17 @@ if ($GLOBALS['loggedIn'])
 }
 else
 {
-	echo '<form id="login" method="post" action="login.php">
-	Username:<br />
-	<input name="username" type="text" /><br />
-	Password:<br />
-	<input id="password" type="password" /><br />
-	<button type="button" onclick="btnSubmitClick()">Submit</button>
-</form>';
+	?>
+	<div id="wrapper_login">
+		<form id="login" method="post" action="login.php">
+			Username:<br />
+			<input name="username" type="text" /><br />
+			Password:<br />
+			<input id="password" type="password" /><br />
+			<button type="button" onclick="btnSubmitClick()">Submit</button>
+		</form>
+	</div>
+<?php
 }
 ?>
 

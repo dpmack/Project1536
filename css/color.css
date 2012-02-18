@@ -3,50 +3,78 @@ body
 	background-color: #929292;
 }
 
-#wrapper_inner { 
+#wrapper_inner 
+{ 
 	border-color: #898989;
 	background-color: white;
 }
 
-#footer h3 {	
+#footer h3 
+{	
 	border-color: #898989;
 }
 
-#header{
+#header
+{
 	color: white;
 }
 
-#news {
-	    border-color: #898989;
+#news > li, #homework, #recentPosts
+{
+	border-color: #898989;
 }
 
-#wrapper_final_header{
+#wrapper_final_header
+{
 	background-color: #393939;
 	border-color: #464646;
 }
 
-#logo {
+#wrapper_outer_nav
+{
+	background-color: #0E0E0E;
+}
+
+#navmain
+{
+	border-color: #0E0E0E;
+}
+
+
+#logo 
+{
 	background-color: #0655A5;
 }
 
-#feeds a {
-	color:#4487DB;
-}
-#feeds h3 {
-	color: #5A5955;
-	font-family:ariel;
+#wrapper_nav 
+{
+	background-color: black;
 }
 
-#navmain {
+#wrapper_header 
+{
+	background-color:#505050
+}
+
+.feed a 
+{
+	color:#4487DB;
+}
+
+.feed h3 
+{
+	color: #5A5955;
+}
+
+#navmain 
+{
 	background-color: #0E0E0E;
 	color: white;
 }
 
-#navmain a:hover {
+#navmain a:hover 
+{
 	background-color:#898989;
 }
 
-#login {
-	background-color: #333333;
-}
 

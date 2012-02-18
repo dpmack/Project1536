@@ -1,0 +1,18 @@
+h1 {font-size:2em}
+h2 {font-size:1.75em}
+h3 {font-size:1.5em}
+
+#feeds h3 {
+	font-family:ariel;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {font-weight: bold;}
+
+#login > form {font-size:.7em;}
+#login p {font-size:.7em; font-style:italic;}
+#login p a:hover {font-weight:normal;text-decoration:underline;}
+#navmain > ul {font-size:.7em;}

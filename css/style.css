@@ -1,16 +1,20 @@
 
 /*
-	most lists are for semantics, not for actuall bullet-point type lists.
+	most lists are for semantics, not for actuall bullet-`oint type lists.
 	no "point" in having them enabled by default
 		- Jake
 */
 
-ol, ul{
+ol, ul
+{
 	list-style: none;
 	display: block;
 }
 
-li {display: block;}
+li 
+{
+	display: block;
+}
 
 /* 
 	General Settings
@@ -21,25 +25,29 @@ li {display: block;}
 
 
  */
-h1 {font-size:2.25em}
-h2 {font-size:1.75em}
-h3 {font-size:1.5em}
-
 
 
 /*
 	Center content area
 */
-#wrapper_outer, #header
+#wrapper_outer, #header, #wrapper_nav
 {
-	max-width: 75%;
-	min-width: 35.5em;
+	max-width: 65em;
+	min-width: 40em;
 	margin: 0 auto;
-
 }
 
-#navmain {
-	min-width: 35.5em;}
+#wrapper_outer_nav
+{
+	width:100%;
+	float:left;
+}
+
+
+#navmain 
+{
+	min-width: 35.5em;
+}
 
 /*
 	we need to float everything so that we can make column layouts.	
@@ -49,20 +57,20 @@ h3 {font-size:1.5em}
 	float: left;
 	border-style: solid;
 	border-width: 0px 8px;
-	
 	width: 100%;
-	
 }
+
+
+
 #wrapper_final
 {
-float:left;
-margin:1.5em 1em;
+	float:left;
+	margin:1em 1em;
 }
 
 #wrapper_final > *
 {
-	float:left;
-	width:100%;
+	float:left;	
 }
 
 
@@ -73,6 +81,7 @@ margin:1.5em 1em;
 		- Jake
 	
 */ 
+
 a {
 	text-decoration: none;
 }
@@ -85,124 +94,146 @@ a[name]:hover  {text-decoration: none;}
 	Header
 */
 
-#logo {float:left;}
-
-h1{float:left;
-font-size:2em;
-padding: 0;
-margin: 1em .5em .5em;
-
+#logo 
+{
+	float:left;
 }
 
-#header {float:none;}
-#wrapper_final_header {float:left;width:100%;
+h1
+{
+	float:left;
+	padding: 0;
+	margin: 1em .5em .5em;
+}
+
+#header 
+{
+	float:none;
+}
+
+#wrapper_final_header 
+{
+	float:left;
+	width:100%;
 	border-style: solid;
-	border-width: 0px 8px;}
-#wrapper_header {float:left;margin:0;padding:0;width:100%;background-color:#505050}
+	border-width: 0px 8px;
+}
+
+#wrapper_header 
+{
+	float:left;
+	margin:0;
+	padding:0;
+	width:100%;
+}
 
 
-#logo, #login {min-height: 7em;padding:0;}
+#logo
+{
+	min-height: 7em;
+	padding:0;
+}
+
 #logo a
 {
 	text-decoration: none;
 }
 
-#login {float:right;}
+#navmain
+{
+	clear:both;
+	float:left;
+	width:100%;
+	padding:0;
+	margin:0;
+	border-left: 8px solid;
+	border-right: 8px solid;
+}
 
-#login > form {margin: 1em;font-size:.7em;}
+#navmain li, #navmain ul
+{
+	float:left;
+}
 
+#navmain li 
+{
+	margin:.5em 1em;
+}
 
-#login > form > fieldset > * {display:block;float:left;}
-#login label {margin-bottom:1em;}
-#login input[type="text"],#login input[type="password"]{width:8em;margin-left:1em;margin-bottom:.5em;float:right;clear:right;}
-#login input[type="submit"] {clear:both;float:right;}
-#login p {width:100%; margin-top:.8em; font-size:.7em; font-style:italic;}
-#login p a {display:block;float:right;clear:right}
-#login p a:hover {font-weight:normal;text-decoration:underline;}
-
-
-#login label {clear:left;}
-
-
-
-#navmain{clear:both;float:left;width:100%;padding:0;margin:0;}
-#navmain > ul {margin-left:12em;font-size:.7em;}
-
-#navmain * {float:left;}
-#navmain li {/*border: 1px solid black;*/margin:.5em 1em;}
-#navmain a {padding: .5em 1.5em;}
-
-
+#navmain a 
+{
+	padding: 0em 3em 0em 0em;
+}
 
 /*
 	feeds
 */
 
-#feeds > *
+/* Recent Posts feeds  Homework feeds */
+.feed
 {
-	display: block;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #898989;
-	padding: 1em;
-	float: left;
-	
-	min-width:18em; /* should be 25 */
-	min-height:15em;
-	margin:1em;
-	
-	
+	width:50%;
 }
 
-#feeds h3 {margin-bottom:.75em;}
-
-#feeds > li > div > ul > li > *
+#homework, #recentPosts
 {
-	display:block;
-	width:100%;
-	padding:.25em .5em;
-}		
+	border-style:solid;
+	border-width:1px;
+	padding:.5em 1em;
+}
+
+#homework
+{
+	margin-right:.5em;
+}
+
+#recentPosts
+{
+	margin-left:.5em;
+}
+
+/*
+.feed:first-child > .innerfeed
+{
+	margin-right: .5em;
+}
+
+.feed:first-child + .feed > .innerfeed
+{
+	margin-left: .5em;
+}
+*/
 
 
 /* NEWS feeds */
 
-#news 
+
+#news
 {
-	float:left;
-	width:100%;
-	border-style:solid;
-	border-width:1px;
+	float: left;
+	width: 100%;
 }
 
 #news > li
 {
-	margin-bottom: 4em;
+	margin-top: 1em;
+	border-style:solid;
+	border-width:1px;
+}
+/*
+#news > li > * {margin: 0 auto;}
+*/
+#news .section
+{
+	padding-top:1em;
+	width: 35.5em;
+	margin:0 auto;
 }
 
 
-/*
-#feeds > li:nth-child(4n+0) {background-color:#CC3333;}
-#feeds > li:nth-child(4n+1) {background-color:#33CC33;}
-#feeds > li:nth-child(4n+2) {background-color:#33AAAA;}
-#feeds > li:nth-child(4n+3) {background-color:#CCCC33;}
-
-
-#feeds > li:nth-child(4n+0) > div > ul > li:nth-child(odd){background-color:#DD4444;}
-#feeds > li:nth-child(4n+1) > div > ul > li:nth-child(odd){background-color:#44DD44;}
-#feeds > li:nth-child(4n+2) > div > ul > li:nth-child(odd){background-color:#44BBBB;}
-#feeds > li:nth-child(4n+3) > div > ul > li:nth-child(odd){background-color:#DDDD44;}
-*/
-
-/*
-
-	footer
-	
-*/
-
-
+/* FOOTers */
 #footer h3
 {
-
 	margin: .65em;
 	padding-top: .5em;
 	border-style: solid;
@@ -211,12 +242,17 @@ margin: 1em .5em .5em;
 
 #footer ul
 {
+<<<<<<< HEAD
 	padding: 0;
 }
 
 #footer li
 {
 	display: inline;
+=======
+	margin: 1em;
+	margin-bottom: 3em;
+>>>>>>> Modified Login Page, Updated Front Page, created font.css, hid login from top-right corner
 }
 
 #footer a
@@ -242,3 +278,22 @@ h1.first
 {
 	margin-top:0;
 }
+
+#login 
+{
+/*
+	float: left;
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+	background-color:black;
+	padding:10px;*/
+	background-color:red;
+	
+	width: 100%;
+}
+
+
+
+
+
