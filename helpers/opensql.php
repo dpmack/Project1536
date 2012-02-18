@@ -1,5 +1,5 @@
 <?php
-include "/config/current.config";
+include "./config/current.config";
 
 $GLOBALS['sql_debug_buffer'] = "";
 $GLOBALS['sql_debug'] = $sqlDebugMode;
