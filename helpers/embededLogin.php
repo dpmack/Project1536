@@ -3,7 +3,7 @@
 function embededLogin()
 {
 	return '
-<form id="loginForm" action="login.php" method="POST">
+<form id="loginForm" action="login.php" method="post">
 	<fieldset>
 		<!--<legend>login</legend>-->
 				

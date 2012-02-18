@@ -2,9 +2,7 @@
 	<div id="header">
 		<div id="wrapper_final_header">
 			<div id="logo">
-				<a href="/">
-					<h1>CSThub</h1>
-				</a>
+				<h1><a href="/">CSThub</a></h1>				
 			</div>
 			
 			<div id="login">	
@@ -30,10 +28,10 @@
 
 		<div id="navmain">
 			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Forums</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Help</a></li>
+				<li><a href="index.php">Home</a></li>
+				<li><a href="forums.php">Forums</a></li>
+				<li><a href="about.php">About</a></li>
+				<li><a href="faq.php">Help</a></li>
 			
 			
 			</ul>
