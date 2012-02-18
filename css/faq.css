@@ -16,10 +16,8 @@ a.purple:visited
 
 .faqHeading
 {
-	font-size: 3em;
+	font-size: 2em;
 	font-weight: bold;
-	background-color: #191970;
-	color: #E6E6FA;
 }
 
 #linkbar  a
@@ -30,7 +28,6 @@ a.purple:visited
 
 p
 {
-	max-width: 64.3em;
 	margin: 5px;
 	padding: 5px;
 }
@@ -40,31 +37,40 @@ ul
 	margin: 0;
 }
 
-li
+/*li
 {
 	display: inline;
 	list-style: none;
 	padding: 2px;
 	font-weight: bold;
 	font-size: 1.1em;
-}
+}*/
 
 #centerThis
 {
 	margin: 0 auto;
 }
 
-#bodyWrap 
-{	
-	margin-left: auto;
-	margin-right: auto;
-	width:55.5%;
-	background-color: #6F7285;
-	border-width: .3em;
-	border-style: solid;
-	border-color: #FFFFFF;
+#faqTitle
+{
+	padding:0;
+	margin:0;
+	border:0;
+	font-size: 1.5em;
 }
 
-html {
-background: #838383 no-repeat fixed center top;
+#faqTOC
+{
+	padding-bottom: 10px;
+}
+
+#howToVidHid
+{
+	cursor: pointer;
+}
+
+#howToVidHid > span
+{
+	color: blue;
+	font-weight: bold;
 }

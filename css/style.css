@@ -79,7 +79,7 @@ a {
 
 a:hover {font-weight: bold;}
 
-
+a[name]:hover  {text-decoration: none;}
 
 /*
 	Header
@@ -211,16 +211,25 @@ margin: 1em .5em .5em;
 
 #footer ul
 {
+	padding: 0;
+}
 
-margin: 1em;
-margin-bottom: 3em;
+#footer li
+{
+	display: inline;
 }
 
 #footer a
 {
-	display: block;
+	/*display: block;*/
 	margin-left: 1em;
 	margin-bottom: .5em;
+}
+
+#footer p
+{
+	text-align: center;
+	margin-top: 1em;
 }
 
 /*
