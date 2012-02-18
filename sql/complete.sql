@@ -17,15 +17,16 @@ DROP TABLE IF EXISTS `errors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `errors` (
   `errorID` int(11) NOT NULL AUTO_INCREMENT,
-  `timeStamp` datetime NOT NULL,
-  `alert` text COLLATE latin1_general_ci NOT NULL,
-  `debug` text COLLATE latin1_general_ci NOT NULL,
+  `time` datetime NOT NULL,
+  `message` text COLLATE latin1_general_ci NOT NULL,
+  `comment` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`errorID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `errors` WRITE;
 /*!40000 ALTER TABLE `errors` DISABLE KEYS */;
+INSERT INTO `errors` VALUES (1,'2012-02-14 17:32:20','Column \'homeworkID\' in where clause is ambiguous','SELECT !ISNULL(ham.homeworkID) as finished, accounts.accountID as accountID \r\nFROM homework\r\nJOIN courses on homework.courseID=courses.courseID\r\nJOIN accountsCoursesMapping as acm on acm.courseID=courses.courseID\r\nJOIN accounts on accounts.accountID = acm.accountID\r\nLEFT JOIN homeworkAccountMapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID\r\nWHERE accounts.username=\'A00802872\' \r\nand accounts.ticket=\'1329269380\' \r\nand homeworkID=1');
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,21 +86,20 @@ DROP TABLE IF EXISTS `accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accounts` (
-  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `accountID` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `lastName` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `username` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `password` varchar(256) COLLATE latin1_general_ci NOT NULL,
-  `salt` varchar(9) COLLATE latin1_general_ci NOT NULL,
   `ticket` varchar(128) COLLATE latin1_general_ci NOT NULL,
   `lastActivity` time NOT NULL,
-  PRIMARY KEY (`userID`)
+  PRIMARY KEY (`accountID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','843bf8ffde5c433f385561b804ddf709af583d3005ebcd38e','','1329239291','00:00:00'),(2,'Kevin','McKeen','A00778394','f9a6c714cb2d4e4ce4fc6427fc6002e48c8b05fc9bf348700','','1326917225','00:00:00');
+INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','843bf8ffde5c433f385561b804ddf709af583d3005ebcd38e','1329600019','00:00:00'),(2,'Kevin','McKeen','A00778394','f9a6c714cb2d4e4ce4fc6427fc6002e48c8b05fc9bf348700','1326917225','00:00:00');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,6 +151,7 @@ LOCK TABLES `homework` WRITE;
 INSERT INTO `homework` VALUES (1,2,'Assignment 1',1330342400),(2,1,'Milestone 2',1328564264),(3,2,'troy sucks',149872941);
 /*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
