@@ -10,7 +10,7 @@ include "helpers/embededLogin.php";
 $headContent = "";
 if ($GLOBALS['loggedIn'])
 {
-	$headContent = "<meta http-equiv='Refresh' content='3; URL=success.php'>";
+	$headContent = "<meta http-equiv='Refresh' content='3; URL=index.php'>";
 }
 
 echo buildHead("Login",$headContent);
