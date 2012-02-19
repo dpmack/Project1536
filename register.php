@@ -28,8 +28,8 @@ if ($GLOBALS['loggedIn'])
 }
 ?>
 
-<h1 class="first">Registration</h1>
-<form action="register.php" method="POST">
+<h2 class="first">Registration</h2>
+<form action="register.php" method="post">
 	<fieldset>
 		<legend><label for="fname">Name</label></legend>
 		<label for="fname">First Name:</label><input type="text" name="fname" id="fname" />
@@ -53,25 +53,17 @@ if ($GLOBALS['loggedIn'])
 		<label for="password">Password:</label><input type="password" name="password" id="password" />
 		<label for="passwordConfirm">Password Confirm:</label><input type="password" name="passwordConfirm" id="passwordConfirm" />
 	</fieldset>
-	<form>
 	
-	<fieldset id="terms">
-	<legend>Terms And Conditions</legend>
+	<h2>Terms And Conditions</h3>
+		<p id="terms">These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
 		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
 		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
 		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
 		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
-		These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
+	</p>
 	
-	
-	</fieldset>
-	<input id="agree" type="checkbox" name="terms" value="terms" /> I Agree</div>
-	
-	
+	<input id="agree" type="checkbox" name="terms" value="terms" /> I Agree
 
-
-</form>
-	
 	<div id="accept">
 	<input type="submit" id="submit" value="Sign up" />
 	</div>
