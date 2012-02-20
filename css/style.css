@@ -291,9 +291,9 @@ h1
 	border-width:1px;
 	border-color:black;
 	background-color:black;
-	padding:10px;*/
-	background-color:red;
-	
+	padding:10px;
+	background-color:red;*/
+
 	width: 100%;
 }
 
@@ -308,7 +308,7 @@ h1
 	margin: 0;
 }
 
-input
+input, select
 {
 	border: 1px solid;
 }
@@ -318,5 +318,16 @@ input
 	border: none;
 }
 
+a.classicLink
+{
+	color: blue;
+	text-decoration: underline;
+}
 
-
+.userPicture
+{
+	border: 1px solid white;
+	display: inline-block;
+	height: 60px;
+	width: 70px;
+}
