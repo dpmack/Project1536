@@ -47,8 +47,6 @@ $posts[5]["posts"] = "56";
 $posts[5]["message"] = "Thats enough from both of you. Topic closed";
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <?php
 $headContent = "<link rel='stylesheet' type='text/css' href='css/forums.css' />";
 echo buildHead("View Topic",$headContent);
@@ -68,7 +66,7 @@ include "templates/header.php";
 $i = 1;
 foreach($posts as $post)
 {
-	echo "<div id='' class='post'><div class='time'>#" . $i . " " . $post["time"] .
+	echo "<div class='post'><div class='time'>#" . $i . " " . $post["time"] .
 	"</div><div class='userinfo'><span>" . $post["username"] . "</span><br />" . 
 	"<span># of posts: " . $post["posts"] . "</span></div><div class='body'>" . 
 	"<div class='content'>" .

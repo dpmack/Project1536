@@ -22,8 +22,6 @@ $topics[3]["title"] = "David is awesome thread";
 $topics[3]["posts"] = "42";
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <?php
 $headContent = "<link rel='stylesheet' type='text/css' href='css/forums.css' />";
 echo buildHead("Topics",$headContent);
@@ -43,7 +41,7 @@ include "templates/header.php";
 
 foreach($topics as $topic)
 {
-	echo "<div id='' class='topic'><span>" . $topic["title"] . "</span>";
+	echo "<div class='topic'><span>" . $topic["title"] . "</span>";
 	echo "<span>Posts: " . $topic["posts"] . "</span>";
 	echo "<a href='viewtopic.php'>View Topic</a></div>";
 }

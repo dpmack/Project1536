@@ -26,8 +26,6 @@ $forums[3]["topics"] = "4";
 $forums[3]["posts"] = "42";
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <?php
 $headContent = "<link rel='stylesheet' type='text/css' href='css/forums.css' />";
 echo buildHead("Forums",$headContent);
@@ -42,7 +40,7 @@ include "templates/header.php";
 
 foreach($forums as $forum)
 {
-	echo "<div id='' class='forum'><span>" . $forum["title"] . "</span>";
+	echo "<div class='forum'><span>" . $forum["title"] . "</span>";
 	echo "<span>Topics: " . $forum["topics"] . "</span><span>Posts: " . $forum["posts"] . "</span>";
 	echo "<a href='topics.php'>View Forum</a></div>";
 }
