@@ -2,7 +2,6 @@
 
 function embededLogin()
 {
-	return;
 	return '
 <form id="loginForm" action="login.php" method="post">
 	<fieldset>
