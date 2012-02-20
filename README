@@ -1,3 +1,45 @@
-Practice folder is for practicing using git or practicing HTML etc
+NOTE: Project will not run without working database
 
-Jay is here!
++-------------------+
+| Project structure |
++-------------------+
+
+Root level
+ - Contains all accessable pages
+
+Templates
+ - Contains php files which help contruct the main pages
+
+   head.php - builds the doctype, and header for all of our pages
+   header.php - builds the standard header for all our pages
+   footer.php - builds the standard footer for all our pages
+   sqlDebug.php - is included in all our pages but only rendered if debuging is
+                  turned on. It shows all sql executed in the page.
+
+Helpers
+ - Contains helpers for various pages
+ 
+   auth.php - handles all authentication for the website
+   opensql.php - has some sql functions in it, allowing for the sql debug to 
+	             work, as well as automatic error table
+   embededLogin.php - handles the embededlogin at the top of the page
+ 
+Config
+ - Contains config files to make the site run properly
+ 
+   current.config - points at the current config file to be used
+   dev.config.exmaple - an example file for the development config, rename this
+                        file to dev.config and change values to ur local settings
+
+Sql
+ - Contains sql information to build database
+ 
+   preSql.py - a script that helps normalize database exports for source control
+   complete.sql - a database dump of everything needed to build a working db from
+                  scratch, some default data is included.
+	
+Scripts
+ - Javascript files used in the site
+
+Css
+ - Css files used in the site
