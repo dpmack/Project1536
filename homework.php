@@ -57,7 +57,7 @@ if (!$GLOBALS['loggedIn'])
 }
 ?>
 
-<h1 class="first">Homework checklist</h1>
+<h2 class="first">Homework checklist</h1>
 
 <?php
 foreach($homework as $piece)
