@@ -75,7 +75,7 @@ li
 
 /* jake if u can find a way to make the h2 not be bad without this feel free */
 
-#wrapper_final > h2
+#wrapper_final > h2, #wrapper_final > br
 {
 	float: none;
 }
