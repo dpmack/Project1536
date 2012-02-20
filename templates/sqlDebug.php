@@ -1,25 +1,6 @@
-<style>
-	#sqlDebugToggle
-	{
-		position: fixed;
-		top:0;
-		right:0;
-		color:red;
-	}
-	
-	#sqlDebugDisplay
-	{
-		border: solid 1px;
-		position: fixed;
-		top:20px;
-		right:10px;
-		background: white;
-		padding: 10px;
-	}
-</style>
-
-<div id="sqlDebugToggle" onclick="toggleSQLDebug()">SQL</div>
-<div id="sqlDebugDisplay" style="display:none;"><?php 
+<div id="sqlDebugToggle" style="position: fixed; top: 0; right: 0; color: red;" onclick="toggleSQLDebug()">SQL</div>
+<div id="sqlDebugDisplay" style="display:none; border: solid 1px; position: fixed; 
+	top:20px; right:10px; background: white; padding: 10px;"><?php 
 if ($GLOBALS['sql_debug_buffer'])
 {
 	echo str_replace("\n","<br />", $GLOBALS['sql_debug_buffer']);

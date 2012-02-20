@@ -12,7 +12,7 @@ function embededLogin()
 		<input type="text" id="username" name="username" value="" />
 		<label for="password">Password
 		</label><input type="password" id="password" name="password" value="" />
-		<button type="button" onclick="btnSubmitClick()">Submit</button>
+		<button type="button" onclick="btnSubmitClick()">Login</button>
 					
 		<p>
 			<a href="/register.php">Register</a>

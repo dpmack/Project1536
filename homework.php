@@ -8,9 +8,9 @@ $hiddenDate = time() - 60*60*24*3;
 $sql = "SELECT homework.homeworkID as homeworkID, courseName, assignment, dueDate, !ISNULL(ham.homeworkID) as finished 
 FROM homework
 JOIN courses on homework.courseID=courses.courseID
-JOIN accountsCoursesMapping as acm on acm.courseID=courses.courseID
+JOIN accountscoursesmapping as acm on acm.courseID=courses.courseID
 JOIN accounts on accounts.accountID = acm.accountID
-LEFT JOIN homeworkAccountMapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
+LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
 WHERE accounts.username='" . $GLOBALS['username'] . "' and accounts.ticket='" . $GLOBALS['ticket'] . "' and
 dueDate > " . $hiddenDate . " 
 ORDER BY duedate DESC";
@@ -26,7 +26,8 @@ while($row = mysql_fetch_assoc($result))
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <?php
 $headContent = '<link rel="stylesheet" type="text/css" href="css/homework.css" />';
@@ -51,6 +52,7 @@ if (!$GLOBALS['loggedIn'])
 	{
 		include "templates/sqlDebug.php";
 	}
+	echo "</body></html>";
 	die();
 }
 ?>
