@@ -36,6 +36,8 @@ function embededLogin()
 function loggedInUser()
 {
 	return '
-<img alt="userPicture">David, Mack<br />
+<img class="userPicture" alt="userPicture">David, Mack<br />
+<a href="/landing.php">My Home</a><br />
+<br />
 <a href="/logout.php">Logout</a>';
 }
