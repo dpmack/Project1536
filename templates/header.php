@@ -5,7 +5,7 @@
 				<h1><a href="/">CSThub</a></h1>				
 			</div>
 			
-			<div id="login">	
+			<div id="loginEM">	
 				<?php 
 					if ($GLOBALS['loggedIn'])
 					{

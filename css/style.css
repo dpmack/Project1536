@@ -1,6 +1,6 @@
 
 /*
-	most lists are for semantics, not for actuall bullet-`oint type lists.
+	most lists are for semantics, not for actuall bullet-point type lists.
 	no "point" in having them enabled by default
 		- Jake
 */
@@ -249,17 +249,14 @@ h1
 
 #footer ul
 {
-<<<<<<< HEAD
 	padding: 0;
 }
 
 #footer li
 {
 	display: inline;
-=======
 	margin: 1em;
 	margin-bottom: 3em;
->>>>>>> Modified Login Page, Updated Front Page, created font.css, hid login from top-right corner
 }
 
 #footer a
@@ -281,7 +278,7 @@ h1
 	
 */
 
-h1.first
+.first
 {
 	margin-top:0;
 }
@@ -300,7 +297,26 @@ h1.first
 	width: 100%;
 }
 
+#loginEM
+{
+	float: right;
+	font-size: 0.9em;
+}
 
+#loginEM fieldset
+{
+	margin: 0;
+}
+
+input
+{
+	border: 1px solid;
+}
+
+#loginEM input
+{
+	border: none;
+}
 
 
 

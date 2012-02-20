@@ -7,14 +7,14 @@ function embededLogin()
 	<fieldset>
 		<!--<legend>login</legend>-->
 				
-		<label for="username">ID</label>
-		<input type="text" id="username" name="username" value="" />
-		<label for="password">Password
-		</label><input type="password" id="password" name="password" value="" />
+		<label for="username">ID</label><br />
+		<input type="text" id="username" name="username" value="" /><br />
+		<label for="password">Password</label>
+		<br /><input type="password" id="password" name="password" value="" /><br />
 		<button type="button" onclick="btnSubmitClick()">Login</button>
 					
 		<p>
-			<a href="/register.php">Register</a>
+			<a href="/register.php">Register</a> / 
 			<a href="/forgotpassword.php">Forgot Password</a>
 		</p>
 					

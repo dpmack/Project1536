@@ -1,15 +1,15 @@
-a
+#wrapper_outer a
 {
 	font-family: Arial;
 	text-decoration: none;
 }
 
-a:link, a:visited
+#wrapper_outer a:link, #wrapper_outer a:visited
 {
 	color: #0000CC;
 }
 
-a.purple:visited
+#wrapper_outer a.purple:visited
 {
 	color: purple;
 }
@@ -26,7 +26,7 @@ a.purple:visited
 	color: #FFFFFF;
 }
 
-p
+#wrapper_outer p
 {
 	margin: 5px;
 	padding: 5px;
