@@ -1,31 +1,42 @@
-#body{
+#body
+{
 
 }
 
-#scheduleForm{
-margin:2em 0 1em 3em;
+#scheduleForm
+{
+	margin:2em 0 1em 3em;
+}
+
+#year
+{
+	width:9em;
+	margin-right:10px;
+}
+
+#term
+{
+	width:9em;
+	margin-right:10px;
+}
+
+#Set
+{
+	width:9em;
+	margin-right:10px;
 
 }
-#year{
-width:9em;
-padding-right:10px;
-}
-#term{
-width:9em;
-padding-right:10px;
-}
-#Set{
-width:9em;
-padding-right:10px;
 
+td,th
+{
+	text-align:center;
+	border:2px solid;
+	width:5em;
 }
-td,th{
-text-align:center;
-border:2px solid;
-width:5em;
-}
-th{
-padding: .5em 0em;
+
+th
+{
+	padding: .5em 0em;
 }	
 
 table{
