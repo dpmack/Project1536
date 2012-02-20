@@ -10,7 +10,7 @@ include "helpers/embededLogin.php";
 $headContent = "";
 if ($GLOBALS['loggedIn'])
 {
-	$headContent = "<meta http-equiv='Refresh' content='3; URL=index.php'>";
+	$headContent = "<meta http-equiv='Refresh' content='3; URL=landing.php'>";
 }
 
 echo buildHead("Login",$headContent);
@@ -21,18 +21,23 @@ echo buildHead("Login",$headContent);
 <?php
 if ($GLOBALS['loggedIn'])
 {
-	echo "Login successful, redirecting in 3 seconds. Or click <a href='success.php'>here</a>";
+	echo "<span>Login successful, redirecting in 3 seconds. Or click <a class='classicLink' href='landing.php'>here</a></span>";
 }
 else
 {
 	?>
-	<div id="wrapper_login">
-		<form id="login" method="post" action="login.php">
+	<div id="login">
+		<form id="loginInPage" method="post" action="login.php">
 			Username:<br />
 			<input name="username" type="text" /><br />
 			Password:<br />
-			<input id="password" type="password" /><br />
-			<button type="button" onclick="btnSubmitClick()">Submit</button>
+			<input id="passwordInPage" name="password" type="password" /><br />
+			<button type="button" onclick="btnSubmitClickInPage()">Login</button>
+			
+			<p>
+				<a href="/register.php">Register</a> / 
+				<a href="/forgotpassword.php">Forgot Password</a>
+			</p>
 		</form>
 	</div>
 <?php
@@ -42,11 +47,11 @@ else
 <script type="text/javascript" src="script/md5.js"></script>
 
 <script type="text/javascript">
-	function btnSubmitClick()
+	function btnSubmitClickInPage()
 	{
-		var txtPassword = document.getElementById("password");
+		var txtPassword = document.getElementById("passwordInPage");
 		txtPassword.value = b64_md5(txtPassword.value);
-		var fmLogin = document.getElementById("login");
+		var fmLogin = document.getElementById("loginInPage");
 		fmLogin.submit();
 	}
 </script>
