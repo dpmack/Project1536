@@ -1,5 +1,6 @@
-.homeworkItem {
+#wrapper_final .homeworkItem {
 	margin: 1em;
+	float: none;
 }
 
 .courseName {

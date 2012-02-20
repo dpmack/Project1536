@@ -42,6 +42,7 @@ CREATE TABLE `homeworkaccountmapping` (
 
 LOCK TABLES `homeworkaccountmapping` WRITE;
 /*!40000 ALTER TABLE `homeworkaccountmapping` DISABLE KEYS */;
+INSERT INTO `homeworkaccountmapping` VALUES (1,1);
 /*!40000 ALTER TABLE `homeworkaccountmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','843bf8ffde5c433f385561b804ddf709af583d3005ebcd38e','1329600019','00:00:00'),(2,'Kevin','McKeen','A00778394','f9a6c714cb2d4e4ce4fc6427fc6002e48c8b05fc9bf348700','1326917225','00:00:00');
+INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','843bf8ffde5c433f385561b804ddf709af583d3005ebcd38e','1329710768','00:00:00'),(2,'Kevin','McKeen','A00778394','f9a6c714cb2d4e4ce4fc6427fc6002e48c8b05fc9bf348700','1326917225','00:00:00');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +165,7 @@ CREATE TABLE `homework` (
 
 LOCK TABLES `homework` WRITE;
 /*!40000 ALTER TABLE `homework` DISABLE KEYS */;
-INSERT INTO `homework` VALUES (1,2,'Assignment 1',1330342400),(2,1,'Milestone 2',1328564264),(3,2,'troy sucks',149872941);
+INSERT INTO `homework` VALUES (1,2,'Assignment 1',1338342400),(2,1,'Milestone 4',1339564264),(3,2,'troy sucks',149872941);
 /*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
