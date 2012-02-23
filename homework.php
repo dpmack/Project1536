@@ -11,7 +11,7 @@ JOIN courses on homework.courseID=courses.courseID
 JOIN accountscoursesmapping as acm on acm.courseID=courses.courseID
 JOIN accounts on accounts.accountID = acm.accountID
 LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
-WHERE accounts.username='" . $GLOBALS['username'] . "' and accounts.ticket='" . $GLOBALS['ticket'] . "' and
+WHERE accounts.username='" . $GLOBALS['username'] . "' and
 dueDate > " . $hiddenDate . " 
 ORDER BY duedate DESC";
 $result = sql_query($sql);
