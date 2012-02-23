@@ -11,7 +11,8 @@ function embededLogin()
 		<input type="text" id="username" name="username" value="" /><br />
 		<label for="password">Password</label>
 		<br /><input type="password" id="password" name="password" value="" /><br />
-		<button type="button" onclick="btnSubmitClick()">Login</button>
+		<input type="hidden" id="hiddenPassword" />
+		<input type="submit" onclick="btnSubmitClick()" value="Login" />
 					
 		<p>
 			<a href="/register.php">Register</a> / 
@@ -20,15 +21,16 @@ function embededLogin()
 					
 	</fieldset>
 </form>
-<script type="text/javascript" src="script/md5.js"></script>
+<script type="text/javascript" src="script/sha1.js"></script>
 
 <script type="text/javascript">
 	function btnSubmitClick()
 	{
 		var txtPassword = document.getElementById("password");
-		txtPassword.value = b64_md5(txtPassword.value);
-		var fmLogin = document.getElementById("loginForm");
-		fmLogin.submit();
+		var hdnPassword = document.getElementById("hiddenPassword");
+		hdnPassword.value = Sha1.hash(txtPassword.value);
+		hdnPassword.setAttribute("name","hPassword");
+		txtPassword.removeAttribute("name");
 	}
 </script>';
 }

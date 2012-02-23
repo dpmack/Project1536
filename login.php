@@ -30,7 +30,8 @@ else
 			<input name="username" type="text" /><br />
 			Password:<br />
 			<input id="passwordInPage" name="password" type="password" /><br />
-			<button type="button" onclick="btnSubmitClickInPage()">Login</button>
+			<input type="hidden" id="hiddenPasswordInPage" />
+			<input type="submit" onclick="btnSubmitClick()" value="Login" />
 			
 			<p>
 				<a href="/register.php">Register</a> / 
@@ -48,9 +49,11 @@ else
 	function btnSubmitClickInPage()
 	{
 		var txtPassword = document.getElementById("passwordInPage");
-		txtPassword.value = b64_md5(txtPassword.value);
-		var fmLogin = document.getElementById("loginInPage");
-		fmLogin.submit();
+		var hdnPassword = document.getElementById("hiddenPasswordInPage");
+		
+		hdnPassword.value = Sha1.hash(txtPassword.value);
+		hdnPassword.setAttribute("name","hPassword");
+		txtPassword.removeAttribute("name");
 	}
 </script>
 
