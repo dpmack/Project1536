@@ -19,7 +19,7 @@ Feature: Login
 		And that javascript is disabled
 		Then I should see the warning about password encryption
 	
-	Scenario: Login session is tracked by IP / login ticket
+	Scenario: Login session is tracked by login ticket and browser sig
 		Given that I am logged in
 		Then I should have a cookie with my login ticket
 
