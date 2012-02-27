@@ -2,13 +2,22 @@
 include 'helpers/auth.php';
 include "templates/head.php";
 include "helpers/embededLogin.php";
-?>
 
-<?php
 $headContent = "";
+	
+if (isset($_GET["referer"]))
+{
+	$dest = $_GET["referer"];
+}
+else
+{
+	$dest = "/landing.php";
+}
+	
 if ($GLOBALS['loggedIn'])
 {
-	$headContent = "<meta http-equiv='Refresh' content='3; URL=landing.php'>";
+	$headContent = "<meta http-equiv='Refresh' content='3; URL=" . $dest . "'>";
+	header('Location: ' . $dest);
 }
 
 echo buildHead("Login",$headContent);
@@ -19,13 +28,16 @@ echo buildHead("Login",$headContent);
 <?php
 if ($GLOBALS['loggedIn'])
 {
-	echo "<span>Login successful, redirecting in 3 seconds. Or click <a class='classicLink' href='landing.php'>here</a></span>";
+	?>
+	<span>Login successful, redirecting in 3 seconds. Or click 
+	<a class='classicLink' href='<?php echo $dest; ?>'>here</a></span>";
+	<?php
 }
 else
 {
 	?>
 	<div id="login">
-		<form id="loginInPage" method="post" action="login.php">
+		<form id="loginInPage" method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 			Username:<br />
 			<input name="username" type="text" /><br />
 			Password:<br />

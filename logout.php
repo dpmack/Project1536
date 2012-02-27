@@ -8,10 +8,9 @@ logout();
 ?>
 
 <?php 
-
+header("Location: /index.php");
 $headContent = '<meta http-equiv="REFRESH" content="0;url=index.php">';
 echo buildHead("Logout", $headContent);
-
 ?>
 <body>
 

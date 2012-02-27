@@ -3,6 +3,12 @@ include 'helpers/auth.php';
 include "templates/head.php";
 include "helpers/embededLogin.php";
 
+if (!$GLOBALS["loggedIn"])
+{
+	include "error/notloggedin.php";
+	die();
+}
+
 $hiddenDate = time() - 60*60*24*3;
 
 $sql = "SELECT homework.homeworkID as homeworkID, courseName, assignment, dueDate, !ISNULL(ham.homeworkID) as finished 
@@ -21,37 +27,17 @@ $homework = array();
 while($row = mysql_fetch_assoc($result))
 {
 	$homework[] = $row;
-	
 }
 
 ?>
 
 <?php
 $headContent = '<link rel="stylesheet" type="text/css" href="css/homework.css" />';
-if (!$GLOBALS['loggedIn'])
-{
-	$headContent .= '<meta http-equiv="Refresh" content="0; URL=login.php" />';
-}
-
 echo buildHead("Homework Checklist",$headContent);
 ?>
 <body>
 <?php
 include "templates/header.php";
-
-if (!$GLOBALS['loggedIn'])
-{	
-	echo "To view this page you must be logged in";
-	
-	include "templates/footer.php";
-	
-	if ($GLOBALS['sql_debug'] != 0)
-	{
-		include "templates/sqlDebug.php";
-	}
-	echo "</body></html>";
-	die();
-}
 ?>
 
 <h2 class="first">Homework checklist</h1>

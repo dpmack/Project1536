@@ -2,37 +2,20 @@
 include 'helpers/auth.php';
 include "templates/head.php";
 include "helpers/embededLogin.php";
-?>
 
-<?php
-$headContent = '<link rel="stylesheet" type="text/css" href="css/schedule.css" />';
-if (!$GLOBALS['loggedIn'])
+if (!$GLOBALS["loggedIn"])
 {
-	$headContent .= '<meta http-equiv="Refresh" content="0; URL=login.php" />';
-}
-
-echo buildHead("Schedule",$headContent);
-?>
-<body>
-<?php
-include "templates/header.php";
-
-if (!$GLOBALS['loggedIn'])
-{	
-	echo "To view this page you must be logged in";
-	
-	include "templates/footer.php";
-	
-	if ($GLOBALS['sql_debug'] != 0)
-	{
-		include "templates/sqlDebug.php";
-	}
-	echo "</body></html>";
+	include "error/notloggedin.php";
 	die();
 }
 ?>
 
-<!-- !-->
+<?php
+$headContent = '<link rel="stylesheet" type="text/css" href="css/schedule.css" />';
+echo buildHead("Schedule",$headContent);
+?>
+<body>
+
 <div id="body">
 	<form id="scheduleForm">
 	
@@ -156,7 +139,6 @@ if (!$GLOBALS['loggedIn'])
 	
 </div>
 
-<!-- !-->
 <?php include "templates/footer.php"; ?>
 
 <?php
