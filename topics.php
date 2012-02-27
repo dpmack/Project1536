@@ -1,6 +1,6 @@
 <?php
 include 'helpers/auth.php';
-include "templates/head.php";
+include "helpers/head.php";
 include "helpers/embededLogin.php";
 
 // to create example data before db is set up
@@ -28,7 +28,7 @@ echo buildHead("Topics",$headContent);
 ?>
 <body>
 <?php
-include "templates/header.php";
+include "helpers/header.php";
 ?>
 
 <h2 class="first">Topics in Example Forum</h2>
@@ -48,12 +48,12 @@ foreach($topics as $topic)
 ?>
 </div>
 
-<?php include "templates/footer.php"; ?>
+<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>	

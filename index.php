@@ -1,13 +1,13 @@
 <?php
 include "helpers/auth.php";
-include "templates/head.php";
+include "helpers/head.php";
 include "helpers/embededLogin.php";
 ?>
 
 <?php echo buildHead("Home"); ?>
 <body>
 
-<?php include "templates/header.php"; ?>
+<?php include "helpers/header.php"; ?>
 <div class="feed">
 	<div id="homework" >
 		<h3>Homework</h3>
@@ -62,12 +62,12 @@ include "helpers/embededLogin.php";
 
 
 
-	<?php include "templates/footer.php"; ?>
+	<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>

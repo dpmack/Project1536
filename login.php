@@ -1,6 +1,6 @@
 <?php
 include 'helpers/auth.php';
-include "templates/head.php";
+include "helpers/head.php";
 include "helpers/embededLogin.php";
 
 $headContent = "";
@@ -23,7 +23,7 @@ if ($GLOBALS['loggedIn'])
 echo buildHead("Login",$headContent);
 ?>
 <body>
-<?php include "templates/header.php"; ?>
+<?php include "helpers/header.php"; ?>
 
 <?php
 if ($GLOBALS['loggedIn'])
@@ -69,12 +69,12 @@ else
 	}
 </script>
 
-<?php include "templates/footer.php"; ?>
+<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>

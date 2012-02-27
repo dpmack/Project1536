@@ -1,6 +1,6 @@
 <?php
 include 'helpers/auth.php';
-include "templates/head.php";
+include "helpers/head.php";
 include "helpers/embededLogin.php";
 
 $posts = array();
@@ -53,7 +53,7 @@ echo buildHead("View Topic",$headContent);
 ?>
 <body>
 <?php
-include "templates/header.php";
+include "helpers/header.php";
 ?>
 
 <h2 class="first">Viewing Topic - <?php echo $posts[0]["title"]; ?></h2>
@@ -76,12 +76,12 @@ foreach($posts as $post)
 ?>
 </div>
 
-<?php include "templates/footer.php"; ?>
+<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>	

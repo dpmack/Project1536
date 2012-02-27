@@ -1,6 +1,6 @@
 <?php
 include 'helpers/auth.php';
-include "templates/head.php";
+include "helpers/head.php";
 include "helpers/embededLogin.php";
 ?>
 
@@ -10,17 +10,17 @@ echo buildHead("Registration",$headContent);
 ?>
 <body>
 <?php
-include "templates/header.php";
+include "helpers/header.php";
 
 if ($GLOBALS['loggedIn'])
 {	
 	echo "You are already registered";
 	
-	include "templates/footer.php";
+	include "helpers/footer.php";
 	
 	if ($GLOBALS['sql_debug'] != 0)
 	{
-		include "templates/sqlDebug.php";
+		include "helpers/sqlDebug.php";
 	}
 	die();
 }
@@ -67,12 +67,12 @@ if ($GLOBALS['loggedIn'])
 	</div>
 </form>
 
-<?php include "templates/footer.php"; ?>
+<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>	
