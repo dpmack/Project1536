@@ -13,6 +13,7 @@ function buildHead($title, $content="")
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/color.css" />
 		<link rel="stylesheet" type="text/css" href="css/font.css" />
+		<script type="text/javascript" src="script/jquery.js"></script>
 		' . $content . '
 </head>';
 }
