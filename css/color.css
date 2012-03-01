@@ -1,80 +1,84 @@
 body
 {
+	background-color: #505050;
+}
+
+#header, #footer
+{
+	color: white;
+}
+
+#header ul li a
+{
+	background-color: #2D2D2D;
+}
+
+#header ul li a:hover
+{
+	background-color: #0975DB;
+}
+
+
+#header h1 a
+{
+	background-color: #0655A5;
+	color: white;
+}
+
+#header h1 a:hover
+{
+	background-color: #0975DB;
+	color: white;
+}
+
+#header > .wrapper > .wrapper,
+#footer > .wrapper > .wrapper
+{
+	background-color: #393939;
+}
+
+#breadcrumbs
+{
+	color: white;
+	background-color: #0E0E0E;
+}
+
+#breadcrumbs a:hover
+{
+	/*color: #0975DB;*/
+	text-decoration: underline;
+	
+}
+
+#content .section > ul > li {border-color: #999999;}
+
+
+#footer h2
+{
+	color: #929292;
+}
+
+#content
+{
 	background-color: #929292;
 }
 
-#wrapper_inner 
-{ 
+#content > .wrapper > .wrapper
+{
 	border-color: #898989;
 	background-color: white;
 }
 
-#footer h3 
-{	
-	border-color: #898989;
-}
-
-#header
-{
-	color: white;
-}
-
-#news > li, #homework, #recentPosts
-{
-	border-color: #898989;
-}
-
-#wrapper_final_header
-{
-	background-color: #393939;
-	border-color: #464646;
-}
-
-#wrapper_outer_nav
-{
-	background-color: #0E0E0E;
-}
-
-#navmain
-{
-	border-color: #0E0E0E;
-}
-
-
-#logo 
-{
-	background-color: #0655A5;
-}
-
-#wrapper_nav 
-{
-	background-color: black;
-}
-
-#wrapper_header 
-{
-	background-color:#505050
-}
-
-.feed a 
-{
-	color:#4487DB;
-}
-
-.feed h3 
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6
 {
 	color: #5A5955;
 }
 
-#navmain 
-{
-	background-color: #0E0E0E;
-	color: white;
-}
-
-#navmain a:hover 
-{
-	background-color:#898989;
-}
-
+/* only for home page below ? */
+#content a {color: #0655A5}
+#content a:hover {color: #0975DB}
 

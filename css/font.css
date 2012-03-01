@@ -1,19 +1,29 @@
+body
+{
+	font-family: sans-serif;
+}
+
 h1 {font-size:2em}
-h2 {font-size:1.75em}
-h3 {font-size:1.5em}
+h2 {font-size:1.5em}
+h3 {font-size:1.25em}
 
-#feeds h3 {
-	font-family:ariel;
+h1, h2, h3, h4, h5, h6 {
+	font-family:serif, ariel;
 }
 
-a {
-	text-decoration: none;
+#footer .section > ul > li > a:hover
+{
+	text-decoration: underline;
 }
 
-a:hover {font-weight: bold;}
 
-/* disabled for now - david
-#login > form {font-size:.7em;} 
-#login p {font-size:.7em; font-style:italic;}
-#login p a:hover {font-weight:normal;text-decoration:underline;}*/
-#navmain > ul {font-size:.7em;}
+/*
+#content a:hover,
+#footer a:hover
+{
+	text-decoration: underline;
+}
+
+#content a[name]:hover  {text-decoration: none;}
+*/
+
