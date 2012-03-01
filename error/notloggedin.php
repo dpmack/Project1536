@@ -1,26 +1,26 @@
 <?php
-require_once 'helpers/auth.php';
-require_once "templates/head.php";
-require_once "helpers/embededLogin.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/auth.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/head.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/embededLogin.php";
 ?>
 
 <?php
-header('Location: login.php?referer=' . $_SERVER["REQUEST_URI"]);
+header('Location: /login.php?referer=' . $_SERVER["REQUEST_URI"]);
 
-$headContent = "<meta http-equiv='Refresh' content='0; URL=login.php?referer=" . $_SERVER["REQUEST_URI"] . "'>";
+$headContent = "<meta http-equiv='Refresh' content='0; URL=/login.php?referer=" . $_SERVER["REQUEST_URI"] . "'>";
 echo buildHead("Not logged In", $headContent);
 ?>
 <body>
-<?php include "templates/header.php"; ?>
+<?php include "helpers/header.php"; ?>
 
-You must be logged in to view this page. Please visit the <a href="login.php">login page.</a>
+You must be logged in to view this page. Please visit the <a href="/login.php">login page.</a>
 
-<?php include "templates/footer.php"; ?>
+<?php include "helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include "templates/sqlDebug.php";
+	include "helpers/sqlDebug.php";
 }
 ?>
 </body>
