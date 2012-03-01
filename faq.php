@@ -5,8 +5,7 @@ include "helpers/embededLogin.php";
 ?>
 
 <?php 
-// $headContent = "<link rel='stylesheet' type='text/css' href='css/faq.css' />";
-echo buildHead("FAQ", $headContent);
+echo buildHead("FAQ", "");
 ?>
 <body>
 

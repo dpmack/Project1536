@@ -3,7 +3,7 @@ include 'helpers/auth.php';
 include "helpers/head.php";
 include "helpers/embededLogin.php";
 
-$headContent = "";
+$headContent = "<link rel='stylesheet' type='text/css' href='/css/login.css' />";
 	
 if (isset($_GET["referer"]))
 {
@@ -36,20 +36,30 @@ if ($GLOBALS['loggedIn'])
 else
 {
 	?>
-	<div id="login">
+	<div class="section">
+		<h2>Log In</h2>
 		<form id="loginInPage" method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-			Username:<br />
-			<input name="username" type="text" /><br />
-			Password:<br />
-			<input id="passwordInPage" name="password" type="password" /><br />
-			<input type="hidden" id="hiddenPasswordInPage" />
-			<input type="submit" onclick="btnSubmitClick()" value="Login" />
 			
-			<p>
-				<a href="/register.php">Register</a> / 
-				<a href="/forgotpassword.php">Forgot Password</a>
-			</p>
+			
+			<fieldset>
+				<legend><!-- something semantic should go here? then hide with css? --jake --></legend>
+			
+				<label for="username">Username</label>
+				<input name="username" type="text" />
+			
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" />
+			</fieldset>
+			
+				<input type="submit" onclick="btnSubmitClick()" value="Login" />
+			
+			<input type="hidden" id="hiddenPassword" />
+			
 		</form>
+		<p>
+			<a href="/register.php">Register</a> / 
+			<a href="/forgotpassword.php">Forgot Password</a>
+		</p>
 	</div>
 <?php
 }
@@ -60,8 +70,8 @@ else
 <script type="text/javascript">
 	function btnSubmitClickInPage()
 	{
-		var txtPassword = document.getElementById("passwordInPage");
-		var hdnPassword = document.getElementById("hiddenPasswordInPage");
+		var txtPassword = document.getElementById("password");
+		var hdnPassword = document.getElementById("hiddenPassword");
 		
 		hdnPassword.value = Sha1.hash(txtPassword.value);
 		hdnPassword.setAttribute("name","hPassword");
