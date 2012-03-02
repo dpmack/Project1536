@@ -1,0 +1,5 @@
+form fieldset {width: 100%;border: 0;padding:.5em 0;}
+form fieldset * {float: left;}
+form {width: 100%;}
+label {clear: left;min-width: 6em;}
+
