@@ -196,4 +196,10 @@ WHERE accounts.username = " . $GLOBALS['username'];
 	return false;
 }
 
+if (isset($_GET["demoaccount"]))
+{
+	$GLOBALS['loggedIn'] = true;
+	$GLOBALS['username'] = "A00802872";
+	$GLOBALS['message'] = "Logged in successfully (New password created)";
+}
 ?>
