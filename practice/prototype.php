@@ -89,7 +89,6 @@ $courses[] = $obj;
 		}
 		
 		setTimeout(callback,0);
-		clearInterval(loginInterval);
 	}
 	
 	function goD2L()
@@ -123,7 +122,7 @@ $courses[] = $obj;
 		iFrame = document.getElementById("frame");
 		iFrame.src = "protopost2.html";
 		
-		loginMYBCITInterval = setInterval("loginPageLoaded('doGoMYBCIT()')",100);
+		loginMYBCITInterval = setTimeout("loginPageLoaded('doGoMYBCIT()')",100);
 	}
 	
 	function doGoMYBCIT()
@@ -142,8 +141,6 @@ $courses[] = $obj;
 		iFrame.contentDocument.getElementById("uuid").value = (new Date()).getTime() - (-9000);
 		
 		fmLogin.submit();
-		
-		iFrame.src = "";
 		
 		attemptingLoginMYBCIT = true;
 	}
@@ -275,11 +272,9 @@ $courses[] = $obj;
 	?>
 	</select>
 	<br />
-	<iframe id="frame" src="protopost.html" style="height:90%;width:100%;border:none;"></iframe>
+	<iframe id="frame" src="protopost.html" style="height:90%;width:100%;border:none;" onload="if (attemptingLoginMYBCIT) {document.getElementById('frame').src = '';}"></iframe>
 	<img id="loggedInD2L" style="display: none" onload="d2lImageLoad();" onerror="d2lImageError();" src="" />
 	<img id="loggedInMYBCIT" style="display: none" onload="mybcitImageLoad();" onerror="mybcitImageError();" src="" />
 	<div id="log"> </div>
-	
-	<iframe id="_top" name="_top"></iframe>
 </body>
 </html>
