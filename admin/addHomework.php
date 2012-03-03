@@ -20,25 +20,27 @@ echo buildHead("Page name here",$headContent);
 <?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/header.php"; ?>
 
 <form action="addHomework.php" method="post">
-	<p>
-		<label for="dept">Department</label>
-		<select name="dept">
-			<option>--Select--</option>
-			<option>COMP</option>
-			<option>COMM</option>
-		<select>
-		
-		<label for="course">Course</label>
-		<select name="course">
-			<option>--Select--</option>
-			<option>1510</option>
-			<option>1538</option>
-			<option>1113</option>
-			<option>1116</option>
-		</select>
-		
-		<label for="homeworkTitle">Homework Title</label>
-		<input type="text" name="homeworkTitle" />
+	<p>	
+		<div id="contents">
+			<label for="dept" id="labelDepartment">Department</label>
+			<select name="dept" id="deptId">
+				<option>--Select--</option>
+				<option>COMP</option>
+				<option>COMM</option>
+			</select>
+			
+			<label for="course" id="labelCourse">Course</label>
+			<select name="course" id="courseId">
+				<option>--Select--</option>
+				<option>1510</option>
+				<option>1538</option>
+				<option>1113</option>
+				<option>1116</option>
+			</select>
+			
+			<label for="homeworkTitle" id="labelHomework">Homework Title</label>
+			<input type="text" name="homeworkTitle" id="homeworkId"/>
+		</div>
 	</p>
 	
 	<p>

@@ -1,0 +1,30 @@
+
+#labelDepartment {
+	position: relative;
+	top: -1.5em;
+}
+#deptId {
+	position: relative;
+	left: -5.2em;
+	margin-top: 1.5em;
+}
+#labelCourse{
+	position: relative;
+	top: -1.5em;
+	left: -5em;
+}
+#courseId{
+	position: relative;
+	left: -8.4em;
+	margin-top:1.5em;
+}
+#labelHomework{
+	position: relative;
+	top: -1.5em;
+	left:-8em;
+}
+#homeworkId{
+	position: relative;
+	left: -14.7em;
+	margin-top:1.5em;
+}

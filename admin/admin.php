@@ -127,6 +127,73 @@ echo buildHead("Admin",$headContent);
 	</form>
 </div>
 
+<div>
+	<form action="admin.php" method="post">
+		<p>
+			Sets
+		</p>
+		
+		<p>
+			<select name="sets" id="setsChange" onchange="setsChange()">
+				<option>--New--</option>
+				<?php
+					foreach ($sets as $set)
+					{
+						echo "<option value='" . $set['deptID'] . "'>" . $set["name"] . "</option>\n";
+					}
+				?>
+			</select>
+		</p>
+		
+		<p>
+			Set Info
+		</p>
+		
+		<p>
+			Set Name: <input type="text" name="deptName" id="deptName" />
+		</p>
+			
+		<p>
+			<strong>Course</strong>
+			<table>
+				<tr>
+					<th>Name</th>
+				</tr>
+				<tr>
+					<td>COMP 1510</td>
+					<td><button type="button">Remove</button></td>
+				</tr>
+				<tr>
+					<td>COMP 1536</td>
+					<td><button type="button">Remove</button></td>
+				</tr>
+				<tr>
+					<td>
+						<select name="dept" id="dept" onchange="deptSelect()">
+							<option>--Select--</option>
+							<?php
+								foreach ($depts as $dept)
+								{
+									echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
+								}
+							?>
+						</select>
+						
+						<select name="course" id="course" onchange="courseSelect()">
+							<option>--New--</option>
+						</select>
+					</td>
+					<td><button type="button">Add</button></td>
+				</tr>
+			</table>
+		</p>
+		
+		<p>
+			<input type="submit" name="which" value="Save Set" />
+		</p>
+	</form>
+</div>
+
 <?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/footer.php"; ?>
 
 <?php

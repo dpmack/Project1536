@@ -10,25 +10,26 @@ echo buildHead("Sitemap",$headContent);
 ?>
 <body>
 <?php include "helpers/header.php"; ?>
-
-<b>Non logged In content</b>
-
-<a href="index.php">Homepage</a>
-<a href="login.php">Login Page</a>
-<a href="faq.php">FAQ</a>
-<a href="forums.php">Forums</a>
-<a href="topics.php">Topics</a>
-<a href="viewtopic.php">View Topic</a>
-
-<b>Logged In content</b>
-
-<a href="landing.php">Temporary Landing page</a>
-<a href="homework.php">Homework</a>
-<a href="schedule.php">Schedule</a>
-
-<b>Logged In super user content (Note these are only displayed for marker convenace)</b>
-
-<a href=""></a>
+<p>
+	<b>Non logged In content</b>
+</p>
+<a href="index.php">Homepage</a><br />
+<a href="login.php">Login Page</a><br />
+<a href="faq.php">FAQ</a><br />
+<a href="forums.php">Forums</a><br />
+<a href="topics.php">Topics</a><br />
+<a href="viewtopic.php">View Topic</a><br />
+<p>
+	<b>Logged In content</b>
+</p>
+<a href="landing.php">Temporary Landing page</a><br />
+<a href="homework.php">Homework</a><br />
+<a href="schedule.php">Schedule</a><br />
+<p>
+	<b>Logged In super user content (Note these are only displayed for marker convenace)</b>
+</p>
+<a href="admin/admin.php">General Admin</a><br />
+<a href="admin/addHomework.php">Add Homework</a><br />
 
 <?php include "helpers/footer.php"; ?>
 
