@@ -73,7 +73,8 @@ body
 #content h3,
 #content h4,
 #content h5,
-#content h6
+#content h6,
+legend
 {
 	color: #5A5955;
 }
@@ -81,4 +82,7 @@ body
 /* only for home page below ? */
 #content a {color: #0655A5}
 #content a:hover {color: #0975DB}
+
+/* for jquery validation errors */
+.error {color: red;}
 

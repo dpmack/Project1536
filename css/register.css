@@ -1,3 +1,4 @@
+/*
 legend
 {
 	font-size:2em;
@@ -21,11 +22,31 @@ fieldset
 	margin-top:.5em;
 	background-color:red;
 }
+*/
 
-#terms
+#terms p
 {
 	overflow:auto;
 	height: 75px;
 	padding: 10px;
 	border: 1px solid;
+	clear:left;
 }
+
+fieldset {border: 0;margin: 1.5em 0;float:left;clear:both;}
+/* fieldset legend {display: none;} /* hide semantics */
+legend {margin-bottom: 1em;}
+fieldset > * {float: left}
+fieldset label {clear:left;min-width: 6em;line-height:1.5em;}
+fieldset p {clear: left;font-size:.75em;}
+label:after {content:":"}
+
+label.error {float:left;width:100%;text-align:right;margin-bottom:1em;font-size:.75em;}
+
+#terms label:after, label.error:after {content:""}
+
+/*#terms label.error{text-align:left;}*/
+#terms label, #terms input {float:right;}
+#terms label {min-width:0;margin-left:.5em;}
+#terms legend {display: block;}
+form {margin-bottom: 2em;float:left;}
