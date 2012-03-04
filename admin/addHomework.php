@@ -13,8 +13,9 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 <?php
 $headContent = "<script type='text/javascript' src='../script/jquery.ui.datepicker.js'></script>
 <script type='text/javascript' src='../script/jquery.ui.core.js'></script>
-<link rel='stylesheet' type='text/css' href='../css/datepicker.css' />"; //if needing to add extra css files
-echo buildHead("Page name here",$headContent);
+<link rel='stylesheet' type='text/css' href='../css/datepicker.css' />
+<link rel='stylesheet' type='text/css' href='../css/admin.css'/>"; //if needing to add extra css files
+echo buildHead("Add Homework",$headContent);
 ?>
 <body>
 <?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/header.php"; ?>
