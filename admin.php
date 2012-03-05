@@ -1,13 +1,36 @@
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/helpers/auth.php";
-include $_SERVER["DOCUMENT_ROOT"] . "/helpers/head.php";
-include $_SERVER["DOCUMENT_ROOT"] . "/helpers/embededLogin.php";
+include "./helpers/auth.php";
+include "./helpers/head.php";
+include "./helpers/embededLogin.php";
 
 if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 {
-	include $_SERVER["DOCUMENT_ROOT"] . "/error/notloggedin.php";
+	include "./error/notloggedin.php";
 	die();
 }
+
+
+$depts = array();
+$depts[0] = array();
+$depts[0]["deptID"] = 0;
+$depts[0]["name"] = "COMP";
+
+$depts[1] = array();
+$depts[1]["deptID"] = 1;
+$depts[1]["name"] = "COMM";
+
+$sets = array();
+$sets[0] = array();
+$sets[0]["setID"] = 0;
+$sets[0]["name"] = "1A";
+
+$sets[1] = array();
+$sets[1]["setID"] = 1;
+$sets[1]["name"] = "1B";
+
+$sets[2] = array();
+$sets[2]["setID"] = 2;
+$sets[2]["name"] = "1C";
 ?>
 
 <?php
@@ -15,10 +38,10 @@ $headContent = ""; //if needing to add extra css files
 echo buildHead("Admin",$headContent);
 ?>
 <body>
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/header.php"; ?>
+<?php include "./helpers/header.php"; ?>
 
 <div>
-	<form action="admin.php" method="post">
+	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
 		<p>
 			Department
 		</p>
@@ -44,13 +67,13 @@ echo buildHead("Admin",$headContent);
 </div>
 
 <div>
-	<form action="admin.php" method="post">
+	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
 		<p>
 			Courses
 		</p>
 		
 		<p>
-			<select name="dept" id="dept" onchange="deptSelect()">
+			<select name="dept" id="deptCourses" onchange="deptSelect()">
 				<option>--Select--</option>
 				<?php
 					foreach ($depts as $dept)
@@ -87,7 +110,7 @@ echo buildHead("Admin",$headContent);
 		
 		<p>
 			Description:
-			<textarea name="description"></textarea>
+			<textarea name="description" rows="5" cols="50"></textarea>
 		</p>
 		
 		<p>
@@ -128,7 +151,7 @@ echo buildHead("Admin",$headContent);
 </div>
 
 <div>
-	<form action="admin.php" method="post">
+	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
 		<p>
 			Sets
 		</p>
@@ -139,7 +162,7 @@ echo buildHead("Admin",$headContent);
 				<?php
 					foreach ($sets as $set)
 					{
-						echo "<option value='" . $set['deptID'] . "'>" . $set["name"] . "</option>\n";
+						echo "<option value='" . $set['setID'] . "'>" . $set["name"] . "</option>\n";
 					}
 				?>
 			</select>
@@ -150,10 +173,10 @@ echo buildHead("Admin",$headContent);
 		</p>
 		
 		<p>
-			Set Name: <input type="text" name="deptName" id="deptName" />
+			Set Name: <input type="text" name="setName" id="setName" />
 		</p>
 			
-		<p>
+		
 			<strong>Course</strong>
 			<table>
 				<tr>
@@ -179,14 +202,14 @@ echo buildHead("Admin",$headContent);
 							?>
 						</select>
 						
-						<select name="course" id="course" onchange="courseSelect()">
+						<select name="course" id="courseAdd" onchange="courseSelect()">
 							<option>--New--</option>
 						</select>
 					</td>
 					<td><button type="button">Add</button></td>
 				</tr>
 			</table>
-		</p>
+		
 		
 		<p>
 			<input type="submit" name="which" value="Save Set" />
@@ -194,12 +217,12 @@ echo buildHead("Admin",$headContent);
 	</form>
 </div>
 
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/footer.php"; ?>
+<?php include "./helpers/footer.php"; ?>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)
 {
-	include $_SERVER["DOCUMENT_ROOT"] . "/helpers/sqlDebug.php";
+	include "./helpers/sqlDebug.php";
 }
 ?>
 </body>
