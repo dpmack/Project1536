@@ -1,7 +1,7 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/auth.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/head.php";
-require_once $_SERVER["DOCUMENT_ROOT"] . "/helpers/embededLogin.php";
+require_once "./helpers/auth.php";
+require_once "./helpers/head.php";
+require_once "./helpers/embededLogin.php";
 ?>
 
 <?php
