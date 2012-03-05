@@ -20,7 +20,7 @@ echo buildHead("Add Homework",$headContent);
 <body>
 <?php include $_SERVER["DOCUMENT_ROOT"] . "/helpers/header.php"; ?>
 
-<form action="addHomework.php" method="post">
+<form action="http://webdevfoundations.net/scripts/formdemo.asp" id="addHomework" method="post">
 	<p>	
 		<div id="contents">
 			<label for="dept" id="labelDepartment">Department</label>
