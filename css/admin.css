@@ -3,7 +3,7 @@
 	position: relative;
 	top: -1.5em;
 }
-#deptId {
+#dept {
 	position: relative;
 	left: -5.2em;
 	margin-top: 1.5em;
@@ -13,7 +13,7 @@
 	top: -1.5em;
 	left: -5em;
 }
-#courseId{
+#course{
 	position: relative;
 	left: -8.4em;
 	margin-top:1.5em;
@@ -23,7 +23,7 @@
 	top: -1.5em;
 	left:-8em;
 }
-#homeworkId{
+#homeworkTitle{
 	position: relative;
 	left: -14.7em;
 	margin-top:1.5em;

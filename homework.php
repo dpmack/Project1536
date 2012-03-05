@@ -32,7 +32,7 @@ while($row = mysql_fetch_assoc($result))
 ?>
 
 <?php
-$headContent = '<link rel="stylesheet" type="text/css" href="css/homework.css" />';
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/homework.css" />';
 echo buildHead("Homework Checklist",$headContent);
 ?>
 <body>
@@ -40,7 +40,7 @@ echo buildHead("Homework Checklist",$headContent);
 include "helpers/header.php";
 ?>
 
-<h2 class="first">Homework checklist</h1>
+<h2 class="first">Homework checklist</h2>
 
 <?php
 foreach($homework as $piece)
@@ -58,7 +58,7 @@ foreach($homework as $piece)
 	{
 		echo " checked='checked'";
 	}
-	echo ">";
+	echo " />";
 	echo "<span class='courseName'>" . $piece["courseName"] . " - </span>";
 	echo "<span class='assignment'>" . $piece["assignment"] . "</span><br />";
 	echo "<span class='dueDate'>" . date('Y-m-d', $piece["dueDate"]) . "</span>";
@@ -82,7 +82,7 @@ foreach($homework as $piece)
 			homeworkDiv.style.textDecoration = "line-through";
 			homeworkStatus = "done";
 		}
-		ajaxHomework.open("GET", "updatehomework.php?homeworkID=" + i + "&homeworkStatus=" + homeworkStatus);
+		ajaxHomework.open("GET", "updatehomework.php?homeworkID=" + i + "&amp;homeworkStatus=" + homeworkStatus);
 		ajaxHomework.send();
 	}
 </script>

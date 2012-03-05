@@ -5,9 +5,9 @@ include "helpers/embededLogin.php";
 ?>
 
 <?php
-$headContent = '<link rel="stylesheet" type="text/css" href="css/register.css" />'
-	. '<script type="text/javascript" src="/script/jquery.validate.js"></script>'
-	. '<script type="text/javascript" src="/script/register.js"></script>';
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/register.css" />
+<script type="text/javascript" src="/script/jquery.validate.js"></script>
+<script type="text/javascript" src="/script/register.js"></script>';
 	
 echo buildHead("Registration",$headContent);
 ?>
@@ -61,7 +61,7 @@ if ($GLOBALS['loggedIn'])
 		</fieldset>
 		
 		<fieldset id="terms">
-			<legend><h3>Terms of Service</h3></legend>
+			<legend>Terms of Service</legend>
 			<p>
 			You must read and agree with our terms of service to use this site.
 			CSThub is not liable for any damages of leaked password or lost data (including, but not limited to homework, eaten by your dog.)

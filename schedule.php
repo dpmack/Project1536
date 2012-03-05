@@ -11,7 +11,7 @@ if (!$GLOBALS["loggedIn"])
 ?>
 
 <?php
-$headContent = '<link rel="stylesheet" type="text/css" href="css/schedule.css" />';
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/schedule.css" />';
 echo buildHead("Schedule",$headContent);
 ?>
 <body>
@@ -21,10 +21,10 @@ include "helpers/header.php";
 ?>
 
 <div id="body">
-	<form id="scheduleForm">
+	<form id="scheduleForm" action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
 	
 		<select id="year">
-			<option selected value="default">Select Year </option>
+			<option>Select Year </option>
 			<option value="Year1">Year 1</option>
 			<option value="Year2">Year 2</option>
 			<option value="Year3">Year 3</option>
@@ -32,13 +32,13 @@ include "helpers/header.php";
 		</select> 
 		
 		<select id="term">
-			<option selected value="default">Select Term </option>
+			<option>Select Term </option>
 			<option value="Year1">Term 1</option>
 			<option value="Year2">Term 2</option>
 		</select> 
 
 		<select id="Set">
-			<option selected value="default">Select Set </option>
+			<option>Select Set </option>
 			<option value="Year1">Set A</option>
 			<option value="Year2">Set B</option>
 			<option value="Year1">Set C</option>
