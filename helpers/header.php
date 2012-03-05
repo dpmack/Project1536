@@ -13,7 +13,7 @@
 	<ul id="navigation">
 		<li><a href="/index.php">Home</a></li>
 		<li><a href="/forums.php">Forums</a></li>
-		<li><a href="/faq.php">Help</a></li>
+		<li><a href="/help.php">Help</a></li>
 		<li><a href="/homework.php">Homework</a></li>
 		<li><a href="/schedule.php">Schedule</a></li>
 	</ul>

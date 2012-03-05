@@ -5,7 +5,7 @@ include "helpers/embededLogin.php";
 ?>
 
 <?php 
-echo buildHead("FAQ", "");
+echo buildHead("Help", "");
 ?>
 <body>
 
@@ -14,7 +14,7 @@ echo buildHead("FAQ", "");
 <div class="groupableSections">
 	<div class="section">
 		<a id="topPage"></a>
-		<h2>FAQs</h2>
+		<h2>FAQ</h2>
 		<ul id="faqTOC">
 			<li><a href="#howTo" onclick="showHowToVid()">How does this site work?</a></li>
 			<li><a href="#registeredAlready">What if my student ID is already registered?</a></li>
@@ -25,7 +25,8 @@ echo buildHead("FAQ", "");
 </div>
 
 
-<div class=""> <!-- some class name might make semantic sense here, e.x. ungroupableSections -- jake -->
+<div>
+<!-- some class name might make semantic sense here, e.x. ungroupableSections - jake -->
 	<div class="section">
 		<h2><a id="howTo" class="faqHeading">How does this Site work?</a></h2>
 
@@ -35,7 +36,6 @@ echo buildHead("FAQ", "");
 		<p>For example: Benjamin Yu (COMP 1536) favors the use of D2L. Under the class section of our site, you'll be able to see exactly where to go for each professor.</p>
 
 		<p>Try this now. </p>
-		<p>
 			<span id="howToVidHid" style="border:1px solid; padding: 5px;">
 			<span onclick="showHowToVid()">Show video</span>
 			</span>
@@ -46,7 +46,6 @@ echo buildHead("FAQ", "");
 				<iframe width="560" height="315" src="http://www.youtube.com/embed/Hx2jt0IyFxY" 
 				frameborder="0"></iframe>
 			</div>
-		</p>
 		
 		<p><a href="#topPage">Top</a></p>
 	</div>
