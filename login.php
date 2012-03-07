@@ -65,10 +65,10 @@ else
 }
 ?>
 
-<script type="text/javascript" src="script/md5.js"></script>
+<script type="text/javascript" src="script/sha1.js"></script>
 
 <script type="text/javascript">
-	function btnSubmitClickInPage()
+	function btnSubmitClick()
 	{
 		var txtPassword = document.getElementById("password");
 		var hdnPassword = document.getElementById("hiddenPassword");

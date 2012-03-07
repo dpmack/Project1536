@@ -36,9 +36,6 @@ function browserSig()
 {
 	$data = $_SERVER['HTTP_HOST'];
 	$data .= $_SERVER['HTTP_USER_AGENT'];
-	$data .= $_SERVER['HTTP_ACCEPT'];
-	$data .= $_SERVER['HTTP_ACCEPT_ENCODING'];
-	$data .= $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 	return sha1($data);
 }
 
@@ -152,18 +149,20 @@ WHERE tickets.ticket = '" . $oldTicket . "'";
 	{
 		if ($result['clientHash'] != browserSig())
 		{
-			sql_error("Ticket matched by Sig didn't", "AccountID: " . $result['accountID'] .
+			sql_error("Ticket matched but Sig didn't", "AccountID: " . $result['accountID'] .
 			" IP: " . $_SERVER['REMOTE_ADDR'] . " Referer: " . $_SERVER['HTTP_REFERER'] . 
 			" User Agent: " . $_SERVER["HTTP_USER_AGENT"] . " Ticket: " . $oldTicket . " Sig: " . browserSig());
 			
 			logout();
 			//Delete all tickets for that account
+			$GLOBALS['message'] = "Logged out cause client hash does not match";
 		}
 		else
 		{
 			newTicket($result["accountID"], $result['password']);
 			$GLOBALS['loggedIn'] = true;
 			$GLOBALS['username'] = $result['username'];
+			$GLOBALS['message'] = "Ticket matches, logged in is ok";
 		}
 	}
 	else
