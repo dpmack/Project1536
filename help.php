@@ -5,7 +5,8 @@ include "helpers/embededLogin.php";
 ?>
 
 <?php 
-echo buildHead("Help", "");
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/faq.css" />';
+echo buildHead("Help", $headContent);
 ?>
 <body>
 
@@ -35,17 +36,15 @@ echo buildHead("Help", "");
 		<p>Run by CST students, for CST students, here you will find guides to each professor's used methods for transfering information.</p>
 		<p>For example: Benjamin Yu (COMP 1536) favors the use of D2L. Under the class section of our site, you'll be able to see exactly where to go for each professor.</p>
 
-		<p>Try this now. </p>
-			<span id="howToVidHid" style="border:1px solid; padding: 5px;">
-			<span onclick="showHowToVid()">Show video</span>
-			</span>
-	
-			<br />
+		<p id="tryThis">Try this now. </p>
+		<p id="howToVidHid">
+			<button onclick="showHowToVid()">Show video</button>
+ 		</p>
 
-			<div id="howToVid" style="display:none">
-				<iframe width="560" height="315" src="http://www.youtube.com/embed/Hx2jt0IyFxY" 
-				frameborder="0"></iframe>
-			</div>
+		<div id="howToVid" style="display:none">
+			<iframe width="560" height="315" src="http://www.youtube.com/embed/Hx2jt0IyFxY" 
+			frameborder="0"></iframe>
+		</div>
 		
 		<p><a href="#topPage">Top</a></p>
 	</div>
@@ -77,7 +76,7 @@ echo buildHead("Help", "");
 	function showHowToVid()
 	{
 		document.getElementById("howToVid").style.display="";
-		document.getElementById("howToVid").scrollIntoView(true);
+		document.getElementById("tryThis").scrollIntoView(true);
 		document.getElementById("howToVidHid").style.display="none";	
 	}
 </script>

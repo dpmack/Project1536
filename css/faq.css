@@ -1,76 +1,10 @@
-#wrapper_outer a
-{
-	font-family: Arial;
-	text-decoration: none;
-}
-
-#wrapper_outer a:link, #wrapper_outer a:visited
-{
-	color: #0000CC;
-}
-
-#wrapper_outer a.purple:visited
-{
-	color: purple;
-}
-
-.faqHeading
-{
-	font-size: 2em;
-	font-weight: bold;
-}
-
-#linkbar  a
-{
-	padding: 5px;
-	color: #FFFFFF;
-}
-
-#wrapper_outer p
-{
-	margin: 5px;
-	padding: 5px;
-}
-
-ul
-{
-	margin: 0;
-}
-
-/*li
-{
-	display: inline;
-	list-style: none;
-	padding: 2px;
-	font-weight: bold;
-	font-size: 1.1em;
-}*/
-
-#centerThis
-{
-	margin: 0 auto;
-}
-
-#faqTitle
-{
-	padding:0;
-	margin:0;
-	border:0;
-	font-size: 1.5em;
-}
-
-#faqTOC
-{
-	padding-bottom: 10px;
-}
-
 #howToVidHid
 {
-	cursor: pointer;
+	margin-top: 1em;
+	margin-bottom: 2em;
 }
 
-#howToVidHid > span
+#howToVidHid > button
 {
-	color: blue;
-	font-weight: bold;
+	padding: 0.5em;
 }
