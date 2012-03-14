@@ -71,11 +71,20 @@ if ($GLOBALS['loggedIn'])
 			<label for="agree">I agree with these terms.</label><input id="agree" type="checkbox" title="You must agree to our terms." name="agree" value="terms" />
 		</fieldset>
 	
+<<<<<<< HEAD
 		<fieldset>
 			<input type="submit" id="submit" value="Join!" />
 		</fieldset>
 	</form>
 </div><!-- section -->
+=======
+	<input id="agree" type="checkbox" name="terms" value="terms" /> I Agree  <!-- has to be checked -->
+
+	<div id="accept">
+	<input type="submit" id="submit" value="Sign up" />
+	</div>
+</form>
+>>>>>>> Added IDs and comments
 
 <?php include "helpers/footer.php"; ?>
 

@@ -45,7 +45,7 @@ else
 				<legend><!-- something semantic should go here? then hide with css? --jake --></legend>
 			
 				<label for="username">Username</label>
-				<input name="username" type="text" />
+				<input name="username" id="username" type="text"/>
 			
 				<label for="password">Password</label>
 				<input id="password" name="password" type="password" />
@@ -76,6 +76,7 @@ else
 		hdnPassword.value = Sha1.hash(txtPassword.value);
 		hdnPassword.setAttribute("name","hPassword");
 		txtPassword.removeAttribute("name");
+	
 	}
 </script>
 
