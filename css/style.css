@@ -61,15 +61,13 @@ body > * > .wrapper > .wrapper
 	margin: 0;
 }
 
-#header h1 a
-{
-	padding-left:2.8em;
-}
 
 #header h1 > a
 {
 	display: block;
 	padding: 1.25em .5em;
+
+	padding-left:2.3em;
 }
 
 #quickLinks
