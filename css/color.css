@@ -21,11 +21,17 @@ body
 
 #header h1 a
 {
-	background-image:url(../images/smCSTHub4.png);
+	background-image:url(../images/csthub5.png);
 	background-color:transparent;
 	background-repeat:no-repeat;
 	background-position:center;
+	padding-left:2.3em;
 	color:transparent;
+	/*
+	background-color:red;
+	background-color: #0655A5;
+	color: white;
+*/
 }
 
 #header h1 a:hover
