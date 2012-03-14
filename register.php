@@ -12,7 +12,7 @@ $firstName = (isset($_POST["firstName"])) ? $_POST["firstName"] : "";
 $lastName = (isset($_POST["lastName"])) ? $_POST["lastName"] : "";
 $studentId = (isset($_POST["studentId"])) ? $_POST["studentId"] : "";
 $email = (isset($_POST["email"])) ? $_POST["email"] : "";
-$confirmEmail = (isset($_POST["emailConfirm"])) ? $_POST["emailConfirm"] : "";
+$emailConfirm = (isset($_POST["emailConfirm"])) ? $_POST["emailConfirm"] : "";
 $terms = (isset($_POST["agree"]) && $_POST["agree"] == "terms");
 
 if (isset($_POST["hPasswordConfirm"]))
@@ -28,15 +28,15 @@ else
 	$passwordConfirm = "";
 }
 
-if (isset($_POST["hPasswordRegister"]))
+if (isset($_POST["hPassword"]))
 {
-	$password = $_POST["hPasswordRegister"];
+	$password = $_POST["hPassword"];
 	$passwordLength = -1;
 }
-else if (isset($_POST["hPasswordRegister"]))
+else if (isset($_POST["password"]))
 {
-	$password = sha1($_POST["hPasswordRegister"]); 
-	$passwordLength = strlen($_POST["passwordConfrim"]);
+	$password = sha1($_POST["password"]); 
+	$passwordLength = strlen($_POST["password"]);
 }
 else
 {
@@ -52,10 +52,7 @@ function isValidEmail($email)
 	return true;//CREATE THIS OR FILL IN
 }
 
-function createUser($studentId, $firstName, $lastName, $email, $password)
-{
-	return -1;
-}
+
 
 function doesStudentIdExist($studentId)
 {
@@ -66,37 +63,38 @@ function sendSignUpEmail($accountId)
 {
 	//FILL
 }
-
-if ($firstName == "" || $lastName == "" || $email == "" || $confirmEmail == "" || $studentId == "" || $password == "" || $passwordCOnfirm == "" || $terms == false)
+// echo "|" . $firstName . "|" . $lastName . "|" . $email . "|" . $emailConfirm . "|" . $studentId . "|" . $password . "|" . $passwordConfirm . "|" . $terms;
+if ($firstName == "" || $lastName == "" || $email == "" || $emailConfirm == "" || $studentId == "" || $password == "" || $passwordConfirm == "" || $terms == false)
 {
-	$validated = false;
+	$validated = false;echo 2;
 }
 else if ($email != $emailConfirm)
 {
-	$validated = false;
+	$validated = false;echo 3;
 }
 else if (!isValidEmail($email))
 {
-	$validated = false;
+	$validated = false;echo 4;
 }
 else if ($password != $passwordConfirm)
 {
-	$validated = false;
+	$validated = false;echo 5;
 }
 else if ($passwordLength < 8 && $passwordLength != -1)
 {
-	$validated = false;
+	$validated = false;echo 6;
 }
 else if (doesStudentIdExist($studentId))
 {
-	$validated = false;
+	$validated = false;echo 7;
 	$studentIdExist = true;
 }
 else
-{	
+{	echo 8;
 	$accountId = createUser($studentId, $firstName, $lastName, $email, $password);
 	sendSignUpEmail($accountId);
 	header("Location: registersuccess.php");
+	echo 9;
 }
 
 ?>
@@ -157,7 +155,7 @@ else
 			<?php 
 			if ($studentIdExist)
 			{
-				?>  Student ID: <?php echo $studentId; ?> already registered. If the ID belongs to you, please see the FAQ page, or contact us. <?php
+				?>  <label for="studentId" class="error">Student ID: <?php echo $studentId; ?> already registered. If the ID belongs to you, please see the FAQ page, or contact us. </label><?php
 			}?>
 		</fieldset>
 	
@@ -165,13 +163,13 @@ else
 			<legend>Email Address</legend>
 			<p>We need an email address to validate your account. We will not share it with others. Other members of CSThub will not see this email address unless you explicitly allow them to.</p>
 			<label for="email" title="Email address">Email</label><input type="text" name="email" id="email" value="<?php echo $email; ?>" />
-			<label for="emailConfirm" title="Confirm email address">Confirm</label><input type="text" name="emailConfirm" id="emailConfirm" value="<?php echo $confirmEmail; ?>" />
+			<label for="emailConfirm" title="Confirm email address">Confirm</label><input type="text" name="emailConfirm" id="emailConfirm" value="<?php echo $emailConfirm; ?>" />
 		</fieldset>
 	
 		<fieldset>
 			<legend>Password</legend>
 			<p>Do <strong>not</strong> use one of your BCIT passwords. Use a password unique to CSThub.</p>
-			<label for="passwordRegister">Password</label><input type="password" name="passwordRegister" id="passwordRegister" />
+			<label for="passwordRegister">Password</label><input type="password" name="password" id="passwordRegister" />
 			<label for="passwordConfirm" title="Confirm password">Confirm</label><input type="password" name="passwordConfirm" id="passwordConfirm" />
 			<input type="hidden" id="hPasswordConfirm" />
 			<input type="hidden" id="hPasswordRegister" />
