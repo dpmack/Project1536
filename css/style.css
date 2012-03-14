@@ -1,4 +1,4 @@
-/*
+﻿/*
 	most lists are for semantics, not for actuall bullet-`oint type lists.
 	no "point" in having them enabled by default
 		- Jake
@@ -59,6 +59,11 @@ body > * > .wrapper > .wrapper
 {
 	float: left;
 	margin: 0;
+}
+
+#header h1 a
+{
+	padding-left:2.8em;
 }
 
 #header h1 > a
