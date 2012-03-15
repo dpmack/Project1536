@@ -48,7 +48,7 @@ function sql_query($query)
 			if ($GLOBALS['sql_debug'] >= 1)
 			{
 				$err .= '<br />Invalid query: <br />' . $error . "\n<br /><br />";
-				$err .= 'Whole query: <br />' . $query;
+				$err .= 'Whole query: <br />' . str_replace("\n","<br />",$query);
 			}
 			die($err);
 		}
