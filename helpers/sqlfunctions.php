@@ -3,6 +3,7 @@
 function createUser($studentId, $firstName, $lastName, $email, $password)
 {
 	$password = generateHash($password);
+	
 	$sql = "INSERT INTO accounts
 (firstName, lastName, username, password, email)
 VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escape_string($lastName) . "\",
@@ -15,33 +16,69 @@ VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escap
 	return $result['accountID'];
 }
 
+function doesStudentIdExist($studentId)
+{
+	$sql = "SELECT 1 FROM accounts WHERE username = \"" . mysql_real_escape_string($studentId) . "\"";
+	return (mysql_num_rows(sql_query($sql)) > 0);
+}
 
+function cleanConfirms()
+{
+	sql_query("DELETE FROM confirmationEmails
+WHERE expire < " . time());
+}
 
+function createNewEmailConfirm($accountID)
+{
+	$MAX_EMAIL_CONFIRM = 60*60*24;
+	
+	cleanConfirms();
 
+	sql_query("DELETE FROM confirmationEmails
+WHERE accountID = " . $accountID);
 
+	do
+	{
+		$hash = sha1(uniqid("",true));
+	}
+	while (mysql_num_rows(sql_query("SELECT 1 FROM confirmationEmails WHERE hash='" . $hash . "'")) > 0);
 
+	$sql = "INSERT INTO confirmationEmails
+(hash, accountID, expire)
+VALUES (\"" . $hash . "\", " . $accountID . ", " . (time() + $MAX_EMAIL_CONFIRM) . ")";
+	sql_query($sql);
+	
+	$sql = "SELECT email FROM accounts
+WHERE accountID=" . $accountID;
+	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
+	
+	return array($result["email"], $hash);
+}
 
+function getAccountForConfirm($hash)
+{
+	cleanConfirms();
+	
+	$sql = "SELECT accountID FROM confirmationEmails
+WHERE hash=\"" . mysql_real_escape_string($hash) . "\"";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["accountID"];
+	}
+	return -1;
+}
 
+function confirmAccount($accountID)
+{
+	sql_query("UPDATE accounts
+SET emailConfirmed=1
+WHERE accountID = " . $accountID);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	sql_query("DELETE FROM confirmationEmails
+WHERE accountID = " . $accountID);
+}
+	
 ?>

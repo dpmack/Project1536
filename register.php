@@ -52,49 +52,45 @@ function isValidEmail($email)
 	return true;//CREATE THIS OR FILL IN
 }
 
-
-
-function doesStudentIdExist($studentId)
+function sendSignUpEmail($accountID)
 {
-	return false;
+	list($email, $hash) =  createNewEmailConfirm($accountID);
+	
+	mail($email,"Verify Your Email Address","Thank you for signing up for CST Hub, please verify your email address by clicking this link.
+<a href='http://localhost/setuppassword.php?id=" . $hash);
 }
 
-function sendSignUpEmail($accountId)
-{
-	//FILL
-}
 // echo "|" . $firstName . "|" . $lastName . "|" . $email . "|" . $emailConfirm . "|" . $studentId . "|" . $password . "|" . $passwordConfirm . "|" . $terms;
 if ($firstName == "" || $lastName == "" || $email == "" || $emailConfirm == "" || $studentId == "" || $password == "" || $passwordConfirm == "" || $terms == false)
 {
-	$validated = false;echo 2;
+	$validated = false;
 }
 else if ($email != $emailConfirm)
 {
-	$validated = false;echo 3;
+	$validated = false;
 }
 else if (!isValidEmail($email))
 {
-	$validated = false;echo 4;
+	$validated = false;
 }
 else if ($password != $passwordConfirm)
 {
-	$validated = false;echo 5;
+	$validated = false;
 }
 else if ($passwordLength < 8 && $passwordLength != -1)
 {
-	$validated = false;echo 6;
+	$validated = false;
 }
 else if (doesStudentIdExist($studentId))
 {
-	$validated = false;echo 7;
+	$validated = false;
 	$studentIdExist = true;
 }
 else
-{	echo 8;
+{	
 	$accountId = createUser($studentId, $firstName, $lastName, $email, $password);
 	sendSignUpEmail($accountId);
 	header("Location: registersuccess.php");
-	echo 9;
 }
 
 ?>

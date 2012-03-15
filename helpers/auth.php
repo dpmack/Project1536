@@ -4,8 +4,8 @@ date_default_timezone_set('America/Vancouver');
 include 'opensql.php';
 
 $GLOBALS['LOGIN_WINDOW'] = 60*30;
-$LOGIN_CREATE_NEW_PASSWORD = true;
 
+$GLOBALS['accountID'] = -1;
 $GLOBALS['username'] = '';
 $GLOBALS['loggedIn'] = false;
 $GLOBALS['message'] = "";
@@ -102,36 +102,28 @@ if ((isset($_POST["password"]) || isset($_POST["hPassword"])) && isset($_POST['u
 		$pass = $_POST["hPassword"];
 	}
 	
-	$sql = "SELECT accountID, password FROM accounts
+	$sql = "SELECT accountID, password, emailConfirmed FROM accounts
 WHERE username='" . mysql_real_escape_string($_POST['username']) . "'";
 	
 	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
 	
-	if ($LOGIN_CREATE_NEW_PASSWORD && $result && $result['password'] == '')
+	if ($result && !$result["emailConfirmed"])
 	{
-		$passHash = generateHash($pass);
-		$sql = "UPDATE accounts
-SET password='" . $passHash . "'
-WHERE accountID=" . $result["accountID"];
-		sql_query($sql);
-		newTicket($result["accountID"], $passHash);
-		$GLOBALS['loggedIn'] = true;
-		$GLOBALS['username'] = mysql_real_escape_string($_POST['username']);
-		$GLOBALS['message'] = "Logged in successfully (New password created)";
-		cleanTickets();
+		$GLOBALS["message"] = "Email Address has not been confirmed. Please check your email.";
 	}
 	elseif ($result && $result['password'] != '' && checkHash($pass, $result['password']))
 	{
 		$passHash = generateHash($pass);
 		newTicket($result["accountID"], $passHash);
 		$GLOBALS['loggedIn'] = true;
+		$GLOBALS['accountID'] = $result["accountID"];
 		$GLOBALS['username'] = mysql_real_escape_string($_POST['username']);
 		$GLOBALS['message'] = "Logged in successfully";
 		cleanTickets();
 	}
 	else
 	{
-		$message = "Invalid user name or password";
+		$GLOBALS['message'] = "Invalid user name or password";
 	}
 }
 elseif (isset($_COOKIE["ticket"]))
@@ -161,6 +153,7 @@ WHERE tickets.ticket = '" . $oldTicket . "'";
 		{
 			newTicket($result["accountID"], $result['password']);
 			$GLOBALS['loggedIn'] = true;
+			$GLOBALS['accountID'] = $result["accountID"];
 			$GLOBALS['username'] = $result['username'];
 			$GLOBALS['message'] = "Ticket matches, logged in is ok";
 		}
@@ -187,18 +180,14 @@ JOIN accountrolesmapping as arm on roles.roleID = arm.roleID
 JOIN accounts on arm.accountID = accounts.accountID
 WHERE accounts.username = " . $GLOBALS['username'];
 
-	$result = sql_query($sql);
-	if (mysql_num_rows($result) > 0)
-	{
-		return true;
-	}
-	return false;
+	return (mysql_num_rows(sql_query($sql)) > 0);
 }
 
 if (isset($_GET["demoaccount"]))
 {
 	$GLOBALS['loggedIn'] = true;
 	$GLOBALS['username'] = "A00802872";
+	$GLOBALS['accountID'] = 1;
 	$GLOBALS['message'] = "Logged in successfully (New password created)";
 }
 ?>
