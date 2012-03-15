@@ -1,0 +1,48 @@
+/*NEWS  	    12 Topics	16  Posts
+
+HOMEWORK    32 Topics   67  Posts
+
+COURSES		10 Topics	145 Posts
+
+OFF TOPIC	4  Topics	42  Posts*/
+
+#topics > li *, #topics, #topics > li
+{
+	float: left;
+}
+
+#topics > li
+{
+	clear: left;
+}
+
+#topics > li > dl > dt
+{	
+	display: none;
+}
+
+#topics > li > dl > dt:first-child + dd
+{
+	float: left;
+	width: 6em;
+	font-size: 2em;
+}
+
+#topics > li > dl > dt:first-child + dd + dt + dd:after
+{
+	content:"Topics";
+}
+
+#topics > li > dl > dt:first-child + dd + dt + dd + dt + dd:after
+{
+	content:"Posts";
+	
+}
+
+#topics > li > dl > dd
+{
+	float: right;
+	clear: right;
+	width: 6em;
+	text-align: left;
+}
