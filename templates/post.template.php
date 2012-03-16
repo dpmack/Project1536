@@ -13,18 +13,18 @@
 
 <dl class="postInfo">
 	<dt>Post Number</dt>
-		<dd><?=$postNumber; ?></dd>
+		<dd class="postNum"><?=$postNumber; ?></dd>
 	<dt>Date Created</dt>
-		<dd><?=$postDateCreated?></dd>
-	<? if(isset($postDateEdited)): ?>
-	<dt>Date Edited</dt>
-		<dd><?=$postDateEdited?></dd>
+		<dd class="postCreated"><?=$postDateCreated?></dd>
+	<? if($postDateEdited != ""): ?>
+	<dt class="dateEdited">Date Edited</dt>
+		<dd class="postEdit"><?=$postDateEdited?></dd>
 	<? endif; ?>
 </dl>
 <dl class="userInfo">
 	<dt>Username</dt>
-		<dd><?=$userName?></dd>
+		<dd class="postUsername"><?=$userName?></dd>
 	<dt>User post count</dt>
-		<dd><?=$userPostCount?></dd>
+		<dd class="postUserCount"><?=$userPostCount?></dd>
 </dl>
-<div class="postContent"><?=$postContent?></div>
+<div class="postContent"><div class="wrapper"><?=$postContent?></div></div>

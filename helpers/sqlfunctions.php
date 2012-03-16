@@ -149,12 +149,118 @@ function addHomeworkAssignment($course, $title, $desc, $dueDate)
 {	
 	$dateSplit = split("/", $dueDate);
 	$dueDate = mktime(23,59,59,$dateSplit[0], $dateSplit[1], $dateSplit[2]);
-	
+
 	$sql = "INSERT INTO homework
 (courseID, title, description, dueDate)
 VALUES ($course, \"" . mysql_real_escape_string($title) . "\", \"" . mysql_real_escape_string($desc) . "\", $dueDate);";
 	sql_query($sql);
 }
 
+// Returns false on error
+function getForums()
+{
+	$sql = "SELECT forumID, forumTitle FROM forums";
+	$result = sql_query($sql);
+	if ($result === false)
+	{
+		return false;
+	}
+	
+	$return = array();
+	
+	while ($row = mysql_fetch_assoc($result))
+	{		
+		if ($row === false)
+		{
+			return false;
+		}
+		
+		$return[] = $row;
+	}
+	
+	return $return;
+}
+
+// Returns false on error
+function getTopics($id)
+{
+	$id = filter_var($id, FILTER_VALIDATE_INT);
+	if (!$id)
+	{
+		return false;
+	}
+	
+	$sql = "SELECT topicID, accountID, title, isLocked, isSticky 
+	FROM topics WHERE forumID = $id";
+	$result = sql_query($sql);
+	if ($result === false)
+	{
+		return false;
+	}
+	
+	$return = array();
+	
+	while ($row = mysql_fetch_assoc($result))
+	{
+		if ($row === false)
+		{
+			return false;
+		}
+		
+		$return[] = $row;
+	}
+	
+	return $return;		
+}
+
+// returns false on error or if account does not exist
+function getNamesByAccountID($id)
+{
+	$id = filter_var($id, FILTER_VALIDATE_INT);
+	if (!$id)
+	{
+		return false;
+	}
+	
+	$sql = "SELECT firstName, lastName FROM accounts WHERE accountID = $id";
+	$result = sql_query($sql);
+	if ($result === false)
+	{
+		return false;
+	}
+	
+	return mysql_fetch_assoc($result);	
+}
+
+function getPosts($id)
+{
+	$id = filter_var($id, FILTER_VALIDATE_INT);
+	if (!$id)
+	{
+		return false;
+	}
+	
+	$sql = "SELECT postID, accountID, topicID, content, createdDate, modifiedDate 
+	FROM posts WHERE topicID = $id";
+	$result = sql_query($sql);
+	if ($result === false)
+	{
+		return false;
+	}
+	
+	$return = array();
+	
+	while ($row = mysql_fetch_assoc($result))
+	{
+		if ($row === false)
+		{
+			return false;
+		}
+		
+		$return[] = $row;
+	}
+	
+	return $return;	
+}
 ?>
 

@@ -1,0 +1,129 @@
+#posts
+{
+	float: left;
+	margin-bottom: 1em;
+}
+
+#posts > li
+{
+	float: left;
+	background-color: lightgrey;
+	width: 100%;
+}
+
+.postInfo
+{
+	background-color: #2D2D2D;
+	color: #FFFFFF;
+	font-size: 1.15em;
+}
+
+.postInfo
+{
+	float: left;
+	width: 100%;
+}
+
+.postInfo > dt
+{
+	display: none;
+}
+
+.postInfo > dd
+{
+	float: right;
+	padding: 0.5em;
+}
+
+dd.postEdit
+{
+	position: relative;
+	float: left;
+	margin-left: 20%;
+	top: 3.2em;
+	color: lightgrey;
+	font-size: 0.8em;
+	padding-left: 1em;
+	
+}
+
+dd.postEdit:before
+{
+	content:"Edited: ";
+}
+
+dd.postNum
+{
+	float: left;
+	width: 0;
+}
+
+.postNum:before
+{
+	content:"#";
+}
+
+
+.userInfo
+{
+	float: left;
+	width: 20%;
+	margin-top: 2em;
+}
+
+.userInfo > dt
+{
+	display: none;
+}
+
+.userInfo > dd
+{
+	margin: 1em 2em;
+}
+
+.postUsername
+{
+	font-weight: bold;
+}
+
+.postUserCount:after
+{
+	content:" Posts";
+}
+
+.postContent
+{
+	float: left;
+	min-height: 8em;
+	background-color: #FFFFFF;
+	width: 80%;
+	padding-top: 3em;
+	padding-bottom: 1em;
+}
+
+.postContent > .wrapper
+{
+	margin-left: 2em;	
+}
+
+.reply
+{
+	max-width: 100%;
+	width: 100%;
+	float: left;
+	margin-bottom: 0.5em;
+}
+
+#content .reply > a
+{
+	background-color: #2D2D2D;
+	color: white;
+	padding: 0.5em 1em;
+	float: right;
+}
+
+#content .reply > a:hover
+{
+	background-color: #0975DB;
+	color: white;
+}

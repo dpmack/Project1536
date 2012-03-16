@@ -13,6 +13,7 @@ echo buildHead("Create Post",$headContent);
 <?php
 include "helpers/header.php";
 echo isset($_POST['postContent']) ? $_POST['postContent'] : "";
+echo time();
 ?>
 
 <div class="section">
@@ -22,6 +23,7 @@ echo isset($_POST['postContent']) ? $_POST['postContent'] : "";
 		<input type="submit" value="Post" />		
 	</form>
 </div>
+
 <?php include "helpers/footer.php"; ?>
 
 <?php

@@ -3,31 +3,19 @@ include 'helpers/auth.php';
 include "helpers/head.php";
 include "helpers/embededLogin.php";
 
-// to create example data before db is set up
+$dbTopics = getTopics($_GET['forumID']);
 $topics = array();
-$topics[0] = array();
-$topics[0]["title"] = "Thread about how awesome CST is";
-$topics[0]["postCount"] = "16";
-$topics[0]["topicURL"] = "/viewtopic.php";
 
-$topics[1] = array();
-$topics[1]["title"] = "Thread about student get together lan party at lunch";
-$topics[1]["postCount"] = "67";
-$topics[1]["topicURL"] = "/viewtopic.php";
+foreach ($dbTopics as $dbTopic)
+{
+	$title = $dbTopic["title"];
+	$postCount = 16;
+	$topicURL = "/thread.php?topicID=".$dbTopic["topicID"];
+	$topics[] = array ("title" => $title, "postCount" => $postCount,
+					"topicURL" => $topicURL);
+}
 
-$topics[2] = array();
-$topics[2]["title"] = "Various other thread";
-$topics[2]["postCount"] = "145";
-$topics[2]["topicURL"] = "/viewtopic.php";
-
-$topics[3] = array();
-$topics[3]["title"] = "David is awesome thread";
-$topics[3]["postCount"] = "42";
-$topics[3]["topicURL"] = "/viewtopic.php";
-?>
-
-<?php
-$headContent = "<link rel='stylesheet' type='text/css' href='css/forums.css' />";
+$headContent = "<link rel='stylesheet' type='text/css' href='css/topicsListing.css' />";
 echo buildHead("Topics",$headContent);
 ?>
 <body>
