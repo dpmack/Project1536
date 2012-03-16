@@ -11,7 +11,7 @@ if (!$GLOBALS["loggedIn"])
 
 $hiddenDate = time() - 60*60*24*3;
 
-$sql = "SELECT homework.homeworkID as homeworkID, courseName, assignment, dueDate, !ISNULL(ham.homeworkID) as finished 
+$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, description, dueDate, !ISNULL(ham.homeworkID) as finished 
 FROM homework
 JOIN courses on homework.courseID=courses.courseID
 JOIN accountscoursesmapping as acm on acm.courseID=courses.courseID
@@ -19,7 +19,7 @@ JOIN accounts on accounts.accountID = acm.accountID
 LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
 WHERE accounts.username='" . $GLOBALS['username'] . "' and
 dueDate > " . $hiddenDate . " 
-ORDER BY duedate DESC";
+ORDER BY duedate ASC";
 $result = sql_query($sql);
 
 $homework = array();
@@ -32,7 +32,8 @@ while($row = mysql_fetch_assoc($result))
 ?>
 
 <?php
-$headContent = '<link rel="stylesheet" type="text/css" href="/css/homework.css" />';
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/homework.css" />
+<script type="text/javascript" src="script/homework.js"></script>';
 echo buildHead("Homework Checklist",$headContent);
 ?>
 <body>
@@ -52,7 +53,7 @@ foreach($homework as $piece)
 	{
 		echo "style = 'text-decoration: line-through' ";
 	}
-	echo "id='homeworkdiv_".$piece["homeworkID"]."'>"; 
+	echo "id='homeworkdiv_".$piece["homeworkID"]."' title=\"" . $piece["description"] . "\">"; 
 	echo "<input type='checkbox' onclick='toggleStrikeOut(".$piece["homeworkID"].")'";
 	if($piece["finished"])
 	{
@@ -60,32 +61,11 @@ foreach($homework as $piece)
 	}
 	echo " />";
 	echo "<span class='courseName'>" . $piece["courseName"] . " - </span>";
-	echo "<span class='assignment'>" . $piece["assignment"] . "</span><br />";
+	echo "<span class='assignment'>" . $piece["title"] . "</span><br />";
 	echo "<span class='dueDate'>" . date('Y-m-d', $piece["dueDate"]) . "</span>";
 	echo "<span class='timeTilDue'>" . $timeTilDue . " day(s).</span></div>";
 }
 ?>
-
-<script type="text/javascript">
-	function toggleStrikeOut(i)
-	{
-		ajaxHomework = new XMLHttpRequest();
-		homeworkDiv = document.getElementById("homeworkdiv_" + i);
-		homeworkStatus = "";
-		if(homeworkDiv.style.textDecoration == "line-through")
-		{
-			homeworkDiv.style.textDecoration = "";
-			homeworkStatus = "todo";
-		}
-		else
-		{
-			homeworkDiv.style.textDecoration = "line-through";
-			homeworkStatus = "done";
-		}
-		ajaxHomework.open("GET", "updatehomework.php?homeworkID=" + i + "&amp;homeworkStatus=" + homeworkStatus);
-		ajaxHomework.send();
-	}
-</script>
 
 <?php include "helpers/footer.php"; ?>
 

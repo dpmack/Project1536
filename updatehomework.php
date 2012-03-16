@@ -15,8 +15,7 @@ JOIN courses on homework.courseID=courses.courseID
 JOIN accountsCoursesMapping as acm on acm.courseID=courses.courseID
 JOIN accounts on accounts.accountID = acm.accountID
 LEFT JOIN homeworkAccountMapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
-WHERE accounts.username='" . $GLOBALS['username'] . "' 
-and accounts.ticket='" . $GLOBALS['ticket'] . "' 
+WHERE accounts.username='" . $GLOBALS['username'] . "'  
 and homework.homeworkID=" . mysql_real_escape_string($_GET["homeworkID"]);
 	
 	$result = mysql_fetch_assoc(sql_query($sql));

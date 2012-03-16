@@ -84,5 +84,47 @@ WHERE accountID = " . $accountID);
 
 	deleteEmailConfirmFor($accountID);
 }
+
+function getDepartments()
+{
+	$sql = "SELECT departmentID, departmentName FROM departments";
+	$result = sql_query($sql);
+
+	$departments = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$departments[] = $row;
+	}
+	return $departments;
+}
+
+function getCourses($deptID)
+{
+	$sql = "SELECT courseID, courseCode FROM courses WHERE departmentID=$deptID";
+	$result = sql_query($sql);
+
+	$courses = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$courses[] = $row;
+	}
+	return $courses;
+}
+
+function addHomeworkAssignment($course, $title, $desc, $dueDate)
+{	
+	$dateSplit = split("/", $dueDate);
+	$dueDate = mktime(23,59,59,$dateSplit[0], $dateSplit[1], $dateSplit[2]);
 	
+	$sql = "INSERT INTO homework
+(courseID, title, description, dueDate)
+VALUES ($course, \"" . mysql_real_escape_string($title) . "\", \"" . mysql_real_escape_string($desc) . "\", $dueDate);";
+	sql_query($sql);
+}
+
 ?>
+
+
+
