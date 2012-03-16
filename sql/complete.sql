@@ -80,7 +80,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872',' ','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',0),(2,'Kevin','McKeen','A00778394',' ','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',0),(10,'David','Mack','A0023424389','davidpmack@gmail.com','$6$rounds=45489$bef6f8157ea9b13f$TvE3NEIMy0HrPTP6NxKPnkt2NytnqcgheJWVnoMU8N9v0WiMrcTcbrXlvKrQoDaQui6HeVUzPWnohMGpLiMxO/',0);
+INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872',' ','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',1),(2,'Kevin','McKeen','A00778394','kevmckeenis@gmail.com','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',1),(10,'David','Mack','A0023424389','davidpmack@gmail.com','$6$rounds=45489$bef6f8157ea9b13f$TvE3NEIMy0HrPTP6NxKPnkt2NytnqcgheJWVnoMU8N9v0WiMrcTcbrXlvKrQoDaQui6HeVUzPWnohMGpLiMxO/',1);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 

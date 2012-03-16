@@ -54,6 +54,7 @@ else
 				<input type="submit" onclick="btnSubmitClick()" value="Login" />
 			
 			<input type="hidden" id="hiddenPassword" />
+			<?php echo $GLOBALS['message']; ?>
 			
 		</form>
 		<p>
