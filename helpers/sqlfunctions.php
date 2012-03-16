@@ -1,41 +1,46 @@
 <?php
 
-function createUser($studentId, $firstName, $lastName, $email, $password)
+function createUser($studentID, $firstName, $lastName, $email, $password)
 {
 	$password = generateHash($password);
 	
 	$sql = "INSERT INTO accounts
 (firstName, lastName, username, password, email)
 VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escape_string($lastName) . "\",
- \"" . mysql_real_escape_string($studentId) . "\", \"" . mysql_real_escape_string($password) . "\",
+ \"" . mysql_real_escape_string($studentID) . "\", \"" . mysql_real_escape_string($password) . "\",
 \"" . mysql_real_escape_string($email) . "\")";
 	sql_query($sql);
 
-	$sql = "SELECT accountID FROM accounts WHERE username = \"" . mysql_real_escape_string($studentId) . "\"";
+	$sql = "SELECT accountID FROM accounts WHERE username = \"" . mysql_real_escape_string($studentID) . "\"";
 	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
 	return $result['accountID'];
 }
 
-function doesStudentIdExist($studentId)
+function doesStudentIDExist($studentID)
 {
-	$sql = "SELECT 1 FROM accounts WHERE username = \"" . mysql_real_escape_string($studentId) . "\"";
+	$sql = "SELECT 1 FROM accounts WHERE username = \"" . mysql_real_escape_string($studentID) . "\"";
 	return (mysql_num_rows(sql_query($sql)) > 0);
 }
 
-function cleanConfirms()
+function cleanEmailConfirms()
 {
 	sql_query("DELETE FROM confirmationEmails
 WHERE expire < " . time());
 }
 
-function createNewEmailConfirm($accountID)
-{
-	$MAX_EMAIL_CONFIRM = 60*60*24;
-	
-	cleanConfirms();
-
+function deleteEmailConfirmFor($accountID)
+{	
 	sql_query("DELETE FROM confirmationEmails
 WHERE accountID = " . $accountID);
+}
+
+function createNewEmailConfirm($accountID)
+{
+	$MAX_TIME_EMAIL_CONFIRM = 60*60*24;
+	
+	cleanEmailConfirms();
+
+	deleteEmailConfirmFor($accountID);
 
 	do
 	{
@@ -55,9 +60,9 @@ WHERE accountID=" . $accountID;
 	return array($result["email"], $hash);
 }
 
-function getAccountForConfirm($hash)
+function getAccountForEmailConfirm($hash)
 {
-	cleanConfirms();
+	cleanEmailConfirms();
 	
 	$sql = "SELECT accountID FROM confirmationEmails
 WHERE hash=\"" . mysql_real_escape_string($hash) . "\"";
@@ -77,8 +82,7 @@ function confirmAccount($accountID)
 SET emailConfirmed=1
 WHERE accountID = " . $accountID);
 
-	sql_query("DELETE FROM confirmationEmails
-WHERE accountID = " . $accountID);
+	deleteEmailConfirmFor($accountID);
 }
 	
 ?>

@@ -8,6 +8,9 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	include "./error/notloggedin.php";
 	die();
 }
+
+$depts = getDepartment();
+
 ?>
 
 <?php
@@ -25,8 +28,12 @@ echo buildHead("Add Homework",$headContent);
 			<label for="dept" id="labelDepartment">Department</label>
 			<select name="dept" id="dept">
 				<option>--Select--</option>
-				<option>COMP</option>
-				<option>COMM</option>
+				<?php
+					foreach ($depts as $dept)
+					{
+						echo "<option value='" . $dept['departmentID'] . "'>" . $dept["departmentName"] . "</option>\n";
+					}
+				?>
 			</select>
 			
 			<label for="course" id="labelCourse">Course</label>

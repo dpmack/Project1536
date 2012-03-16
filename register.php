@@ -1,7 +1,6 @@
 <?php
 include 'helpers/auth.php';
 include "helpers/head.php";
-include "helpers/embededLogin.php";
 
 if ($GLOBALS["loggedIn"])
 {	
@@ -10,7 +9,7 @@ if ($GLOBALS["loggedIn"])
 
 $firstName = (isset($_POST["firstName"])) ? $_POST["firstName"] : "";
 $lastName = (isset($_POST["lastName"])) ? $_POST["lastName"] : "";
-$studentId = (isset($_POST["studentId"])) ? $_POST["studentId"] : "";
+$studentID = (isset($_POST["studentID"])) ? $_POST["studentID"] : "";
 $email = (isset($_POST["email"])) ? $_POST["email"] : "";
 $emailConfirm = (isset($_POST["emailConfirm"])) ? $_POST["emailConfirm"] : "";
 $terms = (isset($_POST["agree"]) && $_POST["agree"] == "terms");
@@ -45,7 +44,7 @@ else
 
 // Validating your information.
 $validated = true;
-$studentIdExist = false; 
+$studentIDExist = false; 
 
 function isValidEmail($email)
 {
@@ -60,8 +59,7 @@ function sendSignUpEmail($accountID)
 <a href='http://localhost/setuppassword.php?id=" . $hash);
 }
 
-// echo "|" . $firstName . "|" . $lastName . "|" . $email . "|" . $emailConfirm . "|" . $studentId . "|" . $password . "|" . $passwordConfirm . "|" . $terms;
-if ($firstName == "" || $lastName == "" || $email == "" || $emailConfirm == "" || $studentId == "" || $password == "" || $passwordConfirm == "" || $terms == false)
+if ($firstName == "" || $lastName == "" || $email == "" || $emailConfirm == "" || $studentID == "" || $password == "" || $passwordConfirm == "" || $terms == false)
 {
 	$validated = false;
 }
@@ -81,18 +79,17 @@ else if ($passwordLength < 8 && $passwordLength != -1)
 {
 	$validated = false;
 }
-else if (doesStudentIdExist($studentId))
+else if (doesStudentIDExist($studentID))
 {
 	$validated = false;
-	$studentIdExist = true;
+	$studentIDExist = true;
 }
 else
 {	
-	$accountId = createUser($studentId, $firstName, $lastName, $email, $password);
-	sendSignUpEmail($accountId);
+	$accountID = createUser($studentID, $firstName, $lastName, $email, $password);
+	sendSignUpEmail($accountID);
 	header("Location: registersuccess.php");
 }
-
 ?>
 
 <?php
@@ -110,19 +107,6 @@ echo buildHead("Registration",$headContent);
 <body>
 <?php
 include "helpers/header.php";
-
-if ($GLOBALS['loggedIn'])
-{	
-	echo "You are already registered";
-	
-	include "helpers/footer.php";
-	
-	if ($GLOBALS['sql_debug'] != 0)
-	{
-		include "helpers/sqlDebug.php";
-	}
-	die();
-}
 ?>
 
 <?php
@@ -147,11 +131,11 @@ else
 		<fieldset>
 			<legend>Student ID</legend>
 			<p>You <strong>must</strong> use your own BCIT student ID. Using another ID is against our <a href="#terms">terms of service</a>.</p>
-			<label for="studentId" title="Student ID">BCIT ID</label><input type="text" name="studentId" id="studentId" value="<?php echo $studentId; ?>" />
+			<label for="studentID" title="Student ID">BCIT ID</label><input type="text" name="studentID" id="studentID" value="<?php echo $studentID; ?>" />
 			<?php 
-			if ($studentIdExist)
+			if ($studentIDExist)
 			{
-				?>  <label for="studentId" class="error">Student ID: <?php echo $studentId; ?> already registered. If the ID belongs to you, please see the FAQ page, or contact us. </label><?php
+				?>  <label for="studentID" class="error">Student ID: <?php echo $studentID; ?> already registered. If the ID belongs to you, please see the FAQ page, or contact us. </label><?php
 			}?>
 		</fieldset>
 	
