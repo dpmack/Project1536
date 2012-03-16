@@ -69,7 +69,7 @@ foreach($homework as $piece)
 <script type="text/javascript">
 	function toggleStrikeOut(i)
 	{
-		ajaxHomework = XMLHttpRequest();
+		ajaxHomework = new XMLHttpRequest();
 		homeworkDiv = document.getElementById("homeworkdiv_" + i);
 		homeworkStatus = "";
 		if(homeworkDiv.style.textDecoration == "line-through")
