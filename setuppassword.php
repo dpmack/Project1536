@@ -8,7 +8,7 @@ if (isset($_GET["id"]))
 {
 	$confirmID = $_GET["id"];
 	
-	$accountID = getAccountForConfirm($confirmID);
+	$accountID = getAccountForEmailConfirm($confirmID);
 	if ($accountID != -1)
 	{
 		confirmAccount($accountID);
@@ -21,7 +21,7 @@ if (isset($_GET["id"]))
 }
 else
 {
-	//header("Location: index.php");
+	header("Location: index.php");
 	$go = "index.php";
 }
 ?>
@@ -29,9 +29,9 @@ else
 <?php
 $headContent = "";
 
-if ($go && 1==0)
+if ($go)
 {
-	$headContent .= "<meta http-equiv='Refresh' content='3; URL='" . $go . "'>";
+	$headContent .= "<meta http-equiv='Refresh' content='3; URL=\"" . $go . "\"'>";
 }
 
 echo buildHead("Setup Password",$headContent);

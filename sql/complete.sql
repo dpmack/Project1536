@@ -12,22 +12,6 @@ USE `a5621243_staging`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP TABLE IF EXISTS `set`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `set` (
-  `setID` int(11) NOT NULL AUTO_INCREMENT,
-  `departmentID` int(11) DEFAULT NULL,
-  `setName` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`setID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `set` WRITE;
-/*!40000 ALTER TABLE `set` DISABLE KEYS */;
-/*!40000 ALTER TABLE `set` ENABLE KEYS */;
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `setcoursemapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -75,12 +59,12 @@ CREATE TABLE `accounts` (
   `emailConfirmed` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','davidpmack@gmail.com','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',1),(2,'Kevin','McKeen','A00778394','kevmckeenis@gmail.com','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',1);
+INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','davidpmack@gmail.com','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',1),(2,'Kevin','McKeen','A00778394','kevmckeenis@gmail.com','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',1),(13,'Jay','Jang','A00807650','gsdmlgla@naver.com','$6$rounds=45489$f1ab5f678fd5d6c4$be1ngbXnzC4qq/3wNqkBxK/nRA.Tfc1nfA8Nd6Vn9FepA3d0/sFMJdPxbkh.Ivw4wOfReuJa/NhS1ZGlD4.gB.',0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,6 +163,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+INSERT INTO `tickets` VALUES ('0fa8d89aeac1deda246fa480a9bcab809a231dec','dbb304940dc31e0668af7c8ddc8562074e676364',1331939953,1);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,11 +176,12 @@ CREATE TABLE `errors` (
   `message` text COLLATE latin1_general_ci NOT NULL,
   `comment` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`errorID`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `errors` WRITE;
 /*!40000 ALTER TABLE `errors` DISABLE KEYS */;
+INSERT INTO `errors` VALUES (32,'2012-03-16 16:16:01','Data too long for column \'departmentName\' at row 1','UPDATE departments\r\n	SET departmentName=\"fuckyou\"\r\n	WHERE departmentID=13'),(33,'2012-03-16 16:16:14','Data too long for column \'departmentName\' at row 1','UPDATE departments\r\n	SET departmentName=\"fuckyou\"\r\n	WHERE departmentID=13'),(31,'2012-03-16 16:15:06','Unknown column \'fuckyou\' in \'field list\'','UPDATE departments\r\n	SET departmentName=fuckyou\r\n	WHERE departmentID=13'),(30,'2012-03-16 16:14:44','You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'13\' at line 3','UPDATE departments\r\n	SET departmentName=fuckyou\r\n	WHERE departmentID=\'13');
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,12 +239,12 @@ CREATE TABLE `departments` (
   `departmentID` int(11) NOT NULL AUTO_INCREMENT,
   `departmentName` varchar(4) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`departmentID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `departments` WRITE;
 /*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-INSERT INTO `departments` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA');
+INSERT INTO `departments` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA'),(13,''),(12,''),(11,'    ');
 /*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,6 +283,21 @@ LOCK TABLES `rolespermissionsmapping` WRITE;
 /*!40000 ALTER TABLE `rolespermissionsmapping` DISABLE KEYS */;
 INSERT INTO `rolespermissionsmapping` VALUES (2,6);
 /*!40000 ALTER TABLE `rolespermissionsmapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `sets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sets` (
+  `setID` int(11) NOT NULL AUTO_INCREMENT,
+  `setName` varchar(2) NOT NULL,
+  PRIMARY KEY (`setID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `sets` WRITE;
+/*!40000 ALTER TABLE `sets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sets` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `whiteboardsaccountsmapping`;

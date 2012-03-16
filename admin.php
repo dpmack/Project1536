@@ -9,28 +9,25 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
+$dept = filter_input(INPUT_POST,"dept", FILTER_VALIDATE_INT);
+$deptName = filter_input(INPUT_POST,"deptName", FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^.*$/")));
+if($dept !== null && $deptName !== null)
+{
+	if($dept == -1)
+	{
+		createDepartment($deptName);
+	}
+	else
+	{
+		renameDepartment($dept, $deptName);
+	}
+}
 
-$depts = array();
-$depts[0] = array();
-$depts[0]["deptID"] = 0;
-$depts[0]["name"] = "COMP";
 
-$depts[1] = array();
-$depts[1]["deptID"] = 1;
-$depts[1]["name"] = "COMM";
+$depts = getDepartments();
 
-$sets = array();
-$sets[0] = array();
-$sets[0]["setID"] = 0;
-$sets[0]["name"] = "1A";
+$sets = getSets();
 
-$sets[1] = array();
-$sets[1]["setID"] = 1;
-$sets[1]["name"] = "1B";
-
-$sets[2] = array();
-$sets[2]["setID"] = 2;
-$sets[2]["name"] = "1C";
 ?>
 
 <?php
@@ -41,18 +38,18 @@ echo buildHead("Admin",$headContent);
 <?php include "./helpers/header.php"; ?>
 
 <div>
-	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
+	<form action="admin.php" method="post">
 		<p>
 			Department
 		</p>
 		
 		<p>
 			<select name="dept" id="deptChange" onchange="deptChange()">
-				<option>--New--</option>
+				<option value="-1">--New--</option>
 				<?php
 					foreach ($depts as $dept)
 					{
-						echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
+						echo "<option value='" . $dept['departmentID'] . "'>" . $dept["departmentName"] . "</option>\n";
 					}
 				?>
 			</select>

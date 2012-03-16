@@ -60,6 +60,23 @@ WHERE accountID=" . $accountID;
 	return array($result["email"], $hash);
 }
 
+function createDepartment($deptName)
+{
+	$sql = "INSERT INTO departments
+	(departmentName)
+	VALUES (\"" . mysql_real_escape_string($deptName) . "\")";
+	sql_query($sql);		
+}
+
+function renameDepartment($dept, $deptName)
+{
+	$sql = "UPDATE departments
+	SET departmentName=\"". mysql_real_escape_string($deptName) . "\"
+	WHERE departmentID=$dept";	
+	sql_query($sql);		
+} 
+
+
 function getAccountForEmailConfirm($hash)
 {
 	cleanEmailConfirms();
@@ -99,6 +116,20 @@ function getDepartments()
 	return $departments;
 }
 
+function getSets()
+{
+	$sql = "SELECT setID, setName FROM sets";
+	$result = sql_query($sql);
+
+	$sets = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$sets[] = $row;
+	}
+	return $sets;
+}
+
 function getCourses($deptID)
 {
 	$sql = "SELECT courseID, courseCode FROM courses WHERE departmentID=$deptID";
@@ -113,6 +144,7 @@ function getCourses($deptID)
 	return $courses;
 }
 
+
 function addHomeworkAssignment($course, $title, $desc, $dueDate)
 {	
 	$dateSplit = split("/", $dueDate);
@@ -125,6 +157,4 @@ VALUES ($course, \"" . mysql_real_escape_string($title) . "\", \"" . mysql_real_
 }
 
 ?>
-
-
 
