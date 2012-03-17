@@ -12,6 +12,22 @@ USE `a5621243_staging`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+DROP TABLE IF EXISTS `set`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `set` (
+  `setID` int(11) NOT NULL AUTO_INCREMENT,
+  `departmentID` int(11) DEFAULT NULL,
+  `setName` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`setID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `set` WRITE;
+/*!40000 ALTER TABLE `set` DISABLE KEYS */;
+/*!40000 ALTER TABLE `set` ENABLE KEYS */;
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS `setcoursemapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -32,17 +48,18 @@ DROP TABLE IF EXISTS `topics`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `topics` (
   `topicID` int(11) NOT NULL AUTO_INCREMENT,
-  `userID` int(11) NOT NULL,
+  `accountID` int(11) NOT NULL,
   `forumID` int(11) NOT NULL,
   `title` varchar(64) COLLATE latin1_general_ci NOT NULL,
   `isLocked` tinyint(1) NOT NULL DEFAULT '0',
   `isSticky` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`topicID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `topics` WRITE;
 /*!40000 ALTER TABLE `topics` DISABLE KEYS */;
+INSERT INTO `topics` VALUES (1,1,1,'CST is Awesome',0,0),(2,2,1,'Lunch Lan Party',0,0),(3,2,2,'Web Dev Midterm',0,0),(4,1,2,'BUSA Quiz',0,0);
 /*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,29 +76,13 @@ CREATE TABLE `accounts` (
   `emailConfirmed` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872','davidpmack@gmail.com','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',1),(2,'Kevin','McKeen','A00778394','kevmckeenis@gmail.com','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',1),(13,'Jay','Jang','A00807650','gsdmlgla@naver.com','$6$rounds=45489$f1ab5f678fd5d6c4$be1ngbXnzC4qq/3wNqkBxK/nRA.Tfc1nfA8Nd6Vn9FepA3d0/sFMJdPxbkh.Ivw4wOfReuJa/NhS1ZGlD4.gB.',0);
+INSERT INTO `accounts` VALUES (1,'David','Mack','A00802872',' ','$6$rounds=45489$e1dd1f44b02518c4$L4Chnr2LLAyYvep.N9ORsh852KFYBgIzW01q08N38VcIVEaBU6S8uX1NdFIlwOSCh2ht0n27mEJRo8mE2LQs11',1),(2,'Kevin','McKeen','A00778394','kevmckeenis@gmail.com','$6$rounds=45489$cb258fb32c66bce1$jMihwGA3UrsszJ8ERKd1JRC3xHuQWlIjshYGJ5N2zutq0HG6SVkvgEAMH01SvelQfNYMBQ7agg20SefbeqWU0/',1),(10,'David','Mack','A0023424389','davidpmack@gmail.com','$6$rounds=45489$bef6f8157ea9b13f$TvE3NEIMy0HrPTP6NxKPnkt2NytnqcgheJWVnoMU8N9v0WiMrcTcbrXlvKrQoDaQui6HeVUzPWnohMGpLiMxO/',1);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `accountscoursesmapping`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accountscoursesmapping` (
-  `accountID` int(11) NOT NULL,
-  `courseID` int(11) NOT NULL,
-  PRIMARY KEY (`accountID`,`courseID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `accountscoursesmapping` WRITE;
-/*!40000 ALTER TABLE `accountscoursesmapping` DISABLE KEYS */;
-INSERT INTO `accountscoursesmapping` VALUES (1,1),(1,2);
-/*!40000 ALTER TABLE `accountscoursesmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `whiteboards`;
@@ -108,11 +109,12 @@ CREATE TABLE `forums` (
   `forumID` int(11) NOT NULL AUTO_INCREMENT,
   `forumTitle` varchar(64) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`forumID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `forums` WRITE;
 /*!40000 ALTER TABLE `forums` DISABLE KEYS */;
+INSERT INTO `forums` VALUES (1,'News'),(2,'Homework'),(3,'Courses'),(4,'Off-Topic');
 /*!40000 ALTER TABLE `forums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +165,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-INSERT INTO `tickets` VALUES ('0fa8d89aeac1deda246fa480a9bcab809a231dec','dbb304940dc31e0668af7c8ddc8562074e676364',1331939953,1);
+INSERT INTO `tickets` VALUES ('00511a198321f0a2dd2eaaed065446e0ebced708','e853586aa17ddcf88ce89eec13d0e66b833acb76',1331921321,2);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,12 +178,11 @@ CREATE TABLE `errors` (
   `message` text COLLATE latin1_general_ci NOT NULL,
   `comment` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`errorID`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `errors` WRITE;
 /*!40000 ALTER TABLE `errors` DISABLE KEYS */;
-INSERT INTO `errors` VALUES (32,'2012-03-16 16:16:01','Data too long for column \'departmentName\' at row 1','UPDATE departments\r\n	SET departmentName=\"fuckyou\"\r\n	WHERE departmentID=13'),(33,'2012-03-16 16:16:14','Data too long for column \'departmentName\' at row 1','UPDATE departments\r\n	SET departmentName=\"fuckyou\"\r\n	WHERE departmentID=13'),(31,'2012-03-16 16:15:06','Unknown column \'fuckyou\' in \'field list\'','UPDATE departments\r\n	SET departmentName=fuckyou\r\n	WHERE departmentID=13'),(30,'2012-03-16 16:14:44','You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'13\' at line 3','UPDATE departments\r\n	SET departmentName=fuckyou\r\n	WHERE departmentID=\'13');
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,23 +230,44 @@ CREATE TABLE `homeworkaccountmapping` (
 
 LOCK TABLES `homeworkaccountmapping` WRITE;
 /*!40000 ALTER TABLE `homeworkaccountmapping` DISABLE KEYS */;
+INSERT INTO `homeworkaccountmapping` VALUES (1,1);
 /*!40000 ALTER TABLE `homeworkaccountmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `departments`;
+DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `departments` (
-  `departmentID` int(11) NOT NULL AUTO_INCREMENT,
-  `departmentName` varchar(4) COLLATE latin1_general_ci NOT NULL,
-  PRIMARY KEY (`departmentID`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+CREATE TABLE `posts` (
+  `postID` int(11) NOT NULL AUTO_INCREMENT,
+  `accountID` int(11) NOT NULL,
+  `topicID` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `createdDate` int(11) NOT NULL,
+  `modifiedDate` int(11) DEFAULT NULL,
+  PRIMARY KEY (`postID`,`accountID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `departments` WRITE;
-/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-INSERT INTO `departments` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA'),(13,''),(12,''),(11,'    ');
-/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,1,1,'Man this forum is epic!',1331930888,NULL),(2,2,1,'I know right?',1331930988,1331930989);
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `accountscoursesmapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `accountscoursesmapping` (
+  `accountID` int(11) NOT NULL,
+  `courseID` int(11) NOT NULL,
+  PRIMARY KEY (`accountID`,`courseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `accountscoursesmapping` WRITE;
+/*!40000 ALTER TABLE `accountscoursesmapping` DISABLE KEYS */;
+INSERT INTO `accountscoursesmapping` VALUES (1,1),(1,2);
+/*!40000 ALTER TABLE `accountscoursesmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `courses`;
@@ -285,19 +307,20 @@ INSERT INTO `rolespermissionsmapping` VALUES (2,6);
 /*!40000 ALTER TABLE `rolespermissionsmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `sets`;
+DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sets` (
-  `setID` int(11) NOT NULL AUTO_INCREMENT,
-  `setName` varchar(2) NOT NULL,
-  PRIMARY KEY (`setID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `department` (
+  `departmentID` int(11) NOT NULL AUTO_INCREMENT,
+  `departmentName` varchar(4) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`departmentID`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `sets` WRITE;
-/*!40000 ALTER TABLE `sets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sets` ENABLE KEYS */;
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA');
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `whiteboardsaccountsmapping`;
@@ -322,16 +345,15 @@ DROP TABLE IF EXISTS `homework`;
 CREATE TABLE `homework` (
   `homeworkID` int(11) NOT NULL AUTO_INCREMENT,
   `courseID` int(11) NOT NULL,
-  `title` varchar(128) COLLATE latin1_general_ci NOT NULL,
+  `assignment` varchar(128) COLLATE latin1_general_ci NOT NULL,
   `dueDate` int(11) NOT NULL,
-  `description` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`homeworkID`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `homework` WRITE;
 /*!40000 ALTER TABLE `homework` DISABLE KEYS */;
-INSERT INTO `homework` VALUES (1,2,'Assignment 1',1338342400,''),(2,1,'Milestone 4',1339564264,''),(3,2,'troy sucks',149872941,''),(4,1,'test',1332399599,'test'),(5,2,'jake',1332053999,'off');
+INSERT INTO `homework` VALUES (1,2,'Assignment 1',1338342400),(2,1,'Milestone 4',1339564264),(3,2,'troy sucks',149872941);
 /*!40000 ALTER TABLE `homework` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
