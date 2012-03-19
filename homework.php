@@ -9,26 +9,7 @@ if (!$GLOBALS["loggedIn"])
 	die();
 }
 
-$hiddenDate = time() - 60*60*24*3;
-
-$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, description, dueDate, !ISNULL(ham.homeworkID) as finished 
-FROM homework
-JOIN courses on homework.courseID=courses.courseID
-JOIN accountscoursesmapping as acm on acm.courseID=courses.courseID
-JOIN accounts on accounts.accountID = acm.accountID
-LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
-WHERE accounts.username='" . $GLOBALS['username'] . "' and
-dueDate > " . $hiddenDate . " 
-ORDER BY duedate ASC";
-$result = sql_query($sql);
-
-$homework = array();
-
-while($row = mysql_fetch_assoc($result))
-{
-	$homework[] = $row;
-}
-
+$homework = getHomework();
 ?>
 
 <?php
@@ -41,7 +22,9 @@ echo buildHead("Homework Checklist",$headContent);
 include "helpers/header.php";
 ?>
 
-<h2 class="first">Homework checklist</h2>
+<div class="groupableSections">
+	<div class="section">
+	<h2>Homework checklist</h2>
 
 <?php
 foreach($homework as $piece)
@@ -66,6 +49,9 @@ foreach($homework as $piece)
 	echo "<span class='timeTilDue'>" . $timeTilDue . " day(s).</span></div>";
 }
 ?>
+	</div>
+</div>
+
 
 <?php include "helpers/footer.php"; ?>
 
