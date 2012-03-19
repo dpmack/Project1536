@@ -102,8 +102,10 @@ if ((isset($_POST["password"]) || isset($_POST["hPassword"])) && isset($_POST['u
 		$pass = $_POST["hPassword"];
 	}
 	
+	$username = strtoupper(mysql_real_escape_string($_POST['username']));
+	
 	$sql = "SELECT accountID, password, emailConfirmed FROM accounts
-WHERE username='" . mysql_real_escape_string($_POST['username']) . "'";
+WHERE username='" . $username . "'";
 	
 	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
 	
@@ -117,7 +119,7 @@ WHERE username='" . mysql_real_escape_string($_POST['username']) . "'";
 		newTicket($result["accountID"], $passHash);
 		$GLOBALS['loggedIn'] = true;
 		$GLOBALS['accountID'] = $result["accountID"];
-		$GLOBALS['username'] = mysql_real_escape_string($_POST['username']);
+		$GLOBALS['username'] = $username;
 		$GLOBALS['message'] = "Logged in successfully";
 		cleanTickets();
 	}
@@ -186,8 +188,8 @@ WHERE accounts.username = " . $GLOBALS['username'];
 if (isset($_GET["demoaccount"]))
 {
 	$GLOBALS['loggedIn'] = true;
-	$GLOBALS['username'] = "A00802872";
-	$GLOBALS['accountID'] = 1;
-	$GLOBALS['message'] = "Logged in successfully (New password created)";
+	$GLOBALS['username'] = "A00000000";
+	$GLOBALS['accountID'] = 0;
+	$GLOBALS['message'] = "Logged in as demo account";
 }
 ?>

@@ -7,18 +7,18 @@ function createUser($studentID, $firstName, $lastName, $email, $password)
 	$sql = "INSERT INTO accounts
 (firstName, lastName, username, password, email, emailConfirmed)
 VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escape_string($lastName) . "\",
- \"" . mysql_real_escape_string($studentID) . "\", \"" . mysql_real_escape_string($password) . "\",
+ \"" . strtoupper(mysql_real_escape_string($studentID)) . "\", \"" . mysql_real_escape_string($password) . "\",
 \"" . mysql_real_escape_string($email) . "\", 1)";
 	sql_query($sql);
 
-	$sql = "SELECT accountID FROM accounts WHERE username = \"" . mysql_real_escape_string($studentID) . "\"";
+	$sql = "SELECT accountID FROM accounts WHERE username = \"" . strtoupper(mysql_real_escape_string($studentID)) . "\"";
 	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
 	return $result['accountID'];
 }
 
 function doesStudentIDExist($studentID)
 {
-	$sql = "SELECT 1 FROM accounts WHERE username = \"" . mysql_real_escape_string($studentID) . "\"";
+	$sql = "SELECT 1 FROM accounts WHERE username = \"" . mysql_real_escape_string(strtoupper($studentID)) . "\"";
 	return (mysql_num_rows(sql_query($sql)) > 0);
 }
 
