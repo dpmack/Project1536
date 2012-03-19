@@ -1,0 +1,22 @@
+UPDATE posts
+set content="<p>
+	CSTHub is now live and ready to be used.
+</p>
+<p>
+	As the first release there are some areas of the site which wont be open to public yet.
+	However in the mean time the homework checklist and forums are operational.
+</p>
+<p>
+	We ask for the moment that only CST students in sets 1A, 1B and 1C sign up for the site.
+	We will be opening the site to all CST students soon.
+</p>
+<p>	
+	We hope that you can find our site useful.
+	Please give any feedback or suggestions to us either in person or to our email <a href=\"mailto:csthub@gmail.com\">csthub@gmail.com</a>.
+</p>
+<p>
+	Thank you,<br />
+	<br />
+	CSTHub Crew - David, Kevin, Troy, Jay and Jake.
+</p>"
+WHERE postID = 1
