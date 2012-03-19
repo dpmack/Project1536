@@ -31,13 +31,6 @@ echo buildHead("Sitemap",$headContent);
 	<a href="homework.php">Homework</a><br />
 	<a href="schedule.php">Schedule</a><br />
 </p>
-<p>
-	<b>Logged In super user content (Note these are only displayed for marker convenace)</b>
-</p>
-<p>
-	<a href="admin.php">General Admin</a><br />
-	<a href="addHomework.php">Add Homework</a><br />
-</p>
 <?php include "helpers/footer.php"; ?>
 
 <?php
