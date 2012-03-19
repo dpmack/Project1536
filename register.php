@@ -87,7 +87,7 @@ else if (doesStudentIDExist($studentID))
 else
 {	
 	$accountID = createUser($studentID, $firstName, $lastName, $email, $password);
-	sendSignUpEmail($accountID);
+	//sendSignUpEmail($accountID);
 	header("Location: registersuccess.php");
 }
 ?>
@@ -161,8 +161,6 @@ else
 			<p>
 			You must read and agree with our terms of service to use this site.
 			CSThub is not liable for any damages of leaked password or lost data (including, but not limited to homework, eaten by your dog.)
-			
-			These are our terms and conditions be sure to remeber them well peons. All your base belong to us. These are our terms and conditions be sure to remeber them well peons. All your base belong to us. 
 			</p>
 			<label for="agree">I agree with these terms.</label><input id="agree" type="checkbox" title="You must agree to our terms." name="agree" value="terms" />
 		</fieldset>

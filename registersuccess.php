@@ -10,7 +10,7 @@ echo buildHead("Registration Successful",$headContent);
 <body>
 <?php include "helpers/header.php"; ?>
 
-Registration Sucessful! Please check your email for a link to confirm your account.
+Registration Sucessful! <!--Please check your email for a link to confirm your account. !-->
 
 <?php include "helpers/footer.php"; ?>
 
