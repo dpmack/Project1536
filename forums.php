@@ -9,9 +9,9 @@ $forums = array();
 foreach ($dbForums as $dbForum)
 {
 	$title = $dbForum["forumTitle"];
-	$subTopicCount = 12;
-	$postCount = 18;
-	$topicURL = "/topics.php?forumID=".$dbForum["forumID"];
+	$subTopicCount = getTopicCount($dbForum["forumID"]);
+	$postCount = getPostCount($dbForum["forumID"]);
+	$topicURL = "/topics.php?forumID=" . $dbForum["forumID"];
 	$forums[] = array("title" => $title, "subTopicCount" => $subTopicCount,
 						"postCount" => $postCount, "topicURL" => $topicURL);
 }
