@@ -28,19 +28,19 @@ LOCK TABLES `set` WRITE;
 /*!40000 ALTER TABLE `set` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `setcoursemapping`;
+DROP TABLE IF EXISTS `setCourseMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `setcoursemapping` (
+CREATE TABLE `setCourseMapping` (
   `setID` int(11) NOT NULL,
   `courseID` int(11) NOT NULL,
   PRIMARY KEY (`setID`,`courseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `setcoursemapping` WRITE;
-/*!40000 ALTER TABLE `setcoursemapping` DISABLE KEYS */;
-/*!40000 ALTER TABLE `setcoursemapping` ENABLE KEYS */;
+LOCK TABLES `setCourseMapping` WRITE;
+/*!40000 ALTER TABLE `setCourseMapping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `setCourseMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `topics`;
@@ -118,10 +118,10 @@ INSERT INTO `forums` VALUES (1,'News'),(2,'Homework'),(3,'Courses'),(4,'Off-Topi
 /*!40000 ALTER TABLE `forums` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `confirmationemails`;
+DROP TABLE IF EXISTS `confirmationEmails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `confirmationemails` (
+CREATE TABLE `confirmationEmails` (
   `hash` varchar(40) NOT NULL,
   `accountID` int(11) NOT NULL,
   `expire` int(11) NOT NULL,
@@ -130,9 +130,9 @@ CREATE TABLE `confirmationemails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `confirmationemails` WRITE;
-/*!40000 ALTER TABLE `confirmationemails` DISABLE KEYS */;
-/*!40000 ALTER TABLE `confirmationemails` ENABLE KEYS */;
+LOCK TABLES `confirmationEmails` WRITE;
+/*!40000 ALTER TABLE `confirmationEmails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `confirmationEmails` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `permissions`;
@@ -186,19 +186,19 @@ LOCK TABLES `errors` WRITE;
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `accountsrolesmapping`;
+DROP TABLE IF EXISTS `accountsRolesMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accountsrolesmapping` (
+CREATE TABLE `accountsRolesMapping` (
   `accountID` int(11) NOT NULL,
   `roleID` int(11) NOT NULL,
   PRIMARY KEY (`accountID`,`roleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `accountsrolesmapping` WRITE;
+LOCK TABLES `accountsRolesMapping` WRITE;
 /*!40000 ALTER TABLE `accountsrolesmapping` DISABLE KEYS */;
-INSERT INTO `accountsrolesmapping` VALUES (1,2),(2,2);
+INSERT INTO `accountsRolesMapping` VALUES (1,2),(2,2);
 /*!40000 ALTER TABLE `accountsrolesmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,20 +218,20 @@ INSERT INTO `roles` VALUES (1,'Disabled'),(2,'Super User'),(3,'Teacher'),(4,'Stu
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `homeworkaccountmapping`;
+DROP TABLE IF EXISTS `homeworkAccountMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `homeworkaccountmapping` (
+CREATE TABLE `homeworkAccountMapping` (
   `homeworkID` int(11) NOT NULL,
   `accountID` int(11) NOT NULL,
   PRIMARY KEY (`homeworkID`,`accountID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `homeworkaccountmapping` WRITE;
-/*!40000 ALTER TABLE `homeworkaccountmapping` DISABLE KEYS */;
-INSERT INTO `homeworkaccountmapping` VALUES (1,1);
-/*!40000 ALTER TABLE `homeworkaccountmapping` ENABLE KEYS */;
+LOCK TABLES `homeworkAccountMapping` WRITE;
+/*!40000 ALTER TABLE `homeworkAccountMapping` DISABLE KEYS */;
+INSERT INTO `homeworkAccountMapping` VALUES (1,1);
+/*!40000 ALTER TABLE `homeworkAccountMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `posts`;
@@ -254,20 +254,20 @@ INSERT INTO `posts` VALUES (1,1,1,'Man this forum is epic!',1331930888,NULL),(2,
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `accountscoursesmapping`;
+DROP TABLE IF EXISTS `accountsCoursesMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accountscoursesmapping` (
+CREATE TABLE `accountsCoursesMapping` (
   `accountID` int(11) NOT NULL,
   `courseID` int(11) NOT NULL,
   PRIMARY KEY (`accountID`,`courseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `accountscoursesmapping` WRITE;
-/*!40000 ALTER TABLE `accountscoursesmapping` DISABLE KEYS */;
-INSERT INTO `accountscoursesmapping` VALUES (1,1),(1,2);
-/*!40000 ALTER TABLE `accountscoursesmapping` ENABLE KEYS */;
+LOCK TABLES `accountsCoursesMapping` WRITE;
+/*!40000 ALTER TABLE `accountsCoursesMapping` DISABLE KEYS */;
+INSERT INTO `accountsCoursesMapping` VALUES (1,1),(1,2);
+/*!40000 ALTER TABLE `accountsCoursesMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `courses`;
@@ -291,20 +291,20 @@ INSERT INTO `courses` VALUES (1,1536,2,'Web Development',NULL,NULL,NULL),(2,1510
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `rolespermissionsmapping`;
+DROP TABLE IF EXISTS `rolesPermissionsMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rolespermissionsmapping` (
+CREATE TABLE `rolesPermissionsMapping` (
   `roleID` int(11) NOT NULL,
   `permissionID` int(11) NOT NULL,
   PRIMARY KEY (`roleID`,`permissionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `rolespermissionsmapping` WRITE;
-/*!40000 ALTER TABLE `rolespermissionsmapping` DISABLE KEYS */;
-INSERT INTO `rolespermissionsmapping` VALUES (2,6);
-/*!40000 ALTER TABLE `rolespermissionsmapping` ENABLE KEYS */;
+LOCK TABLES `rolesPermissionsMapping` WRITE;
+/*!40000 ALTER TABLE `rolesPermissionsMapping` DISABLE KEYS */;
+INSERT INTO `rolesPermissionsMapping` VALUES (2,6);
+/*!40000 ALTER TABLE `rolesPermissionsMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `department`;
@@ -323,10 +323,10 @@ INSERT INTO `department` VALUES (1,'COMM'),(2,'COMP'),(3,'BUSA');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `whiteboardsaccountsmapping`;
+DROP TABLE IF EXISTS `whiteboardsAccountsMapping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `whiteboardsaccountsmapping` (
+CREATE TABLE `whiteboardsAccountsMapping` (
   `whiteboardID` int(11) NOT NULL,
   `accountID` int(11) NOT NULL,
   `color` varchar(6) DEFAULT NULL,
@@ -335,8 +335,8 @@ CREATE TABLE `whiteboardsaccountsmapping` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `whiteboardsaccountsmapping` WRITE;
-/*!40000 ALTER TABLE `whiteboardsaccountsmapping` DISABLE KEYS */;
-/*!40000 ALTER TABLE `whiteboardsaccountsmapping` ENABLE KEYS */;
+/*!40000 ALTER TABLE `whiteboardsAccountsMapping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `whiteboardsAccountsMapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `homework`;
