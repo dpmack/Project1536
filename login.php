@@ -47,7 +47,7 @@ else
 			<fieldset>
 				<legend><!-- something semantic should go here? then hide with css? --jake --></legend>
 			
-				<label for="username">Username</label>
+				<label for="username">Student ID</label>
 				<input name="username" id="username" type="text"/>
 			
 				<label for="password">Password</label>
