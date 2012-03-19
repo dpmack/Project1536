@@ -44,15 +44,6 @@ include "helpers/header.php";
 	<div class="section">
 	<br />
 	<br />
-	<h3>Account</h3>
-	
-	<p>
-		<a class="classicLink" href="manageCourses.php">Manage your courses</a>
-	</p>
-	
-	<p>
-		<a class="classicLink" href="changepassword.php">Change your password</a>
-	</p>
 	</div>
 	
 	<?php if (hasPermission("CREATE_HOMEWORK")): ?>

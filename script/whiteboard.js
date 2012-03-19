@@ -7,6 +7,8 @@ clicks["me"] = new Array();
 clicks["me"]["color"] = "#df4b26";
 clicks["me"]["cords"] = new Array();
 
+clickRevision["me"] = -1;
+
 var update;
 
  $(document).ready (function() {
@@ -15,34 +17,57 @@ var update;
 	canvas.mousedown(down);
 	canvas.mouseup(up);
 	context = document.getElementById('drawBoard').getContext("2d");
-	update = setTimeout("sendUpdateRemote()",500);
+	update = setTimeout("sendUpdateRemote()",100);
 })
 
 function sendUpdateRemote()
 {
-	if (1 == 1 || clickXSent != clickX || clickYSent != clickY || clickDragSent != clickDrag)
+	if (clickRevision["me"] == -1)
 	{
-		$.ajax({
-			url: "whiteboard_ajax.php",
-			type: "POST",
-			context: document.body,
-			success: getUpdate,
-			data: JSON.stringify(clicks["me"]["cords"])
-		})
+		jmessage = -1;
 	}
+	else
+	{
+		jmessage = new Array();
+		jmessage["rev"] = clickRevision;
+		newRev = clicks["me"]["cords"];
+		jmessage["data"] = clicks["me"]["cords"].slice(clickRevision["me"],newRev);
+		clickRevision["me"] = newRev;
+	}
+		
+	$.ajax({
+		url: "whiteboard_ajax.php",
+		type: "POST",
+		context: document.body,
+		success: getUpdate,
+		data: JSON.stringify(jmessage)
+	})
 }
 
 function getUpdate(data, textStatus, jqXHR)
 {
 	newData = JSON.parse(data);
+	if (newData["me"] != null && newData["me"]["cords"] != null)
+	{
+		clicks["me"].concat(newData["me"]["cords"]);
+	}
 	
 	for (var i = 0; i < newData.length; i++)
 	{
-		clicks[i] = newData[i];
+		if (clicks[i] == null)
+		{
+			clicks[i] = newData[i];
+		}
+		else
+		{
+			clicks[i]["cords"].concat(newData[i]["cords"]);
+		}
 	}
-	
-	update = setTimeout("sendUpdateRemote()",500);
-	redraw();
+	update = setTimeout("sendUpdateRemote()",100);
+	if (newData != [])
+	{
+		redraw();
+	}
 }
 
 function lineTool()

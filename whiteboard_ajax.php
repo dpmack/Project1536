@@ -6,23 +6,25 @@ if (!$GLOBALS['loggedIn'])
 	die("[]");
 }
 
+//"#df4b26"
 $dir = "whiteboards/";
 $session = $dir . "test";
 $list = ".list";
+$me = "." . $GLOBALS['username'] . "." . $GLOBALS['ticket'];
 
 if (file_exists($session . $list))
 {
 	$theList = file_get_contents($session . $list);
-	if (!strpos($theList, $GLOBALS['username']))
+	if (!strpos($theList, $me))
 	{
-		file_put_contents($session . "." . $GLOBALS['username'], "");
-		file_put_contents($session . $list,file_get_contents($session . $list) . "," . $GLOBALS['username']);
+		file_put_contents($session . $me, "");
+		file_put_contents($session . $list,file_get_contents($session . $list) . "," . $GLOBALS['username'] . " - " . $GLOBALS['ticket']);
 	}
 }
 else
 {
-	file_put_contents($session . "." . $GLOBALS['username'], "");
-	file_put_contents($session . $list, $GLOBALS['username']);
+	file_put_contents($session . $me, "");
+	file_put_contents($session . $list, $GLOBALS['username'] . " - " . $GLOBALS['ticket']);
 	$theList = $GLOBALS['username'];
 }
 
