@@ -386,7 +386,7 @@ WHERE topics.topicID=$topicID";
 
 function createPost($topicID, $content)
 {
-	$safePost = str_replace(array("<",">"),array("&lt;","&gt;"), $content); 
+	$safePost = str_replace(array("<",">","\n"),array("&lt;","&gt;","<br />"), $content); 
 	
 	$topicID = filter_var($topicID, FILTER_VALIDATE_INT);
 	$accountID = $GLOBALS['accountID'];
