@@ -12,7 +12,7 @@ if (!$GLOBALS["loggedIn"])
 
 <?php
 $headContent = '';
-echo buildHead("Landing page",$headContent);
+echo buildHead("My Hub",$headContent);
 ?>
 <body>
 
@@ -20,10 +20,15 @@ echo buildHead("Landing page",$headContent);
 include "helpers/header.php";
 ?>
 
-Temporay Landing page
-<br />
-<a class="classicLink" href="homework.php">Homework checklist</a><br />
-<a class="classicLink" href="schedule.php">My Schedule</a><br />
+<div class="groupableSections">
+	<div class="section">
+	<h2>My Hub</h2>
+	<br />
+	<a class="classicLink" href="homework.php">Homework checklist</a><br />
+	<a class="classicLink" href="schedule.php">My Schedule</a><br />
+	<a class="classicLink" href="forums.php">Forums</a><br />
+	</div>
+</div>
 
 <?php include "helpers/footer.php"; ?>
 

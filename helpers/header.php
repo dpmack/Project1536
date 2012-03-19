@@ -6,7 +6,7 @@
 		<li><a href="/register.php">join</a></li>
 		<?php else: ?>
 		<li><a href="/logout.php">log out</a></li>
-		<li><a href="/landing.php">MYhub</a></li>
+		<li><a href="/myhub.php">MYhub</a></li>
 		<?php endif; ?>
 	</ul>
 	<h1><a href="/">CSThub</a></h1>
@@ -25,10 +25,15 @@
 <div id="breadcrumbs">
 <div class="wrapper"><div class="wrapper">
 	<ol>
-		<li><a href="#">Bread Crumb</a></li>
-		<li><a href="#">Trail</a></li>
-		<li><a href="#">Goes</a></li>
-		<li><a href="#">Here</a></li>
+		<?php
+		if (isset($crumbs))
+		{
+			foreach ($crumbs as $crumb)
+			{
+				echo "<li><a href='" . $crumb["href"] . "'>" . $crumb["name"] . "</a></li>";
+			}
+		}
+		?>
 	</ol>
 </div></div> <!-- /wrappers for navigation -->
 </div><!-- /#navigation -->
