@@ -5,10 +5,10 @@ function createUser($studentID, $firstName, $lastName, $email, $password)
 	$password = generateHash($password);
 	
 	$sql = "INSERT INTO accounts
-(firstName, lastName, username, password, email)
+(firstName, lastName, username, password, email, emailConfirmed)
 VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escape_string($lastName) . "\",
  \"" . mysql_real_escape_string($studentID) . "\", \"" . mysql_real_escape_string($password) . "\",
-\"" . mysql_real_escape_string($email) . "\")";
+\"" . mysql_real_escape_string($email) . "\", 1)";
 	sql_query($sql);
 
 	$sql = "SELECT accountID FROM accounts WHERE username = \"" . mysql_real_escape_string($studentID) . "\"";
@@ -262,5 +262,205 @@ function getPosts($id)
 	
 	return $return;	
 }
-?>
 
+function getNews()
+{
+	$NEWS_FORUM = "News";
+	$sql = "SELECT * FROM (SELECT posts.topicID, topics.title, posts.content, posts.createdDate FROM posts
+JOIN topics on posts.topicID = topics.topicID
+JOIN forums on topics.forumID = forums.forumID
+WHERE forums.forumTitle=\"$NEWS_FORUM\"
+ORDER BY posts.createdDate ASC) as temp
+GROUP BY temp.topicID
+ORDER BY temp.createdDate DESC";
+	$result = sql_query($sql);
+
+	$news = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$news[] = $row;
+	}
+	return $news;
+}
+
+function getRecentActivity()
+{
+	$sql = "SELECT * FROM (SELECT topics.topicID, topics.title, posts.createdDate FROM posts
+JOIN topics on posts.topicID = topics.topicID
+ORDER BY posts.createdDate DESC) as temp
+GROUP BY temp.topicID
+ORDER BY temp.createdDate DESC
+LIMIT 0, 5";
+	$result = sql_query($sql);
+
+	$recent = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$recent[] = $row;
+	}
+	return $recent;
+}
+
+function getTopicCount($forumID)
+{
+	$sql = "SELECT count(topicID) as topicCount FROM topics
+WHERE topics.forumID=$forumID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["topicCount"];
+	}
+	return 0;
+}
+
+function getPostCount($forumID)
+{
+	$sql = "SELECT COUNT(postID) as postCount FROM posts
+JOIN topics on posts.topicID=topics.topicID
+WHERE topics.forumID=$forumID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["postCount"];
+	}
+	return 0;
+}
+
+function getPostCountFromTopic($topicID)
+{
+	$sql = "SELECT COUNT(postID) as postCount FROM posts
+WHERE topicID=$topicID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["postCount"];
+	}
+	return 0;
+}
+
+function getForumInfo($forumID)
+{
+	$forumID = filter_var($forumID, FILTER_VALIDATE_INT);
+	if (!$forumID)
+	{
+		return false;
+	}
+	
+	$sql = "SELECT forumTitle FROM forums
+WHERE forums.forumID=$forumID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		return mysql_fetch_array($result, MYSQL_ASSOC);
+	}
+	return false;
+}
+
+function getTopicInfo($topicID)
+{
+	$topicID = filter_var($topicID, FILTER_VALIDATE_INT);
+	if (!$topicID)
+	{
+		return false;
+	}
+	
+	$sql = "SELECT title, forumID FROM topics
+WHERE topics.topicID=$topicID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		return mysql_fetch_array($result, MYSQL_ASSOC);
+	}
+	return false;
+}
+
+function createPost($topicID, $content)
+{
+	$safePost = str_replace(array("<",">"),array("&lt;","&gt;"), $content); 
+	
+	$topicID = filter_var($topicID, FILTER_VALIDATE_INT);
+	$accountID = $GLOBALS['accountID'];
+	$now = time();
+	
+	$sql = "INSERT INTO posts
+(accountID, topicID, createdDate, content)
+VALUES ($accountID, $topicID, $now, \"" . mysql_real_escape_string($safePost) . "\")";
+	sql_query($sql);
+}
+
+function createTopic($forumID, $title)
+{	
+
+	$forumID = filter_var($forumID, FILTER_VALIDATE_INT);
+	$forumData = getForumInfo($forumID);
+	
+	if ($forumData["forumTitle"] == "News")
+	{
+		return false;
+	}
+	
+	$accountID = $GLOBALS['accountID'];
+	
+	sql_query("INSERT INTO topics
+(accountID, forumID, title)
+VALUES ($accountID, $forumID, \"" . mysql_real_escape_string($title) . "\")");
+	$result = sql_query("SELECT LAST_INSERT_ID() as topicID");
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["topicID"];
+	}
+	return false;
+}
+
+function getHomework()
+{
+	$hiddenDate = time() - 60*60*24*3;
+
+	$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, description, dueDate, !ISNULL(ham.homeworkID) as finished 
+	FROM homework
+	JOIN courses on homework.courseID=courses.courseID
+	JOIN accounts
+	LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
+	WHERE accounts.username='" . $GLOBALS['username'] . "' and
+	dueDate > " . $hiddenDate . " 
+	ORDER BY duedate ASC";
+	
+	$result = sql_query($sql);
+
+	$homework = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$homework[] = $row;
+	}
+	
+	return $homework;
+}
+
+function getUserPosts($userID)
+{
+	$sql = "SELECT COUNT(postID) as postCount FROM posts
+WHERE accountID=$userID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["postCount"];
+	}
+	return 0;
+}
+
+?>
