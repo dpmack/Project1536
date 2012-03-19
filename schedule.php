@@ -18,8 +18,10 @@ echo buildHead("Schedule",$headContent);
 
 <?php
 include "helpers/header.php";
-?>
 
+if (1==0)
+{
+?>
 <div id="body">
 	<form id="scheduleForm" action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
 	
@@ -142,6 +144,19 @@ include "helpers/header.php";
 	</table>
 	
 </div>
+
+<?php
+}
+else
+{ ?>
+	<div class="groupableSections">
+		<div class="section">
+			<h2>Coming Soon!</h2>
+		</div>
+	</div>
+  <?php
+}
+?>
 
 <?php include "helpers/footer.php"; ?>
 
