@@ -432,7 +432,7 @@ function getHomework()
 	FROM homework
 	JOIN courses on homework.courseID=courses.courseID
 	JOIN accounts
-	LEFT JOIN homeworkaccountmapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
+	LEFT JOIN homeworkAccountMapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
 	WHERE accounts.username='" . $GLOBALS['username'] . "' and
 	dueDate > " . $hiddenDate . " 
 	ORDER BY duedate ASC";
