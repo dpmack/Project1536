@@ -3,8 +3,11 @@ include 'helpers/auth.php';
 include "helpers/head.php";
 include "helpers/embededLogin.php";
 
+$topicID = $_GET['topicID'];
+
 $dbPosts = getPosts($_GET['topicID']);
 $posts = array();
+$userPosts = array();
 
 // DD MM YYYY HH:MM
 $dateFormat = "d/m/Y - g:ia";
@@ -19,6 +22,11 @@ foreach ($dbPosts as $dbPost)
 		$name = implode(' ', $name);
 	}
 	
+	if (!isset($userPosts[$dbPost["accountID"]]))
+	{
+		$userPosts[$dbPost["accountID"]] = getUserPosts($dbPost["accountID"]);
+	}
+	
 	//$topicID = $dbPost["topicID"];
 	$content = $dbPost["content"];
 	$createdDate = date($dateFormat, $dbPost["createdDate"]);
@@ -28,12 +36,17 @@ foreach ($dbPosts as $dbPost)
 		$modifiedDate = date($dateFormat, $dbPost["modifiedDate"]);
 	}
 	$posts[] = array ("userName" => $name, "postDateCreated" => $createdDate, 
-						"userPostCount" => 16, "postDateEdited" => $modifiedDate,
+						"userPostCount" => $userPosts[$dbPost["accountID"]], "postDateEdited" => $modifiedDate,
 						"postContent" => $content);
 }
 
-$topicTitle = "Thread about how awesome CST is";
+$topicInfo = getTopicInfo($_GET['topicID']);
+$forumInfo = getForumInfo($topicInfo['forumID']);
 
+
+$crumbs = array(array("href" => "forums.php", "name" => "Forums"),
+				array("href" => "topics.php?forumID=" . $topicInfo["forumID"], "name" => $forumInfo["forumTitle"]),
+				array("href" => "thread.php?topicID=" . $_GET["topicID"], "name" => $topicInfo["title"]));
 
 $headContent = "<link rel='stylesheet' type='text/css' href='css/post.css' />";
 echo buildHead("View Topic",$headContent);
@@ -42,11 +55,8 @@ echo buildHead("View Topic",$headContent);
 <?php
 include "helpers/header.php";
 ?>
-<div class="section">
-	<h2>Viewing Topic - <?php echo $topicTitle; ?></h2>
-</div>
 
-<p class="reply"><a href="/createPost.php">Reply</a></p>
+<p class="reply"><a href="/createPost.php?topicID=<?=$topicID?>">Reply</a></p>
 
 <ol id="posts">
 	<?php
@@ -65,7 +75,7 @@ include "helpers/header.php";
 	?>
 </ol>
 
-<p class="reply"><a href="/createPost.php">Reply</a></p>
+<p class="reply"><a href="/createPost.php?topicID=<?=$topicID?>">Reply</a></p>
 
 <?php include "helpers/footer.php"; ?>
 

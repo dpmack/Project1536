@@ -18,6 +18,13 @@
 		<div class="section">
 
 		<h2 class="first"><?=$type; ?></h2>
+		<?php if ($type == "Topics" && $forumInfo["forumTitle"] != "News")
+		{
+			?>
+			<p class="newTopic"><a href="/createTopic.php?forumID=<?=$forumID?>">Start New Topic</a></p>
+			<?php
+		}
+		?>
 		<ul id="topics">
 		
 		<?php foreach($topics as $topic): extract($topic); ?>

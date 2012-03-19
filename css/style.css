@@ -142,8 +142,13 @@ body > * > .wrapper > .wrapper
 #content .groupableSections > .section
 {
 	min-width: 30em;
-	width: 50%;
+	/*width: 50%; */
 	float: left;
+}
+
+#content .groupableSections > .section > p
+{
+	max-width: none;
 }
 
 #content .groupableSections

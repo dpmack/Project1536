@@ -34,3 +34,19 @@
 	text-align: left;
 	width: auto;
 }
+
+
+#content .newTopic > a
+{
+	background-color: #2D2D2D;
+	color: white;
+	padding: 0.5em 1em;
+	float: right;
+	margin-top: -40px;
+}
+
+#content .newTopic > a:hover
+{
+	background-color: #0975DB;
+	color: white;
+}

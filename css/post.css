@@ -88,7 +88,7 @@ dd.postNum
 
 .postUserCount:after
 {
-	content:" Posts";
+	content:" Post(s)";
 }
 
 .postContent
@@ -116,6 +116,7 @@ dd.postNum
 
 #content .reply > a
 {
+	margin-top: 1px;
 	background-color: #2D2D2D;
 	color: white;
 	padding: 0.5em 1em;
