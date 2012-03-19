@@ -11,7 +11,7 @@ if (isset($_GET["referer"]))
 }
 else
 {
-	$dest = "/landing.php";
+	$dest = "/myhub.php";
 }
 	
 if ($GLOBALS['loggedIn'])
@@ -40,6 +40,9 @@ else
 		<h2>Log In</h2>
 		<form id="loginInPage" method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 			
+			<div class="error">
+				<?php echo $GLOBALS['message']; ?>
+			</div>
 			
 			<fieldset>
 				<legend><!-- something semantic should go here? then hide with css? --jake --></legend>
@@ -51,10 +54,9 @@ else
 				<input id="password" name="password" type="password" />
 			</fieldset>
 			
-				<input type="submit" onclick="btnSubmitClick()" value="Login" />
+			<input type="submit" onclick="btnSubmitClick()" value="Login" />
 			
 			<input type="hidden" id="hiddenPassword" />
-			<?php echo $GLOBALS['message']; ?>
 			
 		</form>
 		<p>
