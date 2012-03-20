@@ -29,16 +29,52 @@ include "helpers/header.php";
 <?php
 foreach($homework as $piece)
 {
-	$timeTilDue = $piece["dueDate"] - time();
-	$timeTilDue = round($timeTilDue / (60 * 60 * 24));
-	echo "<div class='homeworkItem' ";
-	if($piece["finished"])
+	$overDue = false;
+	$timeTilDue = (($piece["dueDate"] - time()) / (60 * 60 * 24));
+	if ($timeTilDue >= 1)
 	{
-		echo "style = 'text-decoration: line-through' ";
+		$timeTilDue = round($timeTilDue);
+		if ($timeTilDue >= 2)
+		{
+			$timeTilDue .= " days";
+		}
+		else
+		{
+			$timeTilDue .= " day";
+		}
 	}
-	echo "id='homeworkdiv_".$piece["homeworkID"]."' title=\"" . $piece["description"] . "\">"; 
+	else if ($timeTilDue >= 0)
+	{
+		$timeTilDue = "Today";
+	}
+	else if ($timeTilDue > -1)
+	{
+		$timeTilDue = "Due Yesterday";
+		$overDue = true;
+	}
+	else if ($timeTilDue > -2)
+	{
+		$timeTilDue = "Overdue 1 Day";
+		$overDue = true;
+	}
+	else
+	{
+		$timeTilDue = "Overdue " . -($timeTilDue) . " Days";
+		$overDue = true;
+	}
+	
+	echo "<div class='homeworkItem' ";
+	if ($piece["finished"] && $overDue)
+	{
+		echo "style='text-decoration: line-through;display:none;' ";
+	}
+	else if ($piece["finished"])
+	{
+		echo "style='text-decoration: line-through;' ";
+	}
+	echo "id='homeworkdiv_" . $piece["homeworkID"] . "' title=\"" . $piece["description"] . "\">"; 
 	echo "<input type='checkbox' onclick='toggleStrikeOut(".$piece["homeworkID"].")'";
-	if($piece["finished"])
+	if ($piece["finished"])
 	{
 		echo " checked='checked'";
 	}
@@ -46,7 +82,14 @@ foreach($homework as $piece)
 	echo "<span class='courseName'>" . $piece["courseName"] . " - </span>";
 	echo "<span class='assignment'>" . $piece["title"] . "</span><br />";
 	echo "<span class='dueDate'>" . date('Y-m-d', $piece["dueDate"]) . "</span>";
-	echo "<span class='timeTilDue'>" . $timeTilDue . " day(s).</span></div>";
+	echo "<span class='timeTilDue'";
+	
+	if ($overDue)
+	{
+		echo " style='color: red'";
+	}
+	
+	echo ">" . $timeTilDue . "</span></div>";
 }
 ?>
 	</div>

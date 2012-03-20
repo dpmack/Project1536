@@ -12,6 +12,11 @@ function toggleStrikeOut(i)
 	{
 		homeworkDiv.style.textDecoration = "line-through";
 		homeworkStatus = "done";
+		timeTilDue = $("#homeworkdiv_" + i + " .timeTilDue");
+		if (timeTilDue.css("color") == "rgb(255, 0, 0)")
+		{
+			homeworkDiv.style.display = "none";
+		}
 	}
 	ajaxHomework.open("GET", "updatehomework.php?homeworkID=" + i + "&homeworkStatus=" + homeworkStatus);
 	ajaxHomework.send();
