@@ -117,7 +117,7 @@ dd.postNum
 
 #content .reply > a
 {
-	margin-top: 1px;
+	margin-top: 1em;
 	background-color: #2D2D2D;
 	color: white;
 	padding: 0.5em 1em;
