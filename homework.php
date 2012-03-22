@@ -59,7 +59,7 @@ foreach($homework as $piece)
 	}
 	else
 	{
-		$timeTilDue = "Overdue " . -(round($timeTilDue + 1)) . " Days";
+		$timeTilDue = "Overdue " . -(round($timeTilDue - 1)) . " Days";
 		$overDue = true;
 	}
 	
