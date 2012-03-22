@@ -54,12 +54,12 @@ foreach($homework as $piece)
 	}
 	else if ($timeTilDue > -2)
 	{
-		$timeTilDue = "Overdue 1 Day";
+		$timeTilDue = "Overdue 2 Days";
 		$overDue = true;
 	}
 	else
 	{
-		$timeTilDue = "Overdue " . -($timeTilDue) . " Days";
+		$timeTilDue = "Overdue " . -(round($timeTilDue + 1)) . " Days";
 		$overDue = true;
 	}
 	
