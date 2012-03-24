@@ -10,7 +10,13 @@ echo buildHead("Page name here",$headContent);
 <body>
 <?php include "helpers/header.php"; ?>
 
+<div class="groupableSections">
+	<div class="section">
+	<h2><!-- title goes here !--></h2>
+
 <!-- code here !-->
+
+</div></div>
 
 <?php include "helpers/footer.php"; ?>
 
