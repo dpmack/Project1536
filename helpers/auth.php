@@ -3,6 +3,8 @@ date_default_timezone_set('America/Vancouver');
 
 include 'opensql.php';
 
+define("MIN_PASSWORD_LENGTH", 8);
+
 $GLOBALS['LOGIN_WINDOW'] = 60*30;
 
 $GLOBALS['accountID'] = -1;

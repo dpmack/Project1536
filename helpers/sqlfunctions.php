@@ -463,4 +463,29 @@ WHERE accountID=$userID";
 	return 0;
 }
 
+function checkPassword($accountID, $currentPass)
+{
+	$sql = "SELECT password FROM accounts WHERE accountID = $accountID";
+	
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return checkHash($currentPass, $data["password"]);
+	}
+	return false;
+}
+
+function changePassword($accountID, $newPass)
+{
+	$password = generateHash($newPass);
+	
+	$sql = "UPDATE accounts 
+SET password = '$password'
+WHERE accountID = $accountID";
+
+	return (boolean)sql_query($sql);
+}
+
 ?>

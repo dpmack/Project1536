@@ -27,6 +27,7 @@ include "helpers/header.php";
 	<a class="classicLink" href="homework.php">Homework checklist</a><br />
 	<a class="classicLink" href="schedule.php">My Schedule</a><br />
 	<a class="classicLink" href="forums.php">Forums</a><br />
+	<a class="classicLink" href="changepassword.php">Change your password</a><br />
 	</div>
 </div>
 
