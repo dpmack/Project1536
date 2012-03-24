@@ -60,7 +60,7 @@ if ($curPassword !== false && checkPassword($GLOBALS["accountID"], $curPassword)
 ?>
 
 <?php
-$headContent = '<link rel="stylesheet" type="text/css" href="/css/" />
+$headContent = '<link rel="stylesheet" type="text/css" href="/css/register.css" />
 <script type="text/javascript" src="/script/jquery.validate.js"></script>
 <script type="text/javascript" src="/script/changepassword.js"></script>
 <script type="text/javascript" src="script/sha1.js"></script>';
@@ -87,12 +87,18 @@ echo buildHead("Change your password",$headContent);
 		<form action="changepassword.php" method="post" id="changePassword">
 
 			<fieldset>
-				<legend>Change Password</legend>
-				<label for="curPassword">Current password</label> <input type="password" name="curPassword" id="curPassword"/>
-				<label for="newPassword">New password</label> <input type="password" name="newPassword" id="newPassword" />
-				<label for="confirmPassword">Confirm password</label> <input type="password" name="confirmPassword" id="confirmPassword" />
+				<legend>Current Password</legend>
+				<label for="curPassword">Old password</label> <input type="password" name="curPassword" id="curPassword"/>
 			</fieldset>
-			<input type="submit" value="Change it!" id="changeItButton" />
+			<fieldset>
+				<legend>New Password</legend>
+	                        <p>Do <strong>not</strong> use one of your BCIT passwords. Use a password unique to CSThub.</p>
+				<label for="newPassword">Password</label> <input type="password" name="newPassword" id="newPassword" />
+				<label for="confirmPassword">Confirm</label> <input type="password" name="confirmPassword" id="confirmPassword" />
+			</fieldset>
+			<fieldset>
+				<input type="submit" value="Change it!" id="changeItButton" />
+			</fieldset>
 			<input type="hidden" id="hPassword" />
 			<input type="hidden" id="hcPassword" />
 			

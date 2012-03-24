@@ -1,4 +1,8 @@
+/* used for registration and password change pages */
+
 /*
+
+
 legend
 {
 	font-size:2em;
@@ -27,8 +31,8 @@ fieldset
 #terms p
 {
 	overflow:auto;
-	height: 75px;
-	padding: 10px;
+	height: 8em;
+	padding: 1em;
 	border: 1px solid;
 	clear:left;
 }
@@ -37,7 +41,7 @@ fieldset {border: 0;margin: 1.5em 0;float:left;clear:both;}
 /* fieldset legend {display: none;} /* hide semantics */
 legend {margin-bottom: 1em;}
 fieldset > * {float: left}
-fieldset label {clear:left;min-width: 6em;line-height:1.5em;}
+fieldset label {clear:left;min-width: 8em;line-height:1.5em;}
 fieldset p {clear: left;font-size:.75em;}
 label:after {content:":"}
 
