@@ -6,7 +6,7 @@
 		<li><a href="/register.php">join</a></li>
 		<?php else: ?>
 		<li><a href="/logout.php">log out</a></li>
-		<li><a href="/myhub.php">MYhub</a></li>
+		<li><a href="/myhub.php">MYHub</a></li>
 		<?php endif; ?>
 	</ul>
 	<h1><a href="/">CSThub</a></h1>
