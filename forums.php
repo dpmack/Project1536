@@ -16,6 +16,8 @@ foreach ($dbForums as $dbForum)
 						"postCount" => $postCount, "topicURL" => $topicURL);
 }
 
+$crumbs = array(array("href" => "forums.php", "name" => "Forums"));
+
 $headContent = "<link rel='stylesheet' type='text/css' href='css/forumListing.css' />";
 echo buildHead("Forums",$headContent);
 ?>

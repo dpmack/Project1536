@@ -8,9 +8,10 @@ if (!$GLOBALS["loggedIn"])
 	include "error/notloggedin.php";
 	die();
 }
-?>
 
-<?php
+$crumbs = array(array("href" => "myhub.php", "name" => "MYHub"),
+				array("href" => "schedule.php", "name" => "Schedule"));
+				
 $headContent = '<link rel="stylesheet" type="text/css" href="/css/schedule.css" />';
 echo buildHead("Schedule",$headContent);
 ?>

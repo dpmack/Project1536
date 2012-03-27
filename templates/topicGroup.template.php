@@ -17,7 +17,7 @@
 	<div class="groupableSections">
 		<div class="section">
 
-		<h2 class="first"><?=$type; ?></h2>
+		<!--<h2 class="first"><?=$type; ?></h2> !-->
 		<?php if ($type == "Topics" && $forumInfo["forumTitle"] != "News")
 		{
 			?>
