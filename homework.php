@@ -9,10 +9,12 @@ if (!$GLOBALS["loggedIn"])
 	die();
 }
 
+$hasCourses = hasCourses($GLOBALS['accountID']);
 $homework = getHomework();
-?>
 
-<?php
+$crumbs = array(array("href" => "myhub.php", "name" => "MYHub"),
+				array("href" => "homework.php", "name" => "Homework Checklist"));
+
 $headContent = '<link rel="stylesheet" type="text/css" href="/css/homework.css" />
 <script type="text/javascript" src="script/homework.js"></script>';
 echo buildHead("Homework Checklist",$headContent);
@@ -24,7 +26,6 @@ include "helpers/header.php";
 
 <div class="groupableSections">
 	<div class="section">
-	<h2>Homework checklist</h2>
 
 <?php
 foreach($homework as $piece)
@@ -90,6 +91,11 @@ foreach($homework as $piece)
 	}
 	
 	echo ">" . $timeTilDue . "</span></div>";
+}
+
+if (!$hasCourses)
+{
+	echo "<br />You have not selected any courses. Please select your courses <a href='manageCourses.php'>here.</a>";
 }
 ?>
 	</div>

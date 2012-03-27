@@ -8,9 +8,9 @@ if (!$GLOBALS["loggedIn"])
 	include "error/notloggedin.php";
 	die();
 }
-?>
 
-<?php
+$crumbs = array(array("href" => "myhub.php", "name" => "MYHub"));
+				
 $headContent = '';
 echo buildHead("My Hub",$headContent);
 ?>
@@ -22,12 +22,12 @@ include "helpers/header.php";
 
 <div class="groupableSections">
 	<div class="section">
-	<h2>My Hub</h2>
 	<br />
 	<a class="classicLink" href="homework.php">Homework checklist</a><br />
 	<a class="classicLink" href="schedule.php">My Schedule</a><br />
 	<a class="classicLink" href="forums.php">Forums</a><br />
 	<a class="classicLink" href="changepassword.php">Change your password</a><br />
+	<a class="classicLink" href="manageCourses.php">Manage your courses</a><br />
 	</div>
 </div>
 

@@ -433,7 +433,8 @@ function getHomework()
 	$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, homework.description, dueDate, !ISNULL(ham.homeworkID) as finished 
 	FROM homework
 	JOIN courses on homework.courseID=courses.courseID
-	JOIN accounts
+	JOIN accountsCoursesMapping AS acm ON courses.courseID = acm.courseID
+	JOIN accounts ON acm.accountID = accounts.accountID
 	LEFT JOIN homeworkAccountMapping as ham on homework.homeworkID=ham.homeworkID and accounts.accountID=ham.accountID
 	WHERE accounts.username='" . $GLOBALS['username'] . "' and
 	dueDate > " . $hiddenDate . " 
@@ -608,7 +609,7 @@ WHERE setID=$setID";
 
 function getCoursesInSet($setID)
 {
-	$sql = "SELECT departmentName, courseCode, displayName FROM courses
+	$sql = "SELECT courses.courseID, departmentName, courseCode, displayName FROM courses
 JOIN departments ON courses.departmentID = departments.departmentID
 JOIN setsCoursesMapping as scm ON courses.courseID = scm.courseID
 WHERE scm.setID=$setID";
@@ -621,6 +622,84 @@ WHERE scm.setID=$setID";
 		$courses[] = $row;
 	}
 	return $courses;
+}
+
+function getMyCourses()
+{
+	$accountID = $GLOBALS["accountID"];
+	
+	$sql = "SELECT departmentName, courses.courseID, courseCode, displayName FROM courses
+JOIN accountsCoursesMapping AS acm ON acm.courseID = courses.courseID
+JOIN departments ON departments.departmentID = courses.departmentID
+WHERE accountID=$accountID";
+	$result = sql_query($sql);
+	
+	$courses = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$courses[] = $row;
+	}
+	return $courses;
+}
+
+function hasCourses($accountID)
+{
+	$sql = "SELECT 1 FROM accountsCoursesMapping
+WHERE accountID=$accountID";
+	return mysql_num_rows(sql_query($sql)) > 0;
+}
+
+function updateMyCourses($courses)
+{
+	$accountID = $GLOBALS['accountID'];
+
+	$rawCurCourses = getMyCourses();
+	$curCourses = array();
+	for ($i = 0; $i < count($rawCurCourses); $i++)
+	{
+		$curCourses[] = $rawCurCourses[$i]["courseID"];
+	}
+	
+	if (count($courses) == 0)
+	{
+		//delete all
+		$sql = "DELETE FROM accountsCoursesMapping
+WHERE accountID=$accountID";
+		sql_query($sql);
+		return;
+	}
+	
+	for ($i = 0; $i < count($curCourses); $i++)
+	{	
+		$courseID = $curCourses[$i];
+		
+		if (!in_array($courseID, $courses))
+		{
+			//delete
+			$sql = "DELETE FROM accountsCoursesMapping
+WHERE accountID=$accountID AND courseID=$courseID";
+			sql_query($sql);
+		}
+	}
+	
+	for ($i = 0; $i < count($courses); $i++)
+	{
+		$courseID = intval($courses[$i]);
+		if ($courseID == 0)
+		{
+			continue;
+		}
+		
+		if (!in_array($courseID, $curCourses))
+		{
+			//insert
+			$sql = "INSERT INTO accountsCoursesMapping
+(accountID, courseID)
+VALUES ($accountID, $courseID)";
+			sql_query($sql);
+		}
+	}
 }
 
 ?>
