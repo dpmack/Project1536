@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Login</title>
+	
+	<script type="text/javascript">
+		function calcUUID()
+		{
+			var delta = document.getElementById("delta");
+			var uuid = document.getElementById("uuid");
+			
+			uuid.value = (new Date()).getTime() - (delta.value);
+		}
+	</script>
+</head>
+<body>
+	<div id="hide">
+		<form name="cplogin" id="processLogonForm" action="https://my.bcit.ca/cp/home/login" method="post" onsubmit="calcUUID();window.submitted();">
+			<div>
+				<label for="username">Username:</label>
+				<input name="user" id="username" title="Username" />
+			</div>
+			
+			<div>
+				<input type="hidden" id="delta" value="-9000" />
+				<input type="hidden" name="uuid" id="uuid" />
+
+				<label for="password">Password:</label>
+				<input name="pass" id="password" title="Password" type="password" />
+			</div>
+			
+			<input class="button" value="Login" type="submit" />
+		</form>
+	</div>
+</body>
+</html>
