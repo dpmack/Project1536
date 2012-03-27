@@ -132,7 +132,9 @@ function getSets()
 
 function getCourses($deptID)
 {
-	$sql = "SELECT courseID, courseCode FROM courses WHERE departmentID=$deptID";
+	$sql = "SELECT courseID, courseCode, displayName FROM courses
+WHERE departmentID=$deptID
+ORDER BY courseCode";
 	$result = sql_query($sql);
 
 	$courses = array();
@@ -147,7 +149,7 @@ function getCourses($deptID)
 
 function addHomeworkAssignment($course, $title, $desc, $dueDate)
 {	
-	$dateSplit = split("/", $dueDate);
+	$dateSplit = explode("/", $dueDate);
 	$dueDate = mktime(23,59,59,$dateSplit[0], $dateSplit[1], $dateSplit[2]);
 
 	$sql = "INSERT INTO homework
@@ -428,7 +430,7 @@ function getHomework()
 {
 	$hiddenDate = time() - 60*60*24*3;
 
-	$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, description, dueDate, !ISNULL(ham.homeworkID) as finished 
+	$sql = "SELECT homework.homeworkID as homeworkID, courseName, title, homework.description, dueDate, !ISNULL(ham.homeworkID) as finished 
 	FROM homework
 	JOIN courses on homework.courseID=courses.courseID
 	JOIN accounts
@@ -466,7 +468,6 @@ WHERE accountID=$userID";
 function checkPassword($accountID, $currentPass)
 {
 	$sql = "SELECT password FROM accounts WHERE accountID = $accountID";
-	
 	$result = sql_query($sql);
 	
 	if (mysql_num_rows($result) == 1)
@@ -475,6 +476,19 @@ function checkPassword($accountID, $currentPass)
 		return checkHash($currentPass, $data["password"]);
 	}
 	return false;
+}
+
+function getCourseInfo($courseID)
+{
+	$sql = "SELECT courseID, courseCode, courseName, parentCourse, courseURL, displayName, description, location FROM courses
+	WHERE courseID=$courseID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		return mysql_fetch_array($result, MYSQL_ASSOC);
+	}
+	return true;
 }
 
 function changePassword($accountID, $newPass)
@@ -486,6 +500,127 @@ SET password = '$password'
 WHERE accountID = $accountID";
 
 	return (boolean)sql_query($sql);
+}
+
+function createCourse($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parentCourse)
+{
+	$sql = "INSERT INTO courses
+(departmentID, courseCode, courseName, description, location, courseUrl, displayName, parentCourse)
+VALUES ($dept, $courseCode, \"" . mysql_real_escape_string($courseName) . 
+"\", \"" . mysql_real_escape_string($courseDesc) . 
+"\", \"" . mysql_real_escape_string($location) . 
+"\", \"" . mysql_real_escape_string($url) . 
+"\", \"" . mysql_real_escape_string($displayName) . 
+"\", $parentCourse)";
+	
+	return (boolean)sql_query($sql);
+}
+
+function updateCourse($dept, $course, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parentCourse)
+{
+	$sql = "UPDATE courses
+SET departmentID=$dept, 
+courseCode=$courseCode,
+courseName=\"" . mysql_real_escape_string($courseName) . "\",
+description=\"" . mysql_real_escape_string($courseDesc) . "\",
+location=\"" . mysql_real_escape_string($location) . "\",
+courseUrl=\"" . mysql_real_escape_string($url) . "\",
+displayName=\"" . mysql_real_escape_string($displayName) . "\",
+parentCourse=$parentCourse
+WHERE courseID=$course";
+
+	return (boolean)sql_query($sql);
+}
+
+function updateSetCourseMappings($setID, $courses)
+{
+	$deletes = array();
+	$inserts = array();
+	foreach ($courses as $course)
+	{
+		if ($course["status"] == "new")
+		{
+			$inserts[] = $course["courseID"];
+		}
+		else if ($course["status"] == "delete")
+		{
+			$deletes[] = $course["courseID"];
+		}
+	}
+	
+	foreach ($deletes as $courseID)
+	{
+		$sql = "DELETE FROM setsCoursesMapping
+WHERE setID=$setID and courseID=$courseID";
+		sql_query($sql);
+	}
+	
+	foreach ($inserts as $courseID)
+	{
+		$sql = "INSERT INTO setsCoursesMapping
+(setID, courseID)
+VALUES ($setID, $courseID)";
+		sql_query($sql);
+	}
+}
+
+function createSet($setName, $courses)
+{
+	$sql = "INSERT INTO `sets`
+(setName)
+VALUES (\"" . mysql_real_escape_string($setName) . "\")";
+	sql_query($sql);
+	
+	$result = sql_query("SELECT LAST_INSERT_ID() as setID");
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		$setID = $data["setID"];
+		
+		updateSetCourseMappings($setID, $courses);
+	}
+}
+
+function updateSet($setID, $setName, $courses)
+{
+	$sql = "UPDATE `sets`
+SET setName=\"" . mysql_real_escape_string($setName) . "\"
+WHERE setID=$setID";
+	sql_query($sql);
+	
+	updateSetCourseMappings($setID, $courses);
+}
+
+function getSetName($setID)
+{
+	$sql = "SELECT setName FROM `sets`
+WHERE setID=$setID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["setName"];
+	}
+	return false;
+}
+
+function getCoursesInSet($setID)
+{
+	$sql = "SELECT departmentName, courseCode, displayName FROM courses
+JOIN departments ON courses.departmentID = departments.departmentID
+JOIN setsCoursesMapping as scm ON courses.courseID = scm.courseID
+WHERE scm.setID=$setID";
+	$result = sql_query($sql);
+	
+	$courses = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$courses[] = $row;
+	}
+	return $courses;
 }
 
 ?>

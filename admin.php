@@ -9,20 +9,98 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
-$dept = filter_input(INPUT_POST,"dept", FILTER_VALIDATE_INT);
-$deptName = filter_input(INPUT_POST,"deptName", FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^.*$/")));
-if($dept !== null && $deptName !== null)
+$which = (isset($_POST['which'])) ? $_POST['which'] : false;
+
+//Depts
+if ($which == "departments")
 {
-	if($dept == -1)
+	$dept = filter_input(INPUT_POST,"dept", FILTER_VALIDATE_INT);
+	$deptName = filter_input(INPUT_POST,"deptName", FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^.*$/")));
+	if($deptName !== false)
 	{
-		createDepartment($deptName);
-	}
-	else
-	{
-		renameDepartment($dept, $deptName);
+		if($dept === false)
+		{
+			createDepartment($deptName);
+		}
+		else
+		{
+			renameDepartment($dept, $deptName);
+		}
 	}
 }
 
+//Courses
+if ($which == "courses")
+{
+	$dept = filter_input(INPUT_POST,"dept", FILTER_VALIDATE_INT);
+	$course = filter_input(INPUT_POST,"course", FILTER_VALIDATE_INT);
+	$courseCode = filter_input(INPUT_POST,"courseCode", FILTER_VALIDATE_INT);
+	$courseName = (isset($_POST['courseName'])) ? $_POST['courseName'] : false;
+	$courseDesc = (isset($_POST['description'])) ? $_POST['description'] : false;
+	$location = (isset($_POST['location'])) ? $_POST['location'] : false;
+	$url = (isset($_POST['url'])) ? $_POST['url'] : false;
+	$displayName = (isset($_POST['displayName'])) ? $_POST['displayName'] : false;
+	$parent = filter_input(INPUT_POST,"parentCourse", FILTER_VALIDATE_INT);
+	$newDept = filter_input(INPUT_POST,"newDept", FILTER_VALIDATE_INT);
+	
+	if ($parent === false)
+	{
+		$parent = "NULL";
+	}
+	
+	if ($course === false && $dept !== false)
+	{
+		//New Course
+		createCourse($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
+	}
+	else if ($course !== false && $dept !== false)
+	{
+		//Update Course
+		if ($newDept !== false)
+		{
+			$dept = $newDept;
+		}
+		
+		updateCourse($dept, $course, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
+	}
+}
+
+//Sets
+if ($which == "sets")
+{
+	$set = filter_input(INPUT_POST,"set", FILTER_VALIDATE_INT);
+	$setName = (isset($_POST['setName'])) ? $_POST['setName'] : false;
+	
+	$statusIndex = 0;
+	$courses = array();
+	while (isset($_POST["status_$statusIndex"]))
+	{
+		$status = $_POST["status_$statusIndex"];
+		$courseID = filter_input(INPUT_POST,"courseID_$statusIndex", FILTER_VALIDATE_INT);
+		
+		if ($courseID === false)
+		{
+			continue;
+		}
+		
+		if ($status != "gone")
+		{
+			$courses[] = array("courseID" => $courseID, "status" => $status);
+		}
+		
+		$statusIndex++;
+	}
+	
+	if ($set === false && $setName !== false)
+	{
+		//new set
+		createSet($setName, $courses);
+	}
+	else if ($set !== false)
+	{
+		updateSet($set, $setName, $courses);
+	}
+}
 
 $depts = getDepartments();
 
@@ -31,7 +109,7 @@ $sets = getSets();
 ?>
 
 <?php
-$headContent = ""; //if needing to add extra css files
+$headContent = "<script type='text/javascript' src='script/admin.js'></script>"; //if needing to add extra css files
 echo buildHead("Admin",$headContent);
 ?>
 <body>
@@ -39,13 +117,12 @@ echo buildHead("Admin",$headContent);
 
 <div>
 	<form action="admin.php" method="post">
-		<p>
-			Department
-		</p>
+		<br />
+		<h2>Departments</h2>
 		
 		<p>
-			<select name="dept" id="deptChange" onchange="deptChange()">
-				<option value="-1">--New--</option>
+			<select name="dept" id="deptChange" onchange="departmentsDeptChange();">
+				<option>--New--</option>
 				<?php
 					foreach ($depts as $dept)
 					{
@@ -54,28 +131,30 @@ echo buildHead("Admin",$headContent);
 				?>
 			</select>
 			
-			<span id="deptEntry">Choose Name</span>
+			Choose Name
 			
 			<input type="text" name="deptName" id="deptName" />
-			
-			<input type="submit" name="which" value="Save Department" />
+			<input type="hidden" name="which" value="departments" />
+			<input type="submit" id="saveDept" value="Create Department" />
 		</p>
 	</form>
 </div>
 
+<br />
+<hr />
+<br />
+
 <div>
-	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
-		<p>
-			Courses
-		</p>
+	<form action="admin.php" method="post">
+		<h2>Courses</h2>
 		
 		<p>
-			<select name="dept" id="deptCourses" onchange="deptSelect()">
+			<select name="dept" id="deptCourses" onchange="departmentChange()">
 				<option>--Select--</option>
 				<?php
 					foreach ($depts as $dept)
 					{
-						echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
+						echo "<option value='" . $dept['departmentID'] . "'>" . $dept["departmentName"] . "</option>\n";
 					}
 				?>
 			</select>
@@ -86,130 +165,105 @@ echo buildHead("Admin",$headContent);
 		</p>
 		
 		<p>
-			<span id="courseEntry">Create Course</span>
+			<span id="courseEntry">Course Info</span>
 		</p>
 		
-		<p>
-			<select name="newDept" id="newDept" onchange="newDeptSelect()">
-				<option>--Select--</option>
-				<?php
-					foreach ($depts as $dept)
-					{
-						echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
-					}
-				?>
-			</select>
+		<p>		
+			Course Code
 			
-			<input type="text" name="newCourse" id="newCourse" />
+			<input type="text" name="courseCode" id="courseCode" />
 			
-			<input type="text" name="newName" id="newName" />
+			Course Name
+			
+			<input type="text" name="courseName" id="courseName" />
 		</p>
 		
 		<p>
 			Description:
-			<textarea name="description" rows="5" cols="50"></textarea>
+			<textarea name="description" id="description" rows="5" cols="50"></textarea>
 		</p>
 		
 		<p>
-			<input type="checkbox" name="share" /> Share
-			<input type="text" name="shareURL" />
-			Display Name: <input type="text" name="shareDisplay" /><br />
-			
-			<input type="checkbox" name="mybcit" /> My.Bcit
-			<input type="text" name="mybcitURL" />
-			Display Name: <input type="text" name="mybcitDisplay" /><br />
-			
-			<input type="checkbox" name="d2l" /> Desire 2 Learn
-			<input type="text" name="d2lURL" />
-			Display Name: <input type="text" name="d2lDisplay" /><br />
+			Course Data<br />
+			<select name="location" id="location">
+				<option>--Select--</option>
+				<option>D2L</option>
+				<option>My.BCIT</option>
+				<option>Share</option>
+			</select>
+			<br />
+			URL: <input type="text" name="url" id="url" /><br />
+			Display Name: <input type="text" name="displayName" id="displayName" /><br />
 		</p>
 		
 		<p>
 			Parent Course: (Use to associate lab courses with their lecture course)
-			<select name="parentDept" id="parentDept" onchange="parentDeptSelect()">
+			<br />
+			<select name="parentCourse" id="parentCourse">
 				<option>--No-Parent--</option>
+			</select>
+		</p>
+			
+		<p>
+			Change Course Department
+			<br />
+			<select name="newDept" id="newDept">
+				<option>--Select--</option>
 				<?php
 					foreach ($depts as $dept)
 					{
-						echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
+						echo "<option value='" . $dept['departmentID'] . "'>" . $dept["departmentName"] . "</option>\n";
 					}
 				?>
-			</select>
-			
-			<select name="parentCourse" id="parentCourse" onchange="parentCourseSelect()">
-				<option>--No-Parent--</option>
 			</select>
 		</p>
 		
 		<p>
-			<input type="submit" name="which" value="Save Course" />
+			<input type="hidden" name="which" value="courses" />
+			<input type="submit" value="Save Course" />
 		</p>
 	</form>
 </div>
 
+<br />
+<hr />
+<br />
+
 <div>
-	<form action="http://webdevfoundations.net/scripts/formdemo.asp" method="post">
-		<p>
-			Sets
-		</p>
+	<form action="admin.php" method="post">
+		<p>Sets</p>
 		
 		<p>
-			<select name="sets" id="setsChange" onchange="setsChange()">
+			<select name="set" id="set" onchange="setsChange()">
 				<option>--New--</option>
 				<?php
 					foreach ($sets as $set)
 					{
-						echo "<option value='" . $set['setID'] . "'>" . $set["name"] . "</option>\n";
+						echo "<option value='" . $set['setID'] . "'>" . $set["setName"] . "</option>\n";
 					}
 				?>
 			</select>
 		</p>
 		
-		<p>
-			Set Info
-		</p>
+		<p>Set Info</p>
 		
 		<p>
 			Set Name: <input type="text" name="setName" id="setName" />
 		</p>
 			
 		
-			<strong>Course</strong>
-			<table>
-				<tr>
-					<th>Name</th>
-				</tr>
-				<tr>
-					<td>COMP 1510</td>
-					<td><button type="button">Remove</button></td>
-				</tr>
-				<tr>
-					<td>COMP 1536</td>
-					<td><button type="button">Remove</button></td>
-				</tr>
-				<tr>
-					<td>
-						<select name="dept" id="dept" onchange="deptSelect()">
-							<option>--Select--</option>
-							<?php
-								foreach ($depts as $dept)
-								{
-									echo "<option value='" . $dept['deptID'] . "'>" . $dept["name"] . "</option>\n";
-								}
-							?>
-						</select>
-						
-						<select name="course" id="courseAdd" onchange="courseSelect()">
-							<option>--New--</option>
-						</select>
-					</td>
-					<td><button type="button">Add</button></td>
-				</tr>
-			</table>
+		<strong>Courses</strong>
+		<table id="setCourses">
+				
+		</table>
 		
+		<script type="text/javascript">
+			setsChange();
+		</script>
 		
 		<p>
-			<input type="submit" name="which" value="Save Set" />
+			<input type="hidden" name="which" value="sets" />
+			<input type="submit" value="Save Set" />
 		</p>
 	</form>
 </div>

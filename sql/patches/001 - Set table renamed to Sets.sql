@@ -1,0 +1,1 @@
+ALTER TABLE `set` RENAME TO `sets`;

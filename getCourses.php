@@ -10,11 +10,16 @@ $deptID = filter_input(INPUT_GET,"departmentID", FILTER_VALIDATE_INT);
 
 if($deptID !== null)
 {
-	echo "<option>--Select--</option>";
 	$courses = getCourses($deptID);
 	foreach ($courses as $course)
 	{
-		echo "<option value='" . $course['courseID'] . "'>" . $course["courseCode"] . "</option>\n";
+		$courseDisplayName = $course["courseCode"];
+		if ($course["displayName"] !== "")
+		{
+			$courseDisplayName .= " - " . $course["displayName"];
+		}
+		
+		echo "<option value='" . $course['courseID'] . "'>" . $courseDisplayName . "</option>\n";
 	}
 }
 else

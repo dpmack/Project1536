@@ -35,5 +35,5 @@ function departmentChange()
 
 function updateCourses(data, textStatus, jqXHR)
 {
-	$("#course").html(data);
+	$("#course").html("<option>--Select--</option>\n" + data);
 }
