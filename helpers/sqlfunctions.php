@@ -628,7 +628,7 @@ function getMyCourses()
 {
 	$accountID = $GLOBALS["accountID"];
 	
-	$sql = "SELECT departmentName, courses.courseID, courseCode, displayName FROM courses
+	$sql = "SELECT departmentName, courses.courseID, courseCode, displayName, location, courseURL FROM courses
 JOIN accountsCoursesMapping AS acm ON acm.courseID = courses.courseID
 JOIN departments ON departments.departmentID = courses.departmentID
 WHERE accountID=$accountID";

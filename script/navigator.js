@@ -3,74 +3,132 @@ var LOGIN_PAGE_TIMEOUT = 5000;
 
 /* NT - Not tried
    TA - Trying Auto
-   W - Waiting
+   TM - Trying Manual
    Y - Yes
    N - No
    F - Failed */
-var loggedIn = {"D2L":"NT", "MyBCIT":"NT"};
+var loggedIn = {"D2L":"NT", "My.BCIT":"NT"};
+var loginPage = {"D2L":"navigator/postD2L.html", "My.BCIT":"navigator/postMyBCIT.html"};
+var siteImages = {"D2L":"https://learn.bcit.ca/d2l/common/viewprofileimage.d2l?oi=6605&ui=323410&s=40&lm=634618536809400000&v=11&t=",
+				  "My.BCIT":"https://my.bcit.ca/tag.idempotent.worker.carRsrc.target.u11l1n9.uP?carRsrc=com/sct/pipeline/uportal/channels/email/media/chan_email.gif&t="};
 
-var loginPage = {"D2L":"navigator/postD2L.html", "MyBCIT":"navigator/postMyBCIT.html"};
+/*
+$(document).ready(function(){
+	$("#navigatorFrame").attr("onload", "safeLoad()");
+});
 
-function log(message)
-{	
-	var logDiv = $("#log");
-	logDiv.html(logDiv.html() + message + "<br />");
-}
+function safeLoad()
+{
+	if (loggedIn['My.BCIT'] in {TA:1, TM:1} || loggedIn['D2L'] in {TA:1, TM:1})
+	{
+		$('#navigatorFrame').attr('src','');
+	}
+}*/
 
 function imageLoaded(site)
 {
 	loggedIn[site] = "Y";
+	
+	loadSite();
 }
 	
 function imageErrored(site)
 {
-	loggedIn[site] = "N";
+	if (loggedIn[site] in {TA:1, TM:1})
+	{
+		loggedIn[site] = "F";
+	}
+	else
+	{
+		loggedIn[site] = "N";
+	}
+	
+	loadLoginPage(site);
 }
 
 function loadLoginPage(site)
 {
 	var iFrame = $("#navigatorFrame");
-	iFrame.src = loginPage[site];
 	
-	var start = new Date()).getTime();
-	
-	function pollPage();
-		while (new Date()).getTime() - start < LOGIN_PAGE_TIMEOUT)
-		{
-			try
-			{
-				var txtPassword = iFrame.contents().find("#password");
-				break;
-			}
-			catch(e)
-			{
-				setTimeout("pollPage()", 100);
-			}
-		}
-		login(site);
-	}
-	setTimeout("pollPage()", 0);
+	iFrame.one("load", function() { login(site); });
+	iFrame.attr("src", loginPage[site]);
 }
 
 function login(site)
 {
 	var frame = $("#navigatorFrame");
-	var password = $("#password").value;
+	var frameContents = frame.contents();
+	var password = $("#password").val();
 	
-	if (password.value == "" || loggedIn[site] == "F")
+	username = $("#userID").val();
+	frameContents.find("#username").val(username);
+	
+	document.getElementById("navigatorFrame").contentWindow.submitted = function()
 	{
-		frame.content().find("#hide").show();
+		frame.one("load", function() { frame.attr('src',''); });
+
+		setTimeout('isLoggedIn("' + site + '")', 1000);
+	};
+	
+	if (password == "" || loggedIn[site] == "F")
+	{
+		if (loggedIn[site] == "F")
+		{
+			frameContents.find("#error").show();
+		}
+		frameContents.find("#hide").show();
+		loggedIn[site] = "TM";
 	}
 	else
 	{
-		frame.content().find("#hide").hide();
-		frame.content().find("#password").value(
+		frameContents.find("#hide").hide();
+		frameContents.find("#password").val(password);
+		frameContents.find("#processLogonForm").submit();
+		
+		loggedIn[site] = "TA";
 	}
-	
-	
+}
 
-function goD2L()
+function isLoggedIn(site)
 {
+	image = $("#image");
+	image.attr("onload","imageLoaded('" + site + "');");
+	image.attr("onerror","imageErrored('" + site + "');");
+	image.attr("src",siteImages[site] + new Date().getTime());
+}
+
+function goCourse()
+{
+	courseSelect = $("#course option:selected");
+	
+	loc = courseSelect.attr("location");
+	
+	if (loc == "Share")
+	{
+		loadShare();
+	}
+	else
+	{
+		loggedIn = {"D2L":"NT", "My.BCIT":"NT"};
+		isLoggedIn(loc);
+	}
+}
+
+function loadSite()
+{
+	courseSelect = $("#course");
+	
+	$("#navigatorFrame").attr("src", courseSelect.val());
+}
+
+function loadShare()
+{
+	frame = $("#navigatorFrame");
+	frame.src = "navigator/share.html";
+	frame.contents().find("#path").html($("#course").val());
+}
+
+/*
 	iFrame = document.getElementById("frame");
 	iFrame.src = "protopost.html";
 	
@@ -236,4 +294,4 @@ function tryLoggedInMYBCIT()
 	loggedInMYBCITWaiting = true;
 	var img = document.getElementById("loggedInMYBCIT");
 	img.src = "https://my.bcit.ca/tag.idempotent.worker.carRsrc.target.u11l1n9.uP?carRsrc=com/sct/pipeline/uportal/channels/email/media/chan_email.gif&t=" + new Date().getTime();
-}
+}*/

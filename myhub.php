@@ -28,6 +28,7 @@ include "helpers/header.php";
 	<a class="classicLink" href="forums.php">Forums</a><br />
 	<a class="classicLink" href="changepassword.php">Change your password</a><br />
 	<a class="classicLink" href="manageCourses.php">Manage your courses</a><br />
+	<a class="classicLink" href="navigator.php">Navigator</a><br />
 	</div>
 </div>
 

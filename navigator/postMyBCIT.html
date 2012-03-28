@@ -14,10 +14,14 @@
 </head>
 <body>
 	<div id="hide">
-		<form name="cplogin" id="processLogonForm" action="https://my.bcit.ca/cp/home/login" method="post" onsubmit="calcUUID();window.submitted();">
+		<form target="loginFrame" name="cplogin" id="processLogonForm" action="https://my.bcit.ca/cp/home/login" method="post" onsubmit="calcUUID();window.submitted();">
+			<div id="error" class="error" style="display: none">
+				Error with username/password.
+			</div>
+			
 			<div>
 				<label for="username">Username:</label>
-				<input name="user" id="username" title="Username" />
+				<input type="text" name="user" id="username" title="Username" />
 			</div>
 			
 			<div>
