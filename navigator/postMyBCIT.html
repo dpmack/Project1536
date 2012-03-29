@@ -1,20 +1,10 @@
 <html>
 <head>
 	<title>Login</title>
-	
-	<script type="text/javascript">
-		function calcUUID()
-		{
-			var delta = document.getElementById("delta");
-			var uuid = document.getElementById("uuid");
-			
-			uuid.value = (new Date()).getTime() - (delta.value);
-		}
-	</script>
 </head>
 <body>
 	<div id="hide">
-		<form target="loginFrame" name="cplogin" id="processLogonForm" action="https://my.bcit.ca/cp/home/login" method="post" onsubmit="calcUUID();window.submitted();">
+		<form name="cplogin" id="processLogonForm" action="https://my.bcit.ca/cp/home/login" method="post">
 			<div id="error" class="error" style="display: none">
 				Error with username/password.
 			</div>
@@ -25,7 +15,6 @@
 			</div>
 			
 			<div>
-				<input type="hidden" id="delta" value="-9000" />
 				<input type="hidden" name="uuid" id="uuid" />
 
 				<label for="password">Password:</label>

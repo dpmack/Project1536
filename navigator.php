@@ -17,8 +17,9 @@ echo buildHeadNoCSS("Navigator",$headContent);
 ?>
 <body>
 	<div class="menu">
+		<span id="spanPassword">
 		<input type="hidden" id="userID" value="<?=$GLOBALS["username"]?>" />
-		Password: <input type="password" id="password" />
+		BCIT Password: <input type="password" id="password" /></span>
 		<select id="course" onchange="goCourse()">
 			<option>--Select--</option>
 			<?php
@@ -40,10 +41,15 @@ echo buildHeadNoCSS("Navigator",$headContent);
 			?>
 		</select>
 		<button type="button" onclick="goCourse()">Refresh</button>
+		Popups must be enabled for this page to work.
 		<a id="myhublink" href="myhub.php">MYHub</a>
 	</div>
 	
 	<iframe id="navigatorFrame" src="" style="height:90%;width:100%;border:none;position:fixed;"></iframe>
 	<img id="image" style="display: none" onload="" onerror="" src="" />
+	
+	<script type='text/javascript'>
+		delta = (new Date()).getTime() - <?=time()*1000 - $MyBCITDelta?>;
+	</script>
 </body>
 </html>

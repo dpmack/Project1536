@@ -3,9 +3,15 @@
 	position: absolute;
 	right: 10px;
 	top: 10px;
+	color: blue;
 }
 
 .menu
 {
 	margin: 10px;
+}
+
+.error
+{
+	color: red;
 }
