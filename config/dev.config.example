@@ -6,5 +6,6 @@ $sqlPassword = "<your password>";
 $sqlDB = "a5621243_staging";
 $siteEnv = "development";
 $sqlDebugMode = 2;
+$MyBCITDelta = -9000;
 
 ?>
