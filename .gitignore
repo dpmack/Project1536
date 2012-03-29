@@ -1,24 +1,2 @@
-<<<<<<< Updated upstream
 config/dev.config
 config/production.config
-=======
-config/dev.config/css/color.css~
-/css/font.css~
-/css/login.css~
-/css/register.css~
-/css/reset.css~
-/faq.php~
-/helpers/footer.php~
-/helpers/header.php~
-/helpers/sqlDebug.php~
-/indexNew.html
-/indexOldCompiled.html
-/css/style.css~
-/index.php~
-/login.php~
-/register.php~
-/script/register.js~
-/css/color.css~
-/config/dev.config
->>>>>>> Stashed changes
-/changepassword.php~
