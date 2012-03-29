@@ -15,7 +15,7 @@
 		<li><a href="/forums.php">Forums</a></li>
 		<li><a href="/help.php">Help</a></li>
 		<li><a href="/homework.php">Homework</a></li>
-		<li><a href="/schedule.php">Schedule</a></li>
+		<li><a href="/navigator.php">Navigator</a></li>
 	</ul>
 </div></div> <!-- /wrappers for header -->
 </div> <!-- /#header -->
