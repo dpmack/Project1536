@@ -9,6 +9,7 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
+$hasCourses = hasCourses($GLOBALS['accountID']);
 $courses = getMyCourses();
 
 $headContent = '<link rel="stylesheet" type="text/css" href="/css/navigator.css" /> 
@@ -45,7 +46,12 @@ echo buildHeadNoCSS("Navigator",$headContent);
 		<a id="myhublink" href="myhub.php">MYHub</a>
 	</div>
 	
-	<iframe id="navigatorFrame" src="" style="height:90%;width:100%;border:none;position:fixed;"></iframe>
+	<?php if (!$hasCourses): ?>
+		<br />You have not selected any courses. Please select your courses <a style="color: blue" href='manageCourses.php'>here.</a>
+	<?php else: ?>
+		<iframe id="navigatorFrame" src="" style="height:90%;width:100%;border:none;position:fixed;"></iframe>
+	<?php endif; ?>
+	
 	<img id="image" style="display: none" onload="" onerror="" src="" />
 	
 	<script type='text/javascript'>
