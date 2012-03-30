@@ -80,12 +80,13 @@ WHERE lastActivity < " . (time() - $GLOBALS['LOGIN_WINDOW']);
 
 function logout()
 {
-	if (isset($_COOKIE['ticket']))
+	if ($GLOBALS['ticket'] !== "")
 	{
 		sql_query("DELETE FROM tickets
-WHERE ticket='" . mysql_real_escape_string($_COOKIE['ticket']) . "'");
+WHERE ticket='" . mysql_real_escape_string($GLOBALS['ticket']) . "'");
 		setcookie('ticket',"expired",time()-60*60);
 	}
+	$GLOBALS['loggedIn'] = false;
 }
 
 if ((isset($_POST["password"]) || isset($_POST["hPassword"])) && isset($_POST['username']))
@@ -180,11 +181,17 @@ function hasPermission($permission)
 FROM permissions
 JOIN rolespermissionsmapping as rpm on permissions.permissionID = rpm.permissionID
 JOIN roles on rpm.roleID = roles.roleID
-JOIN accountrolesmapping as arm on roles.roleID = arm.roleID
+JOIN accountsRolesMapping as arm on roles.roleID = arm.roleID
 JOIN accounts on arm.accountID = accounts.accountID
-WHERE accounts.username = " . $GLOBALS['username'];
+WHERE accounts.username = '" . $GLOBALS['username'] . "' and permissions.permissionName='$permission'";
 
 	return (mysql_num_rows(sql_query($sql)) > 0);
+}
+
+if ($GLOBALS['loggedIn'] && !hasPermission("LOGIN"))
+{
+	logout();
+	$GLOBALS['message'] = "You do not have permission to be logged in.";
 }
 
 if (isset($_GET["demoaccount"]))
