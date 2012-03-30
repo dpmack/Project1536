@@ -9,6 +9,13 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
+if (!hasPermission("CREATE_HOMEWORK"))
+{
+	include "./error/notauth.php";
+	die();
+}
+
+
 $depts = getDepartments();
 
 $courseID = filter_input(INPUT_POST,"course", FILTER_VALIDATE_INT);
