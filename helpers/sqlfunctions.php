@@ -543,7 +543,7 @@ function updateSetCourseMappings($setID, $courses)
 		{
 			$inserts[] = $course["courseID"];
 		}
-		else if ($course["status"] == "delete")
+		else if ($course["status"] == "deleted")
 		{
 			$deletes[] = $course["courseID"];
 		}
@@ -700,6 +700,137 @@ VALUES ($accountID, $courseID)";
 			sql_query($sql);
 		}
 	}
+}
+
+function getRoles()
+{
+	$sql = "SELECT roleID, roleName from roles";
+	$result = sql_query($sql);
+	
+	$roles = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$roles[] = $row;
+	}
+	return $roles;
+}
+
+function getUsers()
+{
+	$sql = "SELECT roleID, accounts.accountID, firstName, lastName, username from accounts
+LEFT JOIN accountsRolesMapping as arm on arm.accountID = accounts.accountID";
+	$result = sql_query($sql);
+	
+	$users = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$users[] = $row;
+	}
+	return $users;
+}
+
+function getPermissions()
+{
+	$sql = "SELECT permissionID, permissionName FROM permissions";
+	$result = sql_query($sql);
+	
+	$permissions = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$permissions[] = $row;
+	}
+	return $permissions;
+}
+
+function getPermissionsInRole($roleID)
+{
+	$sql = "SELECT permissions.permissionID, permissionName FROM permissions
+JOIN rolesPermissionsMapping as rpm on permissions.permissionID = rpm.permissionID
+WHERE rpm.roleID=$roleID";
+	$result = sql_query($sql);
+	
+	$permissions = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$permissions[] = $row;
+	}
+	return $permissions;
+}
+
+function setRole($accountID, $roleID)
+{
+	$sql = "DELETE FROM accountsRolesMapping
+WHERE accountID=$accountID";
+	sql_query($sql);
+	
+	$sql = "INSERT accountsRolesMapping
+(accountID, roleID)
+VALUES ($accountID, $roleID)";
+	sql_query($sql);
+}
+
+function updatePermissions($roleID, $permissions)
+{
+	$deletes = array();
+	$inserts = array();
+	foreach ($permissions as $permission)
+	{
+		if ($permission["status"] == "new")
+		{
+			$inserts[] = $permission["permissionID"];
+		}
+		else if ($permission["status"] == "deleted")
+		{
+			$deletes[] = $permission["permissionID"];
+		}
+	}
+	
+	foreach ($deletes as $permissionID)
+	{
+		$sql = "DELETE FROM rolesPermissionsMapping
+WHERE roleID=$roleID and permissionID=$permissionID";
+		sql_query($sql);
+	}
+	
+	foreach ($inserts as $permissionID)
+	{
+		$sql = "INSERT INTO rolesPermissionsMapping
+(roleID, permissionID)
+VALUES ($roleID, $permissionID)";
+		sql_query($sql);
+	}
+}
+
+function createRole($roleName, $permissions)
+{
+	$sql = "INSERT INTO `roles`
+(roleName)
+VALUES (\"" . mysql_real_escape_string($roleName) . "\")";
+	sql_query($sql);
+	
+	$result = sql_query("SELECT LAST_INSERT_ID() as roleID");
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		$roleID = $data["roleID"];
+		
+		updatePermissions($roleID, $permissions);
+	}
+}
+
+function updateRole($roleID, $roleName, $permissions)
+{
+	$sql = "UPDATE `roles`
+SET roleName=\"" . mysql_real_escape_string($roleName) . "\"
+WHERE roleID=$roleID";
+	sql_query($sql);
+	
+	updatePermissions($roleID, $permissions);
 }
 
 ?>

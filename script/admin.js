@@ -151,7 +151,7 @@ function addCourseToSet()
 function removeCourseFromSet(courseRowIndex)
 {	
 	var status = $("#status_" + courseRowIndex);
-	if (status == "exists")
+	if (status.val() == "exists")
 	{
 		status.val("deleted");
 	}
@@ -160,4 +160,80 @@ function removeCourseFromSet(courseRowIndex)
 		status.val("gone");
 	}
 	$("#tr_" + courseRowIndex).hide();
+}
+
+function userChange()
+{
+	var user = $("#user option:selected");
+	
+	$("#userRole").val(users[user.attr("index")]["roleID"]);
+}
+
+function updateRolePermissions(data, textStatus, jqXHR) 
+{
+	$("#rolePermissions").html(data);
+}
+
+function rolesChange()
+{
+	roleID = $("#role").val();
+	
+	if (roleID == "--New--")
+	{
+		roleID = -1;
+		$("#roleName").val("");
+	}
+	else
+	{
+		$("#roleName").val($("#role option:selected").text());
+	}
+	
+	$.ajax({
+		url: "getPermissions.php?roleID=" + roleID,
+		type: "GET",
+		context: document.body,
+		success: updateRolePermissions,
+	});
+}
+
+function addPermissionToRole()
+{
+	var numPermissions = parseInt($("#numPermissions").val());
+	
+	var permission = $("#permission");
+	var permissionSelected = $("#permission option:selected");
+	
+	if (permissionSelected.text() == "--Select--")
+	{
+		return;
+	}
+	
+	permissionTR = $("<tr id='tr_perm_" + numPermissions + "'>");
+	permissionTR.append($("<td>" + permissionSelected.text() + "</td>"));
+	
+	dataTD = $("<td>");
+	dataTD.append($("<input type='hidden' id='status_perm_" + numPermissions + "' name='status_perm_" + numPermissions + "' value='new' />"));
+	dataTD.append($("<input type='hidden' id='permissionID_perm_" + numPermissions + "' name='permissionID_perm_" + numPermissions + "' value='" + permission.val() + "' />"));
+	dataTD.append($("<button type='button' onclick='removePermissionFromRole(" + numPermissions + ");'>Remove</button>"));
+	permissionTR.append(dataTD);
+	
+	$("#tr_perm_end").before(permissionTR);
+	
+	permission.val("--Select--");
+	
+	$("#numPermissions").val(numPermissions + 1);
+}
+
+function removePermissionFromRole(permissionRowIndex)
+{	
+	var status = $("#status_perm_" + permissionRowIndex);
+	if (status.val() == "exists")
+	{
+		status.val("deleted");
+	}
+	else
+	{
+		status.val("gone");
+	}
+	$("#tr_perm_" + permissionRowIndex).hide();
 }

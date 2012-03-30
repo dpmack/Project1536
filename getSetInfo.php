@@ -36,8 +36,9 @@ if ($setID !== null):
 			$courseTitle .= " - " . $course["displayName"];
 		}
 		echo "<td>" . $course["departmentName"] . " $courseTitle </td>\n";
-		echo "<td><input type='hidden' name='status_$numCourses' id='status_$numCourses' value='exists' />
-<button type='button' onclick='removeCourseFromSet($numCourses);'>Remove</button></td>\n";
+		echo "<td><input type='hidden' name='status_$numCourses' id='status_$numCourses' value='exists' />";
+		echo "<input type='hidden' id='courseID_$numCourses' name='courseID_$numCourses' value='" . $course["courseID"] . "' />";
+		echo "<button type='button' onclick='removeCourseFromSet($numCourses);'>Remove</button></td>\n";
 		echo "</tr>\n";
 		
 		$numCourses++;
