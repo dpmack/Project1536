@@ -9,6 +9,12 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
+if (!hasPermission("SITE_ADMINISTRATION"))
+{
+	include "./error/notauth.php";
+	die();
+}
+
 $which = (isset($_POST['which'])) ? $_POST['which'] : false;
 
 //Roles

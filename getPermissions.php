@@ -6,6 +6,12 @@ if (!$GLOBALS['loggedIn'])
 	die("Not logged in");
 }
 
+if (!hasPermission("SITE_ADMINISTRATION"))
+{
+	include "./error/notauth.php";
+	die();
+}
+
 $roleID = filter_input(INPUT_GET,"roleID", FILTER_VALIDATE_INT);
 
 if ($roleID !== null):

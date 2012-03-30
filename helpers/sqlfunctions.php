@@ -13,7 +13,13 @@ VALUES (\"" . mysql_real_escape_string($firstName) . "\", \"" . mysql_real_escap
 
 	$sql = "SELECT accountID FROM accounts WHERE username = \"" . strtoupper(mysql_real_escape_string($studentID)) . "\"";
 	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
-	return $result['accountID'];
+	$accountID = $result['accountID'];
+	
+	$sql = "SELECT roleID FROM roles
+WHERE roleName = 'Student'";
+	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
+	setRole($accountID, $result['roleID']);
+	return $accountID;
 }
 
 function doesStudentIDExist($studentID)
@@ -831,6 +837,14 @@ WHERE roleID=$roleID";
 	sql_query($sql);
 	
 	updatePermissions($roleID, $permissions);
+}
+
+function addAuthError()
+{
+	$sql = "INSERT INTO authErrors
+(accountID, url, time)
+VALUES (" . $GLOBALS['accountID'] . ", \"" . $_SERVER["PHP_SELF"] . "\", " . time() . ")";
+	sql_query($sql);
 }
 
 ?>
