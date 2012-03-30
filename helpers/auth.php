@@ -179,7 +179,7 @@ function hasPermission($permission)
 	
 	$sql = "SELECT 1
 FROM permissions
-JOIN rolespermissionsmapping as rpm on permissions.permissionID = rpm.permissionID
+JOIN rolesPermissionsMapping as rpm on permissions.permissionID = rpm.permissionID
 JOIN roles on rpm.roleID = roles.roleID
 JOIN accountsRolesMapping as arm on roles.roleID = arm.roleID
 JOIN accounts on arm.accountID = accounts.accountID
