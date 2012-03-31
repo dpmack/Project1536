@@ -12,8 +12,9 @@ echo buildHead("About",$headContent);
 <?php include "helpers/header.php"; ?>
 
 <div class="section">
+	<h2>About Us</h2>	
 	<p>	
-		We are five students that found the current BCIT system difficult to navigate.
+		We are five students that found the current BCIT system difficult to navigate.	
 		BCIT has Desire 2 Learn, share In/Out, and my.bcit, that are being used by all the professors.
 		This system has caused students to be confused and spend more time on jumping around multiple websites for their studies. 
 		Therefore, we made this website to bring all three platforms together, and ultimately help students study with ease. 
@@ -26,13 +27,13 @@ echo buildHead("About",$headContent);
 	</p>
 	<h2>Features</h2>
 	<p>
-		Access to D2L
-		Access to MyBcit
-		Access to MSDNAA
-		News
-		Updated Homework Checklist
-		Course Forum
-		Off-Topic Forum
+		Access to D2L<br />
+		Access to MyBcit<br />
+		Access to MSDNAA<br />
+		News<br />
+		Updated Homework Checklist<br />
+		Course Forum<br />
+		Off-Topic Forum<br />
 	</p>
 	
 	<p>
