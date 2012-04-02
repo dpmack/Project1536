@@ -40,10 +40,23 @@ include "helpers/header.php";
 		Navigate through BCIT's websites with easy with our <a class="classicLink" href="navigator.php">Navigator</a>.
 	</p>
 	
+	<p>
+		Collaborate with your peers with our shared <a class="classicLink" href="whiteboards.php">whiteboards</a>.
+	</p>
+
 	</div>
 	<div class="section">
 	<br />
 	<br />
+	<h3>Account</h3>
+	
+	<p>
+		<a class="classicLink" href="manageCourses.php">Manage your courses</a>
+	</p>
+	
+	<p>
+		<a class="classicLink" href="changepassword.php">Change your password</a>
+	</p>
 	</div>
 	
 	<?php if (hasPermission("CREATE_HOMEWORK")): ?>
