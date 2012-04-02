@@ -27,7 +27,7 @@ foreach ($dbPosts as $dbPost)
 		$userPosts[$dbPost["accountID"]] = getUserPosts($dbPost["accountID"]);
 	}
 	
-	//$topicID = $dbPost["topicID"];
+	$topicID = $dbPost["topicID"];
 	$content = $dbPost["content"];
 	$createdDate = date($dateFormat, $dbPost["createdDate"]);
 
@@ -37,7 +37,7 @@ foreach ($dbPosts as $dbPost)
 	}
 	$posts[] = array ("userName" => $name, "postDateCreated" => $createdDate, 
 						"userPostCount" => $userPosts[$dbPost["accountID"]], "postDateEdited" => $modifiedDate,
-						"postContent" => $content);
+						"postContent" => $content, "postID" => $dbPost["postID"], "topicID" => $topicID);
 }
 
 $topicInfo = getTopicInfo($_GET['topicID']);

@@ -198,8 +198,13 @@ function getTopics($id)
 		return false;
 	}
 	
-	$sql = "SELECT topicID, accountID, title, isLocked, isSticky 
-	FROM topics WHERE forumID = $id";
+	$sql = "SELECT * FROM (SELECT topics.topicID, topics.accountID, title, isLocked, isSticky, posts.createdDate
+FROM topics 
+JOIN posts on topics.topicID = posts.topicID
+WHERE forumID = $id
+ORDER BY posts.createdDate DESC) as temp
+GROUP BY temp.topicID
+ORDER BY temp.createdDate DESC";
 	$result = sql_query($sql);
 	if ($result === false)
 	{
@@ -859,6 +864,27 @@ WHERE accountID=" . $GLOBALS["accountID"];
 		return $data["firstName"] . " " . $data["lastName"];
 	}
 	return "";
+}
+
+function deletePost($postID)
+{
+	$postID = filter_var($postID, FILTER_VALIDATE_INT);
+	
+	if ($postID !== false)
+	{
+		$message = "DELETED by " . getUsersName() . " on " . date("d/m/Y - g:ia");
+		
+		$sql = "UPDATE posts
+	SET content=\"" . mysql_real_escape_string($message) . "\"
+	WHERE postID=$postID";
+		$result = sql_query($sql);
+		
+		if ($result !== false)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 ?>

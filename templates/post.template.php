@@ -27,4 +27,10 @@
 	<dt>User post count</dt>
 		<dd class="postUserCount"><?=$userPostCount?></dd>
 </dl>
-<div class="postContent"><div class="wrapper"><?=$postContent?></div></div>
+<div class="postContent"><div class="wrapper"><?=$postContent?></div>
+
+<? if(hasPermission("DELETE_REPLY")): ?>
+	<p class="reply"><a href="/deletePost.php?postID=<?=$postID?>&topicID=<?=$topicID?>">Delete</a></p>
+<? endif; ?>
+	
+</div>
