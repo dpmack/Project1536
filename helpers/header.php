@@ -38,7 +38,6 @@
 		<br />
 		<br />
 	<?php endif; ?>
-	</ol>
 </div></div> <!-- /wrappers for navigation -->
 </div><!-- /#navigation -->
 
