@@ -84,8 +84,8 @@ function logout()
 	{
 		sql_query("DELETE FROM tickets
 WHERE ticket='" . mysql_real_escape_string($GLOBALS['ticket']) . "'");
-		setcookie('ticket',"expired",time()-60*60);
 	}
+	setcookie('ticket',"expired",time()-60*60);
 	$GLOBALS['loggedIn'] = false;
 }
 
