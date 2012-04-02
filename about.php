@@ -38,7 +38,7 @@ echo buildHead("About",$headContent);
 	<h2>What exactly is CSTHub</h2>
 	
 	<p>
-		With the Forums we wrote from scratch allow students to discuss homework problems, organize study groups and find out
+		With the forums we wrote from scratch students are able to discuss homework problems, organize study groups and find out
 		the latest on what's happening around campus.
 	</p>
 	
