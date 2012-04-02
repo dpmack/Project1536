@@ -198,6 +198,7 @@ function getTopics($forumID, $first, $length)
 		return false;
 	}
 	
+<<<<<<< HEAD
 	$end = $first + $length;
 	
 	$sql = "SELECT * FROM (SELECT topics.topicID, topics.accountID, title, isLocked, isSticky, posts.createdDate
@@ -208,6 +209,15 @@ ORDER BY posts.createdDate DESC) as temp
 GROUP BY temp.topicID
 ORDER BY temp.createdDate DESC
 LIMIT $end";
+=======
+	$sql = "SELECT * FROM (SELECT topics.topicID, topics.accountID, title, isLocked, isSticky, posts.createdDate
+FROM topics 
+JOIN posts on topics.topicID = posts.topicID
+WHERE forumID = $id
+ORDER BY posts.createdDate DESC) as temp
+GROUP BY temp.topicID
+ORDER BY temp.createdDate DESC";
+>>>>>>> Forums now have their threads sorted in proper order. Posts are now deletable with the proper permission.
 	$result = sql_query($sql);
 	if ($result === false)
 	{
@@ -961,6 +971,27 @@ WHERE accountID=$accountID and whiteboardID=$whiteboardID";
 	if (mysql_num_rows($result) == 1)
 	{
 		return true;
+	}
+	return false;
+}
+
+function deletePost($postID)
+{
+	$postID = filter_var($postID, FILTER_VALIDATE_INT);
+	
+	if ($postID !== false)
+	{
+		$message = "DELETED by " . getUsersName() . " on " . date("d/m/Y - g:ia");
+		
+		$sql = "UPDATE posts
+	SET content=\"" . mysql_real_escape_string($message) . "\"
+	WHERE postID=$postID";
+		$result = sql_query($sql);
+		
+		if ($result !== false)
+		{
+			return true;
+		}
 	}
 	return false;
 }
