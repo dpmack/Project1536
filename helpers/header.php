@@ -24,16 +24,20 @@
 
 <div id="breadcrumbs">
 <div class="wrapper"><div class="wrapper">
-	<ol>
-		<?php
-		if (isset($crumbs))
-		{
+	<?php if (isset($crumbs)): ?>
+		<ol>
+			<?php 
 			foreach ($crumbs as $crumb)
 			{
 				echo "<li><a href='" . $crumb["href"] . "'>" . $crumb["name"] . "</a></li>";
 			}
-		}
-		?>
+			?>
+		</ol>
+	<?php else: ?>
+		<br />
+		<br />
+		<br />
+	<?php endif; ?>
 	</ol>
 </div></div> <!-- /wrappers for navigation -->
 </div><!-- /#navigation -->
