@@ -847,4 +847,18 @@ VALUES (" . $GLOBALS['accountID'] . ", \"" . $_SERVER["PHP_SELF"] . "\", " . tim
 	sql_query($sql);
 }
 
+function getUsersName()
+{
+	$sql = "SELECT firstName, lastName FROM accounts
+WHERE accountID=" . $GLOBALS["accountID"];
+	$result = sql_query($sql);
+
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["firstName"] . " " . $data["lastName"];
+	}
+	return "";
+}
+
 ?>
