@@ -1,0 +1,1 @@
+ALTER TABLE whiteboardsaccountsmapping DROP COLUMN color;

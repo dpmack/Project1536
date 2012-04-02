@@ -11,31 +11,10 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 
 if (isset($_POST["title"]))
 {
-	$sql = "
-INSERT INTO whiteboards (title, accountID)
-VALUES ('" . mysql_real_escape_string($_POST["title"]) . "', " . $GLOBALS["accountID"] . ");
-
-INSERT INTO whiteboardsaccountsmapping (whiteboardID, accountID, color)
-VALUES (last_insert_id(), " . $GLOBALS["accountID"] . ", 'df4b26');
-
-";
-	sql_query($sql);
+	createWhiteboard($_POST["title"]);
 }
 
-$sql = "SELECT whiteboards.whiteboardID as whiteboardID, title, (owner.firstName + ', ' + owner.lastName) as authorName FROM whiteboards
-JOIN accounts as owner on owner.accountID = whiteboards.accountID
-JOIN whiteboardsaccountsmapping as wbam on wbam.whiteboardID = whiteboards.whiteboardID
-JOIN accounts on accounts.accountID = wbam.accountID
-WHERE accounts.username='" . $GLOBALS["username"] . "'";
-$result = sql_query($sql);
-
-$whiteboards = array();
-
-while($row = mysql_fetch_assoc($result))
-{
-	$whiteboards[] = $row;
-}
-
+$whiteboards = getMyWhiteboards();
 ?>
 
 <?php
@@ -59,6 +38,11 @@ echo buildHead("Whiteboards",$headContent);
 			echo "<tr><td>" . $whiteboard["title"] . "</td>";
 			echo "<td><a href='whiteboard.php?whiteboardID=" . $whiteboard["whiteboardID"] . "'>View whiteboard</a></td>";
 			echo "<td>" . $whiteboard["authorName"] . "</td></tr>";
+		}
+		
+		if ($whiteboards == array())
+		{
+			echo "<tr><td colspan='3'>You are not part of any whiteboards</td></tr>";
 		}
 	?>
 </table>

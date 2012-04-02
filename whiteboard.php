@@ -11,11 +11,13 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 ?>
 
 <?php
-$headContent = "<script type='text/javascript' src='/script/whiteboard.js'></script>"; //if needing to add extra css files
+$headContent = "<script type='text/javascript' src='script/paper.js'></script>
+<script type='text/paperscript' canvas='drawBoard' src='/script/whiteboard.js'></script>"; //if needing to add extra css files
 echo buildHead("Whiteboard",$headContent);
 ?>
 <body>
 <?php include "helpers/header.php"; ?>
+<input type="hidden" id="accountID" value="<?=$GLOBALS["accountID"]?>" />
 <span onclick="lineTool()">Line</span>
 <span onclick="freeTool()">Free</span><br />
 <canvas id="drawBoard" style="border: 1px solid" width="500" height="400"></canvas>

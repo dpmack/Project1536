@@ -892,4 +892,47 @@ function deletePost($postID)
 	return false;
 }
 
+function getMyWhiteboards()
+{
+	$sql = "SELECT whiteboards.whiteboardID as whiteboardID, title, CONCAT(owner.firstName, ', ', owner.lastName) as authorName FROM whiteboards
+	JOIN accounts as owner on owner.accountID = whiteboards.accountID
+	JOIN whiteboardsaccountsmapping as wbam on wbam.whiteboardID = whiteboards.whiteboardID
+	JOIN accounts on accounts.accountID = wbam.accountID
+	WHERE accounts.username='" . $GLOBALS["username"] . "'";
+	$result = sql_query($sql);
+
+	$whiteboards = array();
+
+	while($row = mysql_fetch_assoc($result))
+	{
+		$whiteboards[] = $row;
+	}
+	
+	return $whiteboards;
+}
+
+function addUserToWhiteboard($whiteboardID, $userID)
+{
+	$sql = "INSERT INTO whiteboardsaccountsmapping (whiteboardID, accountID)
+VALUES ($whiteboardID, $userID)";
+	sql_query($sql);
+}
+
+function createWhiteboard($title)
+{
+	$sql = "INSERT INTO whiteboards (title, accountID)
+VALUES ('" . mysql_real_escape_string($title) . "', " . $GLOBALS["accountID"] . ");";
+	sql_query($sql);
+	
+	$result = sql_query("SELECT LAST_INSERT_ID() as whiteboardID");
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		$whiteboardID = $data["whiteboardID"];
+		
+		addUserToWhiteboard($whiteboardID, $GLOBALS["accountID"]);
+	}
+}
+
 ?>
