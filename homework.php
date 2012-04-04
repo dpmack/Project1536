@@ -34,14 +34,14 @@ foreach($homework as $piece)
 	$timeTilDue = (($piece["dueDate"] - time()) / (60 * 60 * 24));
 	if ($timeTilDue >= 1)
 	{
-		$timeTilDue = round($timeTilDue);
+		$timeTilDue = round($timeTilDue) - 1;
 		if ($timeTilDue >= 2)
 		{
 			$timeTilDue .= " days";
 		}
 		else
 		{
-			$timeTilDue .= " day";
+			$timeTilDue = "Tomorrow";
 		}
 	}
 	else if ($timeTilDue >= 0)
