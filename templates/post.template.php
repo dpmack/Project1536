@@ -30,7 +30,7 @@
 <div class="postContent"><div class="wrapper"><?=$postContent?></div>
 
 <? if(hasPermission("DELETE_REPLY")): ?>
-	<p class="reply"><a href="/deletePost.php?postID=<?=$postID?>&topicID=<?=$topicID?>">Delete</a></p>
+	<a class="reply" href="/deletePost.php?postID=<?=$postID?>&topicID=<?=$topicID?>">Delete</a>
 <? endif; ?>
 	
 </div>

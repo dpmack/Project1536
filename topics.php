@@ -1,10 +1,28 @@
 <?php
 include 'helpers/auth.php';
 include "helpers/head.php";
-include "helpers/embededLogin.php";
 
-$forumID = $_GET['forumID'];
-$dbTopics = getTopics($_GET['forumID']);
+$TOPIC_PAGES_TO_SHOW = 3;
+
+$forumID = filter_input(INPUT_GET,"forumID", FILTER_VALIDATE_INT);
+$show = filter_input(INPUT_GET,"page", FILTER_VALIDATE_INT);
+
+$topicCount = getTopicCount($forumID);
+$numPages = floor(($topicCount - 1)/$MAX_TOPICS_PER_PAGE) + 1;
+
+if ($show == -1)
+{
+	$show = $numPages;
+}
+
+if ($show === null)
+{
+	$show = 1;
+}
+$currentPage = $show;
+$show = ($show - 1) * $MAX_TOPICS_PER_PAGE;
+
+$dbTopics = getTopics($forumID, $show, $MAX_TOPICS_PER_PAGE);
 $topics = array();
 
 foreach ($dbTopics as $dbTopic)
@@ -28,6 +46,50 @@ echo buildHead("Topics",$headContent);
 <?php
 include "helpers/header.php";
 $type = "Topics";
+
+function drawTopicPages($forumID, $numPages, $currentPage, $topicsToShow)
+{ ?>
+<ul class="pages">
+	<? if ($numPages > 1): ?>
+		<li>Page <?=$currentPage?> of <?=$numPages?></li>
+		<? if ($currentPage > 1): ?>
+			<li><a href="/topics.php?forumID=<?=$forumID?>&page=1">First</a></li>
+			<li><a href="/topics.php?forumID=<?=$forumID?>&page=<?=$currentPage-1?>">&lt;</a></li>
+		<? endif; ?>
+		
+		<? if ($currentPage > $topicsToShow + 1): ?>
+			<li>...</li>
+		<? endif; ?>
+		
+		<? for ($pageIndex = $currentPage - $topicsToShow; $pageIndex <= $currentPage + $topicsToShow; $pageIndex++): ?>
+			<? if ($pageIndex >= 1 && $pageIndex <= $numPages): ?>
+				<li>
+					<? if ($pageIndex == $currentPage): ?>
+						<u>
+					<? endif; ?>
+					
+					<a href="/topics.php?forumID=<?=$forumID?>&page=<?=$pageIndex?>"><?=$pageIndex?></a>
+					
+					<? if ($pageIndex == $currentPage): ?>
+						</u>
+					<? endif; ?>
+				</li>
+			<? endif; ?>
+		<? endfor; ?>
+		
+		<? if ($currentPage < $numPages - $topicsToShow): ?>
+			<li>...</li>
+		<? endif; ?>
+		
+		<? if ($currentPage < $numPages): ?>
+			<li><a href="/topics.php?forumID=<?=$forumID?>&page=<?=$currentPage+1?>">&gt;</a></li>
+			<li><a href="/topics.php?forumID=<?=$forumID?>&page=-1">Last</a></li>
+		<? endif; ?>
+	<? endif; ?>
+	<li class="newTopic"><a href="/createTopic.php?forumID=<?=$forumID?>">Start New Topic</a></li>
+</ul><?
+}
+
 include "templates/topicGroup.template.php";
 include "helpers/footer.php";
 

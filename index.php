@@ -21,7 +21,7 @@ $dateFormat = "d/m/Y - g:ia";
 				<?php
 				foreach ($activity as $topic)
 				{
-					echo "<li><a href='thread.php?topicID=" . $topic["topicID"] . "'>[" . 
+					echo "<li><a href='thread.php?topicID=" . $topic["topicID"] . "&page=-1'>[" . 
 					date($dateFormat, $topic["createdDate"]) . "] " . $topic["title"] . "</a></li>";
 				}
 				?>

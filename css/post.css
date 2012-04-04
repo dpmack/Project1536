@@ -107,25 +107,20 @@ dd.postNum
 	margin-left: 2em;	
 }
 
-.reply
+#content .reply 
 {
-	max-width: 100%;
-	width: 100%;
-	float: left;
-	margin-bottom: 0.5em;
-}
-
-#content .reply > a
-{
-	margin-top: 1em;
 	background-color: #2D2D2D;
 	color: white;
 	padding: 0.5em 1em;
-	float: right;
 }
 
-#content .reply > a:hover
+#content a.reply:hover
 {
 	background-color: #0975DB;
 	color: white;
+}
+
+.postContent > a.reply
+{
+	float: right;
 }

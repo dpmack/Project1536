@@ -1,26 +1,50 @@
 <?php
 include 'helpers/auth.php';
 include "helpers/head.php";
-include "helpers/embededLogin.php";
 
-$topicID = $_GET['topicID'];
+$POST_PAGES_TO_SHOW = 2;
 
-$dbPosts = getPosts($_GET['topicID']);
+$topicID = filter_input(INPUT_GET,"topicID", FILTER_VALIDATE_INT);
+$show = filter_input(INPUT_GET,"page", FILTER_VALIDATE_INT);
+
+$postCount = getPostCountFromTopic($topicID);
+$numPages = floor(($postCount - 1)/$MAX_POSTS_PER_PAGE) + 1;
+
+if ($show == -1)
+{
+	$show = $numPages;
+}
+
+if ($show === null)
+{
+	$show = 1;
+}
+$currentPage = $show;
+$show = ($show - 1) * $MAX_POSTS_PER_PAGE;
+
+$dbPosts = getPosts($topicID, $show, $MAX_POSTS_PER_PAGE);
 $posts = array();
 $userPosts = array();
+$userNames = array();
 
 // DD MM YYYY HH:MM
 $dateFormat = "d/m/Y - g:ia";
 foreach ($dbPosts as $dbPost)
 {
 
-	//$postID = $dbPost["postID"];
-	$name = getNamesByAccountID($dbPost["accountID"]);
+	$postID = $dbPost["postID"];
 	
-	if ($name)
+	if (!isset($userNames[$dbPost["accountID"]]))
 	{
-		$name = implode(' ', $name);
+		$name = getNamesByAccountID($dbPost["accountID"]);
+		
+		if ($name)
+		{
+			$name = implode(' ', $name);
+		}
+		$userNames[$dbPost["accountID"]] = $name;
 	}
+	$name = $userNames[$dbPost["accountID"]];
 	
 	if (!isset($userPosts[$dbPost["accountID"]]))
 	{
@@ -37,7 +61,7 @@ foreach ($dbPosts as $dbPost)
 	}
 	$posts[] = array ("userName" => $name, "postDateCreated" => $createdDate, 
 						"userPostCount" => $userPosts[$dbPost["accountID"]], "postDateEdited" => $modifiedDate,
-						"postContent" => $content, "postID" => $dbPost["postID"], "topicID" => $topicID);
+						"postContent" => $content, "postID" => $postID, "topicID" => $topicID);
 }
 
 $topicInfo = getTopicInfo($_GET['topicID']);
@@ -54,13 +78,56 @@ echo buildHead("View Topic",$headContent);
 <body>
 <?php
 include "helpers/header.php";
-?>
 
-<p class="reply"><a href="/createPost.php?topicID=<?=$topicID?>">Reply</a></p>
+function drawPageNumbers($topicID, $currentPage, $numPages, $numToShow)
+{ ?>
+<ul class="pages">
+	<? if ($numPages > 1): ?>
+		<li>Page <?=$currentPage?> of <?=$numPages?></li>
+		<? if ($currentPage > 1): ?>
+			<li><a href="/thread.php?topicID=<?=$topicID?>&page=1">First</a></li>
+			<li><a href="/thread.php?topicID=<?=$topicID?>&page=<?=$currentPage-1?>">&lt;</a></li>
+		<? endif; ?>
+		
+		<? if ($currentPage > $numToShow + 1): ?>
+			<li>...</li>
+		<? endif; ?>
+		
+		<? for ($pageIndex = $currentPage - $numToShow; $pageIndex <= $currentPage + $numToShow; $pageIndex++): ?>
+			<? if ($pageIndex >= 1 && $pageIndex <= $numPages): ?>
+				<li>
+					<? if ($pageIndex == $currentPage): ?>
+						<u>
+					<? endif; ?>
+					
+					<a href="/thread.php?topicID=<?=$topicID?>&page=<?=$pageIndex?>"><?=$pageIndex?></a>
+					
+					<? if ($pageIndex == $currentPage): ?>
+						</u>
+					<? endif; ?>
+				</li>
+			<? endif; ?>
+		<? endfor; ?>
+		
+		<? if ($currentPage < $numPages - $numToShow): ?>
+			<li>...</li>
+		<? endif; ?>
+		
+		<? if ($currentPage < $numPages): ?>
+			<li><a href="/thread.php?topicID=<?=$topicID?>&page=<?=$currentPage+1?>">&gt;</a></li>
+			<li><a href="/thread.php?topicID=<?=$topicID?>&page=<?=$numPages?>">Last</a></li>
+		<? endif; ?>
+	<? endif; ?>
+	<li class="replyItem"><a class="reply" href="/createPost.php?topicID=<?=$topicID?>">Reply</a></li>
+</ul><?
+}
+
+drawPageNumbers($topicID, $currentPage, $numPages, $POST_PAGES_TO_SHOW);
+?>
 
 <ol id="posts">
 	<?php
-	$i = 1;
+	$i = $show + 1;
 	foreach($posts as $post)
 	{
 		$postNumber = $i;
@@ -75,7 +142,7 @@ include "helpers/header.php";
 	?>
 </ol>
 
-<p class="reply"><a href="/createPost.php?topicID=<?=$topicID?>">Reply</a></p>
+<? drawPageNumbers($topicID, $currentPage, $numPages, $POST_PAGES_TO_SHOW); ?>
 
 <?php include "helpers/footer.php"; ?>
 

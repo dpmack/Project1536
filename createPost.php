@@ -23,7 +23,7 @@ $crumbs = array(array("href" => "forums.php", "name" => "Forums"),
 if (isset($_POST['postContent']))
 {
 	createPost($topicID, $_POST['postContent']);
-	header("Location: thread.php?topicID=$topicID");
+	header("Location: thread.php?topicID=$topicID&page=-1");
 }
 ?>
 

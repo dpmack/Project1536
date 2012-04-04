@@ -7,5 +7,7 @@ $sqlDB = "a5621243_staging";
 $siteEnv = "development";
 $sqlDebugMode = 2;
 $MyBCITDelta = -9000;
+$MAX_POSTS_PER_PAGE = 10;
+$MAX_TOPICS_PER_PAGE = 15;
 
 ?>

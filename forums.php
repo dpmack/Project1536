@@ -1,7 +1,6 @@
 <?php
 include 'helpers/auth.php';
 include "helpers/head.php";
-include "helpers/embededLogin.php";
 
 $dbForums = getForums();
 $forums = array();

@@ -17,12 +17,9 @@
 	<div class="groupableSections">
 		<div class="section">
 
-		<!--<h2 class="first"><?=$type; ?></h2> !-->
 		<?php if ($type == "Topics" && $forumInfo["forumTitle"] != "News")
 		{
-			?>
-			<p class="newTopic"><a href="/createTopic.php?forumID=<?=$forumID?>">Start New Topic</a></p>
-			<?php
+			drawTopicPages($forumID, $numPages, $currentPage, $TOPIC_PAGES_TO_SHOW);
 		}
 		?>
 		<ul id="topics">

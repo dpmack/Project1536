@@ -190,21 +190,24 @@ function getForums()
 }
 
 // Returns false on error
-function getTopics($id)
+function getTopics($forumID, $first, $length)
 {
-	$id = filter_var($id, FILTER_VALIDATE_INT);
-	if (!$id)
+	$forumID = filter_var($forumID, FILTER_VALIDATE_INT);
+	if (!$forumID)
 	{
 		return false;
 	}
 	
+	$end = $first + $length;
+	
 	$sql = "SELECT * FROM (SELECT topics.topicID, topics.accountID, title, isLocked, isSticky, posts.createdDate
 FROM topics 
 JOIN posts on topics.topicID = posts.topicID
-WHERE forumID = $id
+WHERE forumID = $forumID
 ORDER BY posts.createdDate DESC) as temp
 GROUP BY temp.topicID
-ORDER BY temp.createdDate DESC";
+ORDER BY temp.createdDate DESC
+LIMIT $end";
 	$result = sql_query($sql);
 	if ($result === false)
 	{
@@ -212,15 +215,14 @@ ORDER BY temp.createdDate DESC";
 	}
 	
 	$return = array();
-	
+	$index = 0;
 	while ($row = mysql_fetch_assoc($result))
 	{
-		if ($row === false)
+		if ($index >= $first)
 		{
-			return false;
+			$return[] = $row;
 		}
-		
-		$return[] = $row;
+		$index += 1;
 	}
 	
 	return $return;		
@@ -245,7 +247,7 @@ function getNamesByAccountID($id)
 	return mysql_fetch_assoc($result);	
 }
 
-function getPosts($id)
+function getPosts($id, $first, $length)
 {
 	$id = filter_var($id, FILTER_VALIDATE_INT);
 	if (!$id)
@@ -253,8 +255,12 @@ function getPosts($id)
 		return false;
 	}
 	
+	$end = $first + $length;
+	
 	$sql = "SELECT postID, accountID, topicID, content, createdDate, modifiedDate 
-	FROM posts WHERE topicID = $id";
+FROM posts WHERE topicID = $id
+ORDER BY createdDate ASC
+LIMIT $end";
 	$result = sql_query($sql);
 	if ($result === false)
 	{
@@ -262,15 +268,14 @@ function getPosts($id)
 	}
 	
 	$return = array();
-	
+	$index = 0;
 	while ($row = mysql_fetch_assoc($result))
 	{
-		if ($row === false)
+		if ($index >= $first)
 		{
-			return false;
+			$return[] = $row;
 		}
-		
-		$return[] = $row;
+		$index += 1;
 	}
 	
 	return $return;	
