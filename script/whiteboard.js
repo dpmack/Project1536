@@ -1,17 +1,22 @@
+paper.install(window);
+
 var paths = {};
 var debug;
 var socket;
-var wsURL = "ws://localhost:9000";
+var wsURL = "ws://192.168.0.13:9000";
 var loggedIn = false;
 var whiteboard;
 var pages = {};
+var page = 0;
 var accountID;
 var lastPath = -1;
 
 $(document).ready(function(){
+    paper.setup("drawBoard");
+
 	debug = $("#debug");
 	
-	whiteboard = 2; //$("#whiteboardID").value;
+	whiteboard = $("#whiteboardID").val();
 	accountID = $("#accountID").val();
 	paths[accountID] = {}
 	
@@ -33,6 +38,7 @@ $(document).ready(function(){
 	{
 		log("Closed.");
 		loggedIn = false;
+		$("#whiteboardDisplay").html("<br />Whiteboard connection closed. Try refreshing page to re-connect.");
 	};
 		
 	socket.onerror = function(error)
@@ -42,7 +48,7 @@ $(document).ready(function(){
 		
 	socket.onmessage = function(msg)
 	{
-		msg.data += " ";
+		msg.data;
 		log(">>> " + msg.data);
 		if (loggedIn == false)
 		{
@@ -50,6 +56,8 @@ $(document).ready(function(){
 			{
 				send("SELECT " + whiteboard);
 				loggedIn = true;
+				$("#whiteboardDisplay").show();
+				$("#loadingWhiteboard").hide();
 			}
 			else
 			{
@@ -58,34 +66,88 @@ $(document).ready(function(){
 		}
 		else
 		{
-			index = msg.data.indexOf(" ");
+			index = (msg.data + " ").indexOf(" ");
 			cmd = msg.data.slice(0,index);
 			data = msg.data.slice(index+1);
 			
 			if (cmd == "CLEAR")
 			{
-				for (i = 0; i < lastPath; i++)
+				for (var personID in paths)
 				{
-					paths[i].removeSegments();
+					for (var shapeID in paths[personID])
+					{
+						paths[personID][shapeID].removeSegments();
+					}
 				}
+				paths = {};
 				paths[accountID] = {}
 				lastPath = -1;
+				view.draw();
 			}
 			else if (cmd == "PAGES")
 			{
-				//load pages
+				pagesData = JSON.parse(data);
+				pageButtons = $("#pageButtons");
+				pageButtons.html("");
+				
+				for (i = 0; i < pagesData.length; i++)
+				{
+					pageButton = $("<button type='button' onclick='gotoPage(" + (i + 1) + ")'>" + pagesData[i] + "</button>");
+					
+					if (i == page)
+					{
+						pageButton.addClass("current");
+					}
+					
+					pageButtons.append(pageButton);
+				}
 			}
 			else if (cmd  == "UPDATE")
 			{
-				//get page data
+				pagesData = JSON.parse(data);
+				lastPath = -1;
+				
+				for (var personID in pagesData)
+				{
+					paths[personID] = {};
+					
+					for (var shapeID in pagesData[personID])
+					{
+						if (personID == accountID)
+						{
+							lastPath += 1;
+						}
+						
+						paths[personID][shapeID] = new Path();
+						paths[personID][shapeID].strokeColor = 'black';
+						
+						shape = pagesData[personID][shapeID];
+						
+						for (var segIndex in shape)
+						{
+							segment = shape[segIndex];
+							
+							point = new Point(segment["point"]["x"], segment["point"]["y"]);
+							handleIn = (typeof(segment["handleIn"]) != "undefined") ? new Point(segment["handleIn"]["x"], segment["handleIn"]["y"]) : null;
+							handleOut = (typeof(segment["handleOut"]) != "undefined") ? new Point(segment["handleOut"]["x"], segment["handleOut"]["y"]) : null;
+							
+							paths[personID][shapeID].add(new Segment(point, handleIn, handleOut));
+						}
+					}
+				}
+				view.draw();
 			}
 			else if (cmd  == "JOINED")
 			{
 				//person joined whiteboard
 				personData = data.split(" ");
-				if (typeof(paths[personData[0]]) == "undefined")
+				personID = personData[0];
+				personPage = personData[1];
+				personName = personData[2];
+				
+				if (typeof(paths[personID]) == "undefined")
 				{
-					paths[personData[0]] = {};
+					paths[personID] = {};
 				}
 			}
 			else if (cmd  == "MOVED")
@@ -95,21 +157,35 @@ $(document).ready(function(){
 			else if (cmd  == "PNT")
 			{
 				pntData = data.split(" ");
-				if (typeof(paths[pntData[0]][pntData[1]]) == "undefined")
+				personID = pntData[0];
+				shapeID = pntData[1];
+				x = parseInt(pntData[2]);
+				y = parseInt(pntData[3]);
+				
+				if (typeof(paths[personID]) == "undefined")
 				{
-					paths[pntData[0]][pntData[1]] = new Path();
-					paths[pntData[0]][pntData[1]].strokeColor = 'black';
+					paths[personID] = {}
 				}
-				paths[pntData[0]][pntData[1]].add(new Point(pntData[2], pntData[3]));
-				paper.view.draw();
+				
+				if (typeof(paths[personID][shapeID]) == "undefined")
+				{
+					paths[personID][shapeID] = new Path();
+					paths[personID][shapeID].add(new Point(x, y));
+					paths[personID][shapeID].strokeColor = 'black';
+				}
+				else
+				{
+					paths[personID][shapeID].add(new Point(x, y));
+				}
+				view.draw();
 			}
 			else if (cmd == "END")
 			{
 				pntData = data.split(" ");
-				log("B" + paths[pntData[0]][pntData[1]].segments);
-				paths[pntData[0]][pntData[1]].simplify(10);
-				log("A" + paths[pntData[0]][pntData[1]].segments);
-				paper.view.draw();
+				personID = pntData[0];
+				shapeID = pntData[1];
+				paths[personID][shapeID].simplify(10);
+				view.draw();
 			}
 			else
 			{
@@ -117,6 +193,54 @@ $(document).ready(function(){
 			}
 		}
 	};
+	
+	var tool = new Tool();
+
+	tool.onMouseDown = function(event) {
+		// If we produced a path before, deselect it:
+		//if (path) {
+		//    path.selected = false;
+		//}
+
+		// Create a new path and set its stroke color to black:
+		lastPath += 1;
+		paths[accountID][lastPath] = new Path();
+		paths[accountID][lastPath].add(event.point);
+		paths[accountID][lastPath].strokeColor = 'black';
+		
+		send("PNT " + lastPath + " " + event.point.x + " " + event.point.y);
+
+		// Select the path, so we can see its segment points:
+		//path.fullySelected = true;
+	}
+
+	// While the user drags the mouse, points are added to the path
+	// at the position of the mouse:
+	tool.onMouseDrag = function(event) {
+		paths[accountID][lastPath].add(event.point);
+		
+		send("PNT " + lastPath + " " + event.point.x + " " + event.point.y);
+
+		// Update the content of the text item to show how many
+		// segments it has:
+		//textItem.content = 'Segment count: ' + path.segments.length;
+	}
+
+	// When the mouse is released, we simplify the path:
+	tool.onMouseUp = function(event) {
+		// When the mouse is released, simplify it:
+		paths[accountID][lastPath].simplify(10);
+
+		// Select the path, so we can see its segments:
+		//path.fullySelected = true;
+
+		send("END " + lastPath + " [" + paths[accountID][lastPath].segments + "]");
+
+		//var newSegmentCount = path.segments.length;
+		//var difference = segmentCount - newSegmentCount;
+		//var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
+		//textItem.content = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
+	}
 });
 
 //http://www.quirksmode.org/js/cookies.html
@@ -133,7 +257,7 @@ function readCookie(name) {
 
 function log(msg)
 {
-	debug.html(debug.html() + msg + "<br />");
+	//debug.html(debug.html() + msg + "<br />");
 }
 
 function send(msg)
@@ -146,52 +270,20 @@ function send(msg)
 textItem.fillColor = 'black';
 textItem.content = 'Click and drag to draw a line.';*/
 
-function onMouseDown(event) {
-    // If we produced a path before, deselect it:
-    //if (path) {
-    //    path.selected = false;
-    //}
-
-    // Create a new path and set its stroke color to black:
-	lastPath += 1;
-    paths[accountID][lastPath] = new Path();
-    paths[accountID][lastPath].add(event.point);
-    paths[accountID][lastPath].strokeColor = 'black';
-	
-	send("PNT " + lastPath + " " + event.point.x + " " + event.point.y);
-
-    // Select the path, so we can see its segment points:
-    //path.fullySelected = true;
+function newPage()
+{
+	name = prompt("Page Name");
+	if (name != null)
+	{
+		send("CREATE " + name);
+	}
 }
 
-// While the user drags the mouse, points are added to the path
-// at the position of the mouse:
-function onMouseDrag(event) {
-    paths[accountID][lastPath].add(event.point);
-	
-	send("PNT " + lastPath + " " + event.point.x + " " + event.point.y);
-	log("PNTDATA " + event.point);
-
-    // Update the content of the text item to show how many
-    // segments it has:
-    //textItem.content = 'Segment count: ' + path.segments.length;
+function gotoPage(pageNum)
+{
+	send("CHANGE " + pageNum);
 }
 
-// When the mouse is released, we simplify the path:
-function onMouseUp(event) {
-    // When the mouse is released, simplify it:
-    paths[accountID][lastPath].simplify(10);
-
-    // Select the path, so we can see its segments:
-    //path.fullySelected = true;
-
-	send("END " + lastPath + " " + paths[accountID][lastPath].segments);
-
-    //var newSegmentCount = path.segments.length;
-    //var difference = segmentCount - newSegmentCount;
-    //var percentage = 100 - Math.round(newSegmentCount / segmentCount * 100);
-    //textItem.content = difference + ' of the ' + segmentCount + ' segments were removed. Saving ' + percentage + '%';
-}
 
 /*var tool = "line";
 var canvas;

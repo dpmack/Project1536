@@ -913,7 +913,7 @@ function getMyWhiteboards()
 
 function addUserToWhiteboard($whiteboardID, $userID)
 {
-	$sql = "INSERT INTO whiteboardsaccountsmapping (whiteboardID, accountID)
+	$sql = "INSERT INTO whiteboardsAccountsMapping (whiteboardID, accountID)
 VALUES ($whiteboardID, $userID)";
 	sql_query($sql);
 }
@@ -932,7 +932,37 @@ VALUES ('" . mysql_real_escape_string($title) . "', " . $GLOBALS["accountID"] . 
 		$whiteboardID = $data["whiteboardID"];
 		
 		addUserToWhiteboard($whiteboardID, $GLOBALS["accountID"]);
+		
+		mkdir("whiteboards\\boards\\" . $whiteboardID);
+		file_put_contents("whiteboards\\boards\\" . $whiteboardID . "\\pages.json", '["Default"]');
 	}
+}
+
+function getAccountIDOf($username)
+{
+	$sql = "SELECT accountID from accounts
+WHERE username=\"" . strtoupper(mysql_real_escape_string($username)) . "\"";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		$data = mysql_fetch_array($result, MYSQL_ASSOC);
+		return $data["accountID"];
+	}
+	return false;
+}
+
+function isOwnerOfWhiteboard($whiteboardID, $accountID)
+{
+	$sql = "SELECT 1 from whiteboards
+WHERE accountID=$accountID and whiteboardID=$whiteboardID";
+	$result = sql_query($sql);
+	
+	if (mysql_num_rows($result) == 1)
+	{
+		return true;
+	}
+	return false;
 }
 
 ?>

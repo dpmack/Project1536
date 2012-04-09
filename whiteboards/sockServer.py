@@ -23,8 +23,8 @@ class WhiteboardServerProtocol(WebSocketServerProtocol):
       whiteboard.processMessage(self, msg)
 
 if __name__ == '__main__':
-   log.startLogging(sys.stdout)
-   debug = True
+   #log.startLogging(sys.stdout)
+   debug = False
 
    factory = WebSocketServerFactory("ws://localhost:9000",
                                     debug = debug,

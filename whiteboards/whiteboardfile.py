@@ -32,7 +32,7 @@ class WhiteboardPage:
 
     def setShape(self, account, shape, shapeData):
         self.lastActive = time.time()
-        self.shapes[account][shape] = shapeData
+        self.shapes[account][shape] = json.loads(shapeData)
 
     def inactive(self):
         return time.time() - self.lastActive
@@ -58,7 +58,7 @@ class WhiteboardFile:
         self.lastActive = time.time()
         
         self.pagesData.append(title)
-        pageNum = self.pagesData.index(title)
+        pageNum = self.pagesData.index(title) + 1
         self.pages[pageNum] = WhiteboardPage(self.boardID, pageNum)
         return pageNum
 
@@ -72,6 +72,9 @@ class WhiteboardFile:
         if not(pageNum in self.pages):
             self.pages[pageNum] = WhiteboardPage(self.boardID, pageNum)
         return self.pages[pageNum]
+
+    def pageExists(self, pageNum):
+        return len(self.pagesData) >= pageNum
 
     def inactive(self):
         return time.time() - self.lastActive

@@ -1,0 +1,22 @@
+#members
+{
+	display: inline-block;
+	vertical-align: top;
+}
+
+#tools
+{
+	float: left;
+	padding: 2px;
+	display: inline;
+}
+
+#pages
+{
+	padding: 2px;
+}
+
+#pageButtons
+{
+	display: inline;
+}
