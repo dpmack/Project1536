@@ -15,6 +15,9 @@ if (isset($_POST["title"]))
 }
 
 $whiteboards = getMyWhiteboards();
+
+$crumbs = array(array("href" => "myhub.php", "name" => "MYHub"),
+				array("href" => "whiteboards.php", "name" => "Whiteboards"));
 ?>
 
 <?php
@@ -24,8 +27,10 @@ echo buildHead("Whiteboards",$headContent);
 <body>
 <?php include "helpers/header.php"; ?>
 
+<br />
+
 <h2>My whiteboards</h2>
-<table border="1">
+<table id="whiteboards">
 	<tr>
 		<th>Title</th>
 		<th>View</th>
@@ -46,6 +51,9 @@ echo buildHead("Whiteboards",$headContent);
 		}
 	?>
 </table>
+
+<br />
+<br />
 
 <h2>Create whiteboard</h2>
 <form action="whiteboards.php" method="post">

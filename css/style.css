@@ -210,3 +210,8 @@ ul.pages > li.replyItem
 {
 	margin-left: 1em;
 }
+
+#whiteboards td, #whiteboards th
+{
+	padding: 5px;
+}

@@ -23,6 +23,9 @@ if ($addID != null && $owner)
 }
 
 $colors = array(array("Black","000000"), array("Red", "FF0000"));
+
+$crumbs = array(array("href" => "myhub.php", "name" => "MYHub"),
+				array("href" => "whiteboards.php", "name" => "Whiteboards"));
 ?>
 
 <?php
