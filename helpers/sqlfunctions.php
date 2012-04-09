@@ -875,7 +875,7 @@ function getMyWhiteboards()
 {
 	$sql = "SELECT whiteboards.whiteboardID as whiteboardID, title, CONCAT(owner.firstName, ', ', owner.lastName) as authorName FROM whiteboards
 	JOIN accounts as owner on owner.accountID = whiteboards.accountID
-	JOIN whiteboardsaccountsmapping as wbam on wbam.whiteboardID = whiteboards.whiteboardID
+	JOIN whiteboardsAccountsMapping as wbam on wbam.whiteboardID = whiteboards.whiteboardID
 	JOIN accounts on accounts.accountID = wbam.accountID
 	WHERE accounts.username='" . $GLOBALS["username"] . "'";
 	$result = sql_query($sql);
