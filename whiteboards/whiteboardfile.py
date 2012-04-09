@@ -46,6 +46,17 @@ class WhiteboardFile:
     def __init__(self, boardID):
         self.boardID = boardID
         self.path = "boards/%s/pages.json" % self.boardID
+
+        if not(os.path.exists("boards")):
+            os.mkdir("boards")
+
+        if not(os.path.exists("boards/%s" % self.boardID)):
+            os.mkdir("boards/%s" % self.boardID)
+
+        if not(os.path.exists(self.path)):
+            file = open(self.path, "wb")
+            file.write('["Default"]')
+            file.close()
         
         file = open(self.path, "rb")
         self.pagesData = json.load(file)
