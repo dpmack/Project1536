@@ -7,7 +7,10 @@ class MyDaemon(Daemon):
         sockServer.main()
  
 if __name__ == "__main__":
-    daemon = MyDaemon('/tmp/daemon-whiteboardServer.pid', stdout="stdout.txt", stderr="stderr.txt")
+    curDir = os.path.realpath(".")
+    daemon = MyDaemon('/tmp/daemon-whiteboard-server.pid',
+                      stdout=os.path.join(curDir, "stdout.txt"),
+                      stderr=os.path.join(curDir, "stderr.txt"))
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             daemon.start()
