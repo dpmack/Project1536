@@ -1,4 +1,4 @@
-import sys,threading
+import sys,threading,os
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -11,7 +11,7 @@ from autobahn.websocket import WebSocketServerFactory, \
 
 from WhiteboardServer import WhiteboardServer
 
-def main():
+def main(curDir):
     class WhiteboardServerProtocol(WebSocketServerProtocol):
         def onConnect(self, connectionRequest):
             whiteboard.addClient(self)
@@ -20,6 +20,8 @@ def main():
         def onMessage(self, msg, binary):
             whiteboard.processMessage(self, msg)
 
+    os.chdir(curDir)
+    
     #log.startLogging(sys.stdout)
     debugWS = False
     debugWhiteboard = False
@@ -39,3 +41,5 @@ def main():
 
     #threading.Thread(None, reactor.run, None).start()
     reactor.run()
+
+    whiteboard.close()

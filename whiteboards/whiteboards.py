@@ -1,13 +1,14 @@
 import sys, time, os
 from daemon import Daemon
 import sockServer
+
+curDir = os.path.realpath(".")
  
 class MyDaemon(Daemon):
     def run(self):
-        sockServer.main()
+        sockServer.main(curDir)
  
 if __name__ == "__main__":
-    curDir = os.path.realpath(".")
     daemon = MyDaemon('/tmp/daemon-whiteboard-server.pid',
                       stdout=os.path.join(curDir, "stdout.txt"),
                       stderr=os.path.join(curDir, "stderr.txt"))

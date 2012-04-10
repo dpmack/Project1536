@@ -1,7 +1,7 @@
 import os, threading, pickle, time, json, atexit
 
-KEEP_IN_MEMORY = 60
-GC_POLL = 60
+KEEP_IN_MEMORY = 20
+GC_POLL = 10
 
 class WhiteboardPage:
     def __init__(self, boardID, pageNum):
