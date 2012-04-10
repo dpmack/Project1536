@@ -1,4 +1,4 @@
-import os, threading, pickle, time, json
+import os, threading, pickle, time, json, atexit
 
 KEEP_IN_MEMORY = 60
 GC_POLL = 60
@@ -110,7 +110,10 @@ class WhiteboardFiles:
         self.gc = threading.Thread(None, self.gcThread, None)
         self.gc.start()
 
+        atexit.register(self.close)
+
     def close(self):
+        print "Closing whiteboard file."
         self.gc.stop()
         for whiteboard in self.whiteboards:
             whiteboard.flush()

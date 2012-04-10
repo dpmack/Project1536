@@ -11,32 +11,30 @@ from autobahn.websocket import WebSocketServerFactory, \
 
 from WhiteboardServer import WhiteboardServer
 
-whiteboard = WhiteboardServer()
-
 class WhiteboardServerProtocol(WebSocketServerProtocol):
+    def onConnect(self, connectionRequest):
+        whiteboard.addClient(self)
+        return None
 
-   def onConnect(self, connectionRequest):
-      whiteboard.addClient(self)
-      return None
-
-   def onMessage(self, msg, binary):
-      whiteboard.processMessage(self, msg)
+    def onMessage(self, msg, binary):
+        whiteboard.processMessage(self, msg)
 
 def main():
-   #log.startLogging(sys.stdout)
-   debug = False
+    #log.startLogging(sys.stdout)
+    whiteboard = WhiteboardServer()
+    debug = False
 
-   factory = WebSocketServerFactory("ws://localhost:9000",
-                                    debug = debug,
-                                    debugCodePaths = debug)
+    factory = WebSocketServerFactory("ws://localhost:9000",
+                                     debug = debug,
+                                     debugCodePaths = debug)
 
-   factory.protocol = WhiteboardServerProtocol
-   #factory.setProtocolOptions(allowHixie76 = True)
-   listenWS(factory)
+    factory.protocol = WhiteboardServerProtocol
+    #factory.setProtocolOptions(allowHixie76 = True)
+    listenWS(factory)
 
-   webdir = File(".")
-   web = Site(webdir)
-   reactor.listenTCP(8080, web)
+    webdir = File(".")
+    web = Site(webdir)
+    reactor.listenTCP(8080, web)
 
-   #threading.Thread(None, reactor.run, None).start()
-   reactor.run()
+    #threading.Thread(None, reactor.run, None).start()
+    reactor.run()
