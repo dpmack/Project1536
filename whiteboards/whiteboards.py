@@ -7,7 +7,7 @@ class MyDaemon(Daemon):
         sockServer.main()
  
 if __name__ == "__main__":
-    daemon = MyDaemon('/tmp/daemon-whiteboardServer.pid')
+    daemon = MyDaemon('/tmp/daemon-whiteboardServer.pid', stdout="stdout.txt", stderr="stderr.txt")
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             daemon.start()
