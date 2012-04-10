@@ -22,7 +22,7 @@ class WhiteboardServerProtocol(WebSocketServerProtocol):
    def onMessage(self, msg, binary):
       whiteboard.processMessage(self, msg)
 
-if __name__ == '__main__':
+def main():
    #log.startLogging(sys.stdout)
    debug = False
 
