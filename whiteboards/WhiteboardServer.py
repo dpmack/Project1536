@@ -2,7 +2,8 @@ from whiteboardfile import WhiteboardFiles
 from database import dbConnection
 
 class WhiteboardServer:
-    def __init__(self):
+    def __init__(self, debug = False):
+        self.debug = debug
         self.clients = {}
         self.db = dbConnection()
         self.whiteboards = WhiteboardFiles()
@@ -15,6 +16,7 @@ class WhiteboardServer:
                                 "page":None}
         
     def broadcastFrom(self, sentFrom, message, pageOnly=False):
+        if self.debug: print "OUT <<<", message
         sentFromData = self.clients[sentFrom]
         for client in self.clients:
             clientData = self.clients[client]
@@ -81,7 +83,7 @@ class WhiteboardServer:
         self.broadcastFrom(client, "END %s %s" % (accountID, shapeID), True)
     
     def processMessage(self, client, msg):
-        #print "IN >>>", msg
+        if self.debug: print "IN >>>", msg
         cmd, data = msg.split(" ", 1)
 
         if cmd == "QUIT":
@@ -124,5 +126,5 @@ class WhiteboardServer:
             shapeID, data = data.split(" ", 1)
             self.endShape(client, shapeID, data)
         else:
-            print "Unknown command '%s'" % msg
+            if self.debug: print "Unknown command '%s'" % msg
             self.close(client)

@@ -21,11 +21,12 @@ def main():
             whiteboard.processMessage(self, msg)
 
     #log.startLogging(sys.stdout)
-    whiteboard = WhiteboardServer()
-    debug = False
+    debugWS = False
+    debugWhiteboard = False
+    whiteboard = WhiteboardServer(debugWhiteboard)
 
     factory = WebSocketServerFactory("ws://localhost:9000",
-                                     debug = debug,
+                                     debug = debugWS,
                                      debugCodePaths = debug)
 
     factory.protocol = WhiteboardServerProtocol
