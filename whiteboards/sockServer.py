@@ -27,7 +27,7 @@ def main():
 
     factory = WebSocketServerFactory("ws://localhost:9000",
                                      debug = debugWS,
-                                     debugCodePaths = debug)
+                                     debugCodePaths = debugWS)
 
     factory.protocol = WhiteboardServerProtocol
     #factory.setProtocolOptions(allowHixie76 = True)
