@@ -107,6 +107,8 @@ class WhiteboardFile:
 class WhiteboardFiles:
     def __init__(self):
         self.whiteboards = {}
+        self.running = True
+        
         self.gc = threading.Thread(None, self.gcThread, None)
         self.gc.start()
 
@@ -118,6 +120,7 @@ class WhiteboardFiles:
         for whiteboard in self.whiteboards:
             whiteboard.flush()
         self.whiteboards = {}
+        self.running = False
 
     def getBoard(self, boardID):
         if not(boardID in self.whiteboards):
@@ -125,7 +128,7 @@ class WhiteboardFiles:
         return self.whiteboards[boardID]
 
     def gcThread(self):
-        while True:
+        while self.running:
             for whiteboard in self.whiteboards.keys():
                 self.whiteboards[whiteboard].gc()
                 if (self.whiteboards[whiteboard].inactive() > KEEP_IN_MEMORY):

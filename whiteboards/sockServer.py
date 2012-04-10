@@ -11,15 +11,15 @@ from autobahn.websocket import WebSocketServerFactory, \
 
 from WhiteboardServer import WhiteboardServer
 
-class WhiteboardServerProtocol(WebSocketServerProtocol):
-    def onConnect(self, connectionRequest):
-        whiteboard.addClient(self)
-        return None
-
-    def onMessage(self, msg, binary):
-        whiteboard.processMessage(self, msg)
-
 def main():
+    class WhiteboardServerProtocol(WebSocketServerProtocol):
+        def onConnect(self, connectionRequest):
+            whiteboard.addClient(self)
+            return None
+
+        def onMessage(self, msg, binary):
+            whiteboard.processMessage(self, msg)
+
     #log.startLogging(sys.stdout)
     whiteboard = WhiteboardServer()
     debug = False
