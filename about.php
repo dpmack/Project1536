@@ -1,6 +1,6 @@
 <?php
 
-// hello world
+// hello world - hi there
 include 'helpers/auth.php';
 include "helpers/head.php";
 include "helpers/embededLogin.php";
