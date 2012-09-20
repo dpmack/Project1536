@@ -30,12 +30,14 @@
 				<dl>
 					<dt>Title</dt>
 					<dd><a href="<?=$topicURL; ?>"> <?=$title; ?> </a></dd>
-					<?php if(isset($subTopicCount)): ?>
+					<!--< ?php if(isset($subTopicCount)): ?>
 					<dt>Topics</dt>
-					<dd> <?=$subTopicCount; ?> </dd>
-					<?php endif; ?>
+					<dd> < ?=$subTopicCount; ?> </dd>
+					< ?php endif; ?>!-->
+					<?php if ($postCount): ?>
 					<dt>Posts</dt>
 					<dd> <?=$postCount; ?> </dd>
+					<?php endif; ?>
 				</dl>
 			</li>
 			

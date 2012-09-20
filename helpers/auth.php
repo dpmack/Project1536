@@ -1,7 +1,11 @@
 <?php
-date_default_timezone_set('America/Vancouver');
+include 'sql/opensql.php';
 
-include 'opensql.php';
+if($SSL_ENABLED && $_SERVER["HTTPS"] != "on")
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
 
 define("MIN_PASSWORD_LENGTH", 8);
 
@@ -14,7 +18,7 @@ $GLOBALS['message'] = "";
 $GLOBALS['ticket'] = "";
 
 function generateSalt()
-{	
+{
 	return md5(uniqid(rand(), true));
 }
 
@@ -52,41 +56,47 @@ function newTicket($accountID, $passwordHash)
 	{
 		$newTick = makeTicket($passwordHash);
 	}
-	while (mysql_num_rows(sql_query("SELECT 1 FROM tickets WHERE ticket='" . $newTick . "'")) > 0);
-		
+	while (mysql_num_rows(SQL::SingleQuery("SELECT 1 FROM tickets WHERE ticket=" . SQL::Safe($newTick))) > 0);
+	
+	$success = true;
+	
 	if (isset($_COOKIE["ticket"]))
 	{
-		$sql = "UPDATE tickets
-SET ticket='" . $newTick . "', lastActivity=" . time() . "
-WHERE ticket='" . mysql_real_escape_string($_COOKIE["ticket"]) . "'";
+		SQL::SingleQuery("UPDATE tickets
+SET ticket=" . SQL::Safe($newTick) . ", lastActivity=" . SQL::SafeInt(time()) . "
+WHERE ticket=" . SQL::Safe($_COOKIE["ticket"]));
+		if (mysql_affected_rows(SQL::$Link) !== 1)
+		{
+			$success = false;
+		}
 	}
 	else
 	{
-		$sql = "INSERT INTO tickets (ticket, clientHash, lastActivity, accountID)
-VALUES ('" . $newTick . "', '" . browserSig() . "', " . time() . ", " . $accountID . ")";
+		SQL::SingleQuery("INSERT INTO tickets (ticket, clientHash, lastActivity, accountID)
+VALUES (" . SQL::Safe($newTick) . ", " . SQL::Safe(browserSig()) . ", " . SQL::SafeInt(time()) . ", " . SQL::SafeInt($accountID) . ")");
 	}
 	
-	sql_query($sql);
-	$GLOBALS['ticket'] = $newTick;
-	setcookie('ticket',$newTick,$_SERVER['REQUEST_TIME'] + $GLOBALS['LOGIN_WINDOW']);
+	if ($success)
+	{
+		$GLOBALS['ticket'] = $newTick;
+		setcookie('ticket',$newTick,$_SERVER['REQUEST_TIME'] + $GLOBALS['LOGIN_WINDOW'], "/");
+	}
 }
 
 function cleanTickets()
 {
-	$sql = "DELETE FROM tickets
-WHERE lastActivity < " . (time() - $GLOBALS['LOGIN_WINDOW']);
-	sql_query($sql);
+	SQL::SingleQuery("DELETE FROM tickets
+WHERE lastActivity < " . (time() - $GLOBALS['LOGIN_WINDOW']));
 }
 
 function logout()
 {
-	if ($GLOBALS['ticket'] !== "")
+	if (isset($_COOKIE['ticket']))
 	{
-		sql_query("DELETE FROM tickets
-WHERE ticket='" . mysql_real_escape_string($GLOBALS['ticket']) . "'");
+		SQL::SingleQuery("DELETE FROM tickets
+WHERE ticket=" . SQL::Safe($_COOKIE['ticket']));
 	}
-	setcookie('ticket',"expired",time()-60*60);
-	$GLOBALS['loggedIn'] = false;
+	setcookie('ticket',"expired",time()-60*60,"/");
 }
 
 if ((isset($_POST["password"]) || isset($_POST["hPassword"])) && isset($_POST['username']))
@@ -105,61 +115,55 @@ if ((isset($_POST["password"]) || isset($_POST["hPassword"])) && isset($_POST['u
 		$pass = $_POST["hPassword"];
 	}
 	
-	$username = strtoupper(mysql_real_escape_string($_POST['username']));
+	$result = SQL::SingleQuery("SELECT accountID, password FROM accounts
+WHERE username=" . SQL::Safe($_POST['username']));
 	
-	$sql = "SELECT accountID, password, emailConfirmed FROM accounts
-WHERE username='" . $username . "'";
+	$data = mysql_fetch_assoc($result);
 	
-	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
-	
-	if ($result && !$result["emailConfirmed"])
-	{
-		$GLOBALS["message"] = "Email Address has not been confirmed. Please check your email.";
-	}
-	elseif ($result && $result['password'] != '' && checkHash($pass, $result['password']))
+	if ($data && $data['password'] != '' && checkHash($pass, $data['password']))
 	{
 		$passHash = generateHash($pass);
-		newTicket($result["accountID"], $passHash);
+		newTicket($data["accountID"], $passHash);
 		$GLOBALS['loggedIn'] = true;
-		$GLOBALS['accountID'] = $result["accountID"];
-		$GLOBALS['username'] = $username;
+		$GLOBALS['accountID'] = $data["accountID"];
+		$GLOBALS['username'] = $_POST['username'];
 		$GLOBALS['message'] = "Logged in successfully";
 		cleanTickets();
 	}
 	else
 	{
-		$GLOBALS['message'] = "Invalid user name or password";
+		$GLOBALS['message'] = "Error: Invalid user name or password";
 	}
 }
 elseif (isset($_COOKIE["ticket"]))
 {
-	$oldTicket = mysql_real_escape_string($_COOKIE['ticket']);
-	
-	$sql = "SELECT accounts.accountID, username, password, clientHash, lastActivity
+	$result = SQL::SingleQuery("SELECT accounts.accountID, username, password, clientHash, lastActivity
 FROM tickets
 JOIN accounts on tickets.accountID = accounts.accountID
-WHERE tickets.ticket = '" . $oldTicket . "'";
+WHERE tickets.ticket=" . SQL::Safe($_COOKIE["ticket"]));
 	
-	$result = mysql_fetch_array(sql_query($sql), MYSQL_ASSOC);
+	$data = mysql_fetch_assoc($result);
 	
-	if ($result && ($result['lastActivity'] > (time() - $GLOBALS['LOGIN_WINDOW'])))
+	if ($data && ($data['lastActivity'] > (time() - $GLOBALS['LOGIN_WINDOW'])))
 	{
-		if ($result['clientHash'] != browserSig())
+		if ($data['clientHash'] != browserSig())
 		{
-			sql_error("Ticket matched but Sig didn't", "AccountID: " . $result['accountID'] .
-			" IP: " . $_SERVER['REMOTE_ADDR'] . " Referer: " . $_SERVER['HTTP_REFERER'] . 
-			" User Agent: " . $_SERVER["HTTP_USER_AGENT"] . " Ticket: " . $oldTicket . " Sig: " . browserSig());
+			SQL::SingleQuery("INSERT INTO errors
+(time,message,comment)
+VALUES(NOW(), " . SQL::Safe("Ticket matched but Sig didn't") . ", " . SQL::Safe("AccountID: " . $data['accountID'] .
+			" IP: " . $_SERVER['REMOTE_ADDR'] . " Referer: " . @$_SERVER['HTTP_REFERER'] . 
+			" User Agent: " . $_SERVER["HTTP_USER_AGENT"] . " Ticket: " . $_COOKIE["ticket"] . " Sig: " . browserSig()) . ")");
 			
 			logout();
 			//Delete all tickets for that account
-			$GLOBALS['message'] = "Logged out cause client hash does not match";
+			$GLOBALS['message'] = "Error: Logged out cause client hash does not match";
 		}
 		else
 		{
-			newTicket($result["accountID"], $result['password']);
+			newTicket($data["accountID"], $data['password']);
 			$GLOBALS['loggedIn'] = true;
-			$GLOBALS['accountID'] = $result["accountID"];
-			$GLOBALS['username'] = $result['username'];
+			$GLOBALS['accountID'] = $data["accountID"];
+			$GLOBALS['username'] = $data['username'];
 			$GLOBALS['message'] = "Ticket matches, logged in is ok";
 		}
 	}
@@ -168,37 +172,5 @@ WHERE tickets.ticket = '" . $oldTicket . "'";
 		logout();
 		$GLOBALS['message'] = "You have been auto logged out due to inactivity";
 	}
-}
-
-function hasPermission($permission)
-{
-	if (!$GLOBALS['loggedIn'])
-	{
-		return false;
-	}
-	
-	$sql = "SELECT 1
-FROM permissions
-JOIN rolesPermissionsMapping as rpm on permissions.permissionID = rpm.permissionID
-JOIN roles on rpm.roleID = roles.roleID
-JOIN accountsRolesMapping as arm on roles.roleID = arm.roleID
-JOIN accounts on arm.accountID = accounts.accountID
-WHERE accounts.username = '" . $GLOBALS['username'] . "' and permissions.permissionName='$permission'";
-
-	return (mysql_num_rows(sql_query($sql)) > 0);
-}
-
-if ($GLOBALS['loggedIn'] && !hasPermission("LOGIN"))
-{
-	logout();
-	$GLOBALS['message'] = "You do not have permission to be logged in.";
-}
-
-if (isset($_GET["demoaccount"]))
-{
-	$GLOBALS['loggedIn'] = true;
-	$GLOBALS['username'] = "A00000000";
-	$GLOBALS['accountID'] = 0;
-	$GLOBALS['message'] = "Logged in as demo account";
 }
 ?>

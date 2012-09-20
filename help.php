@@ -2,16 +2,10 @@
 include "helpers/auth.php";
 include "helpers/head.php";
 include "helpers/embededLogin.php";
-?>
 
-<?php 
-$headContent = '';
-echo buildHead("Help", $headContent);
-?>
+echo buildHead("Help"); ?>
 <body>
-<?php
-include "helpers/header.php";
-?>
+<?php include "helpers/header.php"; ?>
 
 <div class="groupableSections">
 	<div class="section">

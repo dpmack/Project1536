@@ -1,6 +1,6 @@
 <?php
 include "./config/current.config";
-include "sqlfunctions.php";
+include "./sql/functions/init.php";
 
 $GLOBALS['sql_debug_buffer'] = "";
 $GLOBALS['sql_debug'] = $sqlDebugMode;
@@ -10,136 +10,183 @@ if($GLOBALS['sql_debug'] != -1 && isset($_GET["sqldebug"]))
 	$GLOBALS['sql_debug'] = floor($_GET["sqldebug"]);
 }
 
-$link = mysql_connect($sqlHost, $sqlUser, $sqlPassword);
-if (!$link) {
-    die('Not connected : ' . mysql_error());
-}
-
-$db_selected = mysql_select_db($sqlDB);
-if (!$db_selected) {
-    die ('Can\'t use ' . $sqlDB . ' : ' . mysql_error());
-}
-
-function sql_error($query,$error)
+class SQL
 {
-	return mysql_query("INSERT INTO errors (time,message,comment) VALUES(NOW(), \"" . mysql_real_escape_string($error) . "\", \"" . mysql_real_escape_string($query) . "\")");
-}
-
-function sql_query($query)
-{
-	if ($GLOBALS['sql_debug'] >= 2)
-	{	
-		$GLOBALS['sql_debug_buffer'] .= "Executing sql statement:<br />" . $query . "<br /><br />";
-	}
-	$result = mysql_query($query);
-	if (!$result)
+	private $live = false;
+	private $transactionLink = false;
+	private static $Link = false;
+	
+	public function __construct()
 	{
-		$error = mysql_error();
-		if (!sql_error($query,$error))
+		if ($this->transactionLink === false)
 		{
-			//failed to add error to db
-			$err  = 'Invalid query: ' . mysql_error() . "\n<br />";
-			$err .= 'Whole query: ' . $query;
-			die($err);
+			$this->transactionLink = SQL::Connect();
+		}
+		
+		if ($this->transactionLink)
+		{
+			$this->live = true;
+			$this->begin();
+		}
+	}
+	
+	public function __destruct()
+	{
+		$this->cancel();
+	}
+	
+	private function close()
+	{
+		$this->live = false;
+		if ($this->transactionLink)
+		{
+			mysql_close($this->transactionLink);
+		}
+		$this->transactionLink = false;
+	}
+	
+	private static function Connect()
+	{
+		global $sqlHost;
+		global $sqlUser;
+		global $sqlPassword;
+		global $sqlDB;
+		
+		$link = mysql_connect($sqlHost, $sqlUser, $sqlPassword);
+		if ($link) {
+			$error = ($GLOBALS["sql_debug"] > 0)? "<br /><br />Not connected : " . mysql_error() : "";
+			include "./error/somethingwentwrong.php";
+			die();
+		}
+
+		$db_selected = mysql_select_db($sqlDB, $link);
+		if (!$db_selected) {
+			$link = false;
+			$error = ($GLOBALS["sql_debug"] > 0)? "Can't use $sqlDB : " . mysql_error() : "";
+			include "./error/somethingwentwrong.php";
+			die();
+		}
+		return $link;
+	}
+	
+	public function query($query)
+	{
+		if ($this->live)
+		{
+			return SQL::DoQuery($query, $link->transactionLink, $this);
+		}
+	}
+
+	public static function SingleQuery($query)
+	{
+		if (self::$Link === false)
+		{
+			self::$Link = SQL::Connect();
+		}
+		return SQL::DoQuery($query, self::$Link);
+	}
+	
+	private static function Error($query,$errorLink, $sqlInstance)
+	{
+		if ($sqlInstance !== false)
+		{
+			$sqlInstance->cancel();
+		}
+		
+		$linkErrorMessage = mysql_error($errorLink);
+		
+		$link = SQL::Connect();
+		$result = mysql_query("INSERT INTO errors
+(time,message,comment)
+VALUES(NOW(), " . SQL::Safe($linkErrorMessage) . ", " . SQL::Safe($query) . ")");
+		mysql_close($link);
+		
+		if (!$result)
+		{
+			if ($GLOBALS["sql_debug"] > 0)
+			{
+				$error  = "Error saving error: <br />\n";
+				$error .= "Invalid query: " . mysql_error($link) . "<br />\n";
+				$error .= "Whole query: " . $query . "<br />\n<br />\n";
+				$error .= "First error: <br />\n";
+				$error .= "Invalid query: <br />\n . $linkErrorMessage . <br />\n<br />\n";
+				$error .= "Whole query: <br />\n" . str_replace("\n","<br />\n",$query);
+			}
+			else
+			{
+				$error = "";
+			}
+			include "./error/somethingwentwrong.php";
+			die();
 		}
 		else
-		{	
-			$err = "Something went wrong. Please try again, if the problem persists contact the site administrator.";
+		{
+			$error = "Something went wrong. Please try again, if the problem persists contact the site administrator.";
 			if ($GLOBALS['sql_debug'] >= 1)
 			{
-				$err .= '<br />Invalid query: <br />' . $error . "\n<br /><br />";
-				$err .= 'Whole query: <br />' . str_replace("\n","<br />",$query);
+				$error .= "<br />\nInvalid query: <br />\n$linkErrorMessage<br />\n<br />\n";
+				$error .= "Whole query: <br />\n" . str_replace("\n","<br />\n",$query);
 			}
-			die($err);
+			include "./error/somethingwentwrong.php";
+			die();
 		}
-	}
-	return $result;
-}
-
-function sql_insert($table_name,$columns,$data)
-{
-	$sql_cols = "";
-	$sql_values = "";
-	$index = 0;
-	foreach ($columns as &$col)
-	{
-		if ($index != 0)
-		{
-			$sql_cols .= ",";
-			$sql_values .= ",";
-		}
-		$sql_cols .= mysql_real_escape_string($col);
-		if (gettype($data[$col]) == "string" or $data[$col] == "")
-		{
-			$sql_values .= '"'.mysql_real_escape_string($data[$col]).'"';
-		}
-		else
-		{
-			$sql_values .= mysql_real_escape_string($data[$col]);
-		}
-		$index += 1;
 	}
 	
-	return sql_query("INSERT INTO `".$table_name."` (".$sql_cols.") VALUES (".$sql_values.")");
-}
-
-function sql_update($table_name,$columns,$data)
-{
-	$sql_updates = "";
-	$index = 0;
-	foreach ($columns as &$col)
-	{
-		if ($index != 0)
-		{
-			$sql_updates .= ", ";
+	private static function DoQuery($query, $link, $sqlInstance = false)
+	{	
+		if ($GLOBALS['sql_debug'] >= 2)
+		{	
+			$GLOBALS['sql_debug_buffer'] .= "Executing sql statement:<br />" . $query . "<br /><br />";
 		}
-		$sql_updates .= $col."=";
-		if (gettype($data[$col]) == "string" or $data[$col] == "")
+		
+		$result = mysql_query($query, $link);
+		if ($result === false)
 		{
-			$sql_updates .= '"'.mysql_real_escape_string($data[$col]).'"';
+			SQL:Error($query,$link, $sqlInstance);
 		}
-		else
-		{
-			$sql_updates .= mysql_real_escape_string($data[$col]);
-		}
-		$index += 1;
+		return $result;
 	}
 	
-	return sql_query("UPDATE `".$table_name."` SET ".$sql_updates." where memberID=".$data["memberID"]);
-}
-
-////rewrite
-function sql_get($tablename,$colname,$colvalue)
-{
-	return sql_query("SELECT * FROM `" . $tablename . "`WHERE `" . $colname . "`=" . $colvalue);
-};
-
-function sql_get_single($tablename,$colname,$colvalue)
-{	
-	if (gettype($colvalue) == "string" or $colvalue == "")
+	private function begin()
 	{
-		$colvalue = '"'.mysql_real_escape_string($colvalue).'"';
+		if ($this->live)
+		{
+			sql_query("BEGIN");
+		}
 	}
-	$value = mysql_fetch_array(sql_get($tablename,$colname,$colvalue), MYSQL_ASSOC);
 	
-	if ($GLOBALS['sql_debug'] >= 3)
+	public function cancel()
 	{
-		$GLOBALS['sql_debug_buffer'] .= print_r($value, true)."<br /><br />";
+		if ($this->live)
+		{
+			sql_query("ROLLBACK");
+			$this->close();
+		}
 	}
-	return $value;
-};
+	
+	public function save()
+	{
+		if ($this->live)
+		{
+			sql_query("COMMIT");
+			$this->close();
+		}
+	}
 
-function sql_set($tablename,$colname,$colvalue,$changecol,$changeval)
-{
-	if (gettype($colvalue) == "string" or $colvalue == "")
+	public static function SafeInt($content)
 	{
-		$colvalue = '"'.mysql_real_escape_string($colvalue).'"';
+		return filter_var($content, FILTER_VALIDATE_INT);
 	}
-	if (gettype($changeval) == "string" or $changeval == "")
+	
+	public static function SafeFloat($content)
 	{
-		$changeval = '"'.mysql_real_escape_string($changeval).'"';
+		return filter_var($content, FILTER_VALIDATE_FLOAT);
 	}
-	return sql_query("UPDATE `" . $tablename . "` SET `" . $changecol . "`=" . $changeval . " WHERE `" . $colname . "`=" . $colvalue);
-};
+	
+	public static function Safe($content)
+	{
+		return '"' . mysql_real_escape_string($content) . '"';
+	}
+}
 
 ?>

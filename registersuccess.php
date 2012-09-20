@@ -1,11 +1,8 @@
 <?php
-include 'helpers/auth.php';
+include "helpers/auth.php";
 include "helpers/head.php";
-?>
 
-<?php
-$headContent = ""; //if needing to add extra css files
-echo buildHead("Registration Successful",$headContent);
+echo buildHead("Registration Successful");
 ?>
 <body>
 <?php include "helpers/header.php"; ?>

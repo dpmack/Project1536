@@ -27,7 +27,7 @@ function departmentChange()
 {
 	departmentID = $("#deptCourses").val();
 	$.ajax({
-		url: "getCourses.php?departmentID=" + departmentID,
+		url: "/ajax/getCourses.php?departmentID=" + departmentID,
 		type: "GET",
 		context: document.body,
 		success: updateCourses,
@@ -65,7 +65,7 @@ function courseSelect()
 	else
 	{
 		$.ajax({
-			url: "getCourseInfo.php?courseID=" + courseID,
+			url: "/ajax/getCourseInfo.php?courseID=" + courseID,
 			type: "GET",
 			context: document.body,
 			success: updateCourseData,
@@ -83,7 +83,7 @@ function setsChange()
 	}
 	
 	$.ajax({
-		url: "getSetInfo.php?setID=" + setID,
+		url: "/ajax/getSetInfo.php?setID=" + setID,
 		type: "GET",
 		context: document.body,
 		success: updateSetData,
@@ -107,7 +107,7 @@ function setDeptSelect()
 {
 	departmentID = $("#setDept").val();
 	$.ajax({
-		url: "getCourses.php?departmentID=" + departmentID,
+		url: "/ajax/getCourses.php?departmentID=" + departmentID,
 		type: "GET",
 		context: document.body,
 		success: updateSetCourses,
@@ -189,7 +189,7 @@ function rolesChange()
 	}
 	
 	$.ajax({
-		url: "getPermissions.php?roleID=" + roleID,
+		url: "/ajax/getPermissions.php?roleID=" + roleID,
 		type: "GET",
 		context: document.body,
 		success: updateRolePermissions,

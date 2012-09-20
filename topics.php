@@ -7,7 +7,7 @@ $TOPIC_PAGES_TO_SHOW = 3;
 $forumID = filter_input(INPUT_GET,"forumID", FILTER_VALIDATE_INT);
 $show = filter_input(INPUT_GET,"page", FILTER_VALIDATE_INT);
 
-$topicCount = getTopicCount($forumID);
+$topicCount = Topics::CountInForum($forumID);
 $numPages = floor(($topicCount - 1)/$MAX_TOPICS_PER_PAGE) + 1;
 
 if ($show == -1)
@@ -22,22 +22,30 @@ if ($show === null)
 $currentPage = $show;
 $show = ($show - 1) * $MAX_TOPICS_PER_PAGE;
 
-$dbTopics = getTopics($forumID, $show, $MAX_TOPICS_PER_PAGE);
+$dbTopics = Topics::InForum($forumID, $show, $MAX_TOPICS_PER_PAGE);
 $topics = array();
 
 foreach ($dbTopics as $dbTopic)
 {
 	$title = $dbTopic["title"];
-	$postCount = getPostCountFromTopic($dbTopic["topicID"]);
+	$postCount = Topics::CountPosts($dbTopic["topicID"]);
 	$topicURL = "/thread.php?topicID=".$dbTopic["topicID"];
 	$topics[] = array ("title" => $title, "postCount" => $postCount,
 					"topicURL" => $topicURL);
 }
 
-$forumInfo = getForumInfo($_GET['forumID']);
+$forumInfo = Forums::Info($_GET['forumID']);
 
-$crumbs = array(array("href" => "forums.php", "name" => "Forums"),
-				array("href" => "topics.php?forumID=" . $_GET["forumID"], "name" => $forumInfo["forumTitle"]));
+$crumbs = array(array("href" => "forums.php", "name" => "Forums"));
+
+$iForum = Forums::Info($forumID);
+while ($iForum["parentForumID"] != null)
+{
+	$lastID = $iForum["parentForumID"];
+	$iForum = Forums::Info($lastID);
+	$crumbs[] = array("href" => "forums.php?forumID=" . $lastID, "name" => $iForum["forumTitle"]);
+}
+$crumbs[] = array("href" => "topics.php?forumID=" . $_GET["forumID"], "name" => $forumInfo["forumTitle"]);
 
 $headContent = "<link rel='stylesheet' type='text/css' href='css/topicsListing.css' />";
 echo buildHead("Topics",$headContent);
@@ -86,7 +94,7 @@ function drawTopicPages($forumID, $numPages, $currentPage, $topicsToShow)
 			<li><a href="/topics.php?forumID=<?=$forumID?>&page=-1">Last</a></li>
 		<? endif; ?>
 	<? endif; ?>
-	<li class="newTopic"><a href="/createTopic.php?forumID=<?=$forumID?>">Start New Topic</a></li>
+	<li class="newTopic"><a href="/myhub/createTopic.php?forumID=<?=$forumID?>">Start New Topic</a></li>
 </ul><?
 }
 

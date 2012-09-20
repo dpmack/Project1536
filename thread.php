@@ -7,7 +7,7 @@ $POST_PAGES_TO_SHOW = 2;
 $topicID = filter_input(INPUT_GET,"topicID", FILTER_VALIDATE_INT);
 $show = filter_input(INPUT_GET,"page", FILTER_VALIDATE_INT);
 
-$postCount = getPostCountFromTopic($topicID);
+$postCount = Topics::CountPosts($topicID);
 $numPages = floor(($postCount - 1)/$MAX_POSTS_PER_PAGE) + 1;
 
 if ($show == -1)
@@ -22,7 +22,7 @@ if ($show === null)
 $currentPage = $show;
 $show = ($show - 1) * $MAX_POSTS_PER_PAGE;
 
-$dbPosts = getPosts($topicID, $show, $MAX_POSTS_PER_PAGE);
+$dbPosts = Posts::InTopic($topicID, $show, $MAX_POSTS_PER_PAGE);
 $posts = array();
 $userPosts = array();
 $userNames = array();
@@ -36,19 +36,13 @@ foreach ($dbPosts as $dbPost)
 	
 	if (!isset($userNames[$dbPost["accountID"]]))
 	{
-		$name = getNamesByAccountID($dbPost["accountID"]);
-		
-		if ($name)
-		{
-			$name = implode(' ', $name);
-		}
-		$userNames[$dbPost["accountID"]] = $name;
+		$userNames[$dbPost["accountID"]] = implode(" ", Accounts::UsersName($dbPost["accountID"]));
 	}
 	$name = $userNames[$dbPost["accountID"]];
 	
 	if (!isset($userPosts[$dbPost["accountID"]]))
 	{
-		$userPosts[$dbPost["accountID"]] = getUserPosts($dbPost["accountID"]);
+		$userPosts[$dbPost["accountID"]] = Posts::FromAccount($dbPost["accountID"]);
 	}
 	
 	$topicID = $dbPost["topicID"];
@@ -64,13 +58,20 @@ foreach ($dbPosts as $dbPost)
 						"postContent" => $content, "postID" => $postID, "topicID" => $topicID);
 }
 
-$topicInfo = getTopicInfo($_GET['topicID']);
-$forumInfo = getForumInfo($topicInfo['forumID']);
+$topicInfo = Topics::Info($_GET['topicID']);
+$iForum = Forums::Info($topicInfo['forumID']);
 
+$crumbs = array(array("href" => "forums.php", "name" => "Forums"));
+$secondLastCrumb = array("href" => "topics.php?forumID=" . $topicInfo["forumID"], "name" => $iForum["forumTitle"]);
 
-$crumbs = array(array("href" => "forums.php", "name" => "Forums"),
-				array("href" => "topics.php?forumID=" . $topicInfo["forumID"], "name" => $forumInfo["forumTitle"]),
-				array("href" => "thread.php?topicID=" . $_GET["topicID"], "name" => $topicInfo["title"]));
+while ($iForum["parentForumID"] != null)
+{
+	$lastID = $iForum["parentForumID"];
+	$iForum = Forums::Info($lastID);
+	$crumbs[] = array("href" => "forums.php?forumID=" . $lastID, "name" => $iForum["forumTitle"]);
+}
+$crumbs[] = $secondLastCrumb;
+$crumbs[] = array("href" => "thread.php?topicID=" . $_GET["topicID"], "name" => $topicInfo["title"]);
 
 $headContent = "<link rel='stylesheet' type='text/css' href='css/post.css' />";
 echo buildHead("View Topic",$headContent);
@@ -118,7 +119,7 @@ function drawPageNumbers($topicID, $currentPage, $numPages, $numToShow)
 			<li><a href="/thread.php?topicID=<?=$topicID?>&page=<?=$numPages?>">Last</a></li>
 		<? endif; ?>
 	<? endif; ?>
-	<li class="replyItem"><a class="reply" href="/createPost.php?topicID=<?=$topicID?>">Reply</a></li>
+	<li class="replyItem"><a class="reply" href="/myhub/createPost.php?topicID=<?=$topicID?>">Reply</a></li>
 </ul><?
 }
 

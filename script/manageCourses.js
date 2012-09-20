@@ -11,7 +11,7 @@ function deptSelect()
 {
 	departmentID = $("#dept").val();
 	$.ajax({
-		url: "getCourses.php?departmentID=" + departmentID,
+		url: "/ajax/getCourses.php?departmentID=" + departmentID,
 		type: "GET",
 		context: document.body,
 		success: updateCourses,
@@ -57,7 +57,7 @@ function setSelected()
 		return;
 	}
 	$.ajax({
-		url: "getSetCourses.php?setID=" + setID,
+		url: "/ajax/getSetCourses.php?setID=" + setID,
 		type: "GET",
 		context: document.body,
 		success: updateSetCourses,

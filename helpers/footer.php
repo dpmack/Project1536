@@ -9,8 +9,7 @@
 	<div class="section">
 		<h2>Resources</h2>
 		<ul class="inline">
-			<li><a href="about.php">About</a></li>
-			<li><a href="sitemap.php">Site map</a></li>
+			<li><a href="/about.php">About</a></li>
 			<li><a href="http://learn.bcit.ca" class="external">D2L</a></li>
 			<li><a href="http://my.bcit.ca" class="external">my.bcit.ca</a></li>
 			<li><a href="http://www.bcit.ca" class="external">bcit.ca</a></li>
@@ -38,5 +37,3 @@
    
 </div></div></div> <!-- /wrappers for #footer -->
 </div><!-- /#footer -->
-
-

@@ -18,7 +18,7 @@ function toggleStrikeOut(i)
 			homeworkDiv.style.display = "none";
 		}
 	}
-	ajaxHomework.open("GET", "updatehomework.php?homeworkID=" + i + "&homeworkStatus=" + homeworkStatus);
+	ajaxHomework.open("GET", "/ajax/updatehomework.php?homeworkID=" + i + "&homeworkStatus=" + homeworkStatus);
 	ajaxHomework.send();
 }
 
@@ -26,7 +26,7 @@ function departmentChange()
 {
 	departmentID = $("#dept").val();
 	$.ajax({
-		url: "getCourses.php?departmentID=" + departmentID,
+		url: "/ajax/getCourses.php?departmentID=" + departmentID,
 		type: "GET",
 		context: document.body,
 		success: updateCourses,

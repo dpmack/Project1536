@@ -29,8 +29,8 @@
 </dl>
 <div class="postContent"><div class="wrapper"><?=$postContent?></div>
 
-<? if(hasPermission("DELETE_REPLY")): ?>
-	<a class="reply" href="/deletePost.php?postID=<?=$postID?>&topicID=<?=$topicID?>">Delete</a>
+<? if(Permissions::Has("DELETE_REPLY")): ?>
+	<a class="reply" href="/myhub/deletePost.php?postID=<?=$postID?>&topicID=<?=$topicID?>">Delete</a>
 <? endif; ?>
 	
 </div>

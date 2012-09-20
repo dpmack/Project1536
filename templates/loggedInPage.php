@@ -5,7 +5,7 @@ include "helpers/embededLogin.php";
 
 if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 {
-	include "error/notloggedin.php";
+	include "errors/notloggedin.php";
 	die();
 }
 ?>

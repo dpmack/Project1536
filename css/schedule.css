@@ -27,21 +27,23 @@
 
 }
 
-td,th
+#schedule td,th
 {
-	text-align:center;
-	border:2px solid;
-	width:5em;
+	text-align: center;
+	border: 2px solid;
+	width: 5em;
+	padding: .5em 0em;
+
 }
 
-th
+#schedule th
 {
-	padding: .5em 0em;
-}	
+	font-size: 2em;
+}
 
-table{
-font-size:2em;
-margin-left:2em;
+#schedule td
+{
+	vertical-align: top;
 }
 
 #submit{

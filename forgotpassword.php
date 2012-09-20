@@ -1,12 +1,8 @@
 <?php
 include 'helpers/auth.php';
 include "helpers/head.php";
-include "helpers/embededLogin.php";
-?>
 
-<?php
-$headContent = ""; //if needing to add extra css files
-echo buildHead("Forgot Password",$headContent);
+echo buildHead("Forgot Password");
 ?>
 <body>
 <?php include "helpers/header.php"; ?>

@@ -10,4 +10,6 @@ $MyBCITDelta = -9000;
 $MAX_POSTS_PER_PAGE = 10;
 $MAX_TOPICS_PER_PAGE = 15;
 
+$SSL_ENABLED = false;
+
 ?>

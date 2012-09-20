@@ -53,10 +53,10 @@ function isValidEmail($email)
 
 function sendSignUpEmail($accountID)
 {
-	list($email, $hash) =  createNewEmailConfirm($accountID);
+	list($email, $hash) = Email::NewConfirm($accountID);
 	
 	mail($email,"Verify Your Email Address","Thank you for signing up for CST Hub, please verify your email address by clicking this link.
-<a href='http://localhost/setuppassword.php?id=" . $hash);
+<a href='http://" . $_SERVER["SERVER_NAME"] . "/setuppassword.php?id=" . $hash);
 }
 
 if ($firstName == "" || $lastName == "" || $email == "" || $emailConfirm == "" || $studentID == "" || $password == "" || $passwordConfirm == "" || $terms == false)
@@ -79,14 +79,14 @@ else if ($passwordLength < 8 && $passwordLength != -1)
 {
 	$validated = false;
 }
-else if (doesStudentIDExist($studentID))
+else if (Accounts::Exists($studentID))
 {
 	$validated = false;
 	$studentIDExist = true;
 }
 else
 {	
-	$accountID = createUser($studentID, $firstName, $lastName, $email, $password);
+	$accountID = Accounts::Create($studentID, $firstName, $lastName, $email, $password);
 	//sendSignUpEmail($accountID);
 	header("Location: registersuccess.php");
 }

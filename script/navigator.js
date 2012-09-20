@@ -7,7 +7,7 @@ var LOGIN_PAGE_TIMEOUT = 5000;
    N - No
    F - Failed */
 var loggedIn = {"D2L":"NT", "My.BCIT":"NT"};
-var loginPage = {"D2L":"navigator/postD2L.html", "My.BCIT":"navigator/postMyBCIT.html"};
+var loginPage = {"D2L":"/navigator/postD2L.html", "My.BCIT":"/navigator/postMyBCIT.html"};
 var siteImages = {"D2L":"https://learn.bcit.ca/d2l/common/viewprofileimage.d2l?oi=6605&ui=323751&s=100&lm=634685911407100000&v=11&t=",
 				  "My.BCIT":"https://my.bcit.ca/tag.idempotent.worker.carRsrc.target.u11l1n9.uP?carRsrc=com/sct/pipeline/uportal/channels/email/media/chan_email.gif&t="};
 var loginWindow = null;
