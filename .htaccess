@@ -1,1 +1,1 @@
-php_value include_path "c:\Projects\Project1536"
+php_value include_path "/var/www/csthub"
