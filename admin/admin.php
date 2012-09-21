@@ -8,7 +8,7 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 	die();
 }
 
-if (!Permissions::Has("SITE_ADMINISTRATION"))
+if (!Permissions::Has("COURSE_ADMINISTRATION"))
 {
 	include "errors/notauth.php";
 	die();

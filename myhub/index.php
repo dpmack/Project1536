@@ -12,6 +12,9 @@ if (!$GLOBALS["loggedIn"])
 $crumbs = array(array("href" => "index.php", "name" => "MYHub"));
 
 $userRealName = Accounts::CurrentUsersName();
+
+$siteAdmin = Permissions::Has("SITE_ADMINISTRATION");
+$courseAdmin = Permissions::Has("COURSE_ADMINISTRATION");
 				
 $headContent = '';
 echo buildHead("My Hub",$headContent);
@@ -66,17 +69,21 @@ echo buildHead("My Hub",$headContent);
 		</div>
 	<?php endif; ?>
 	
-	<?php if (Permissions::Has("SITE_ADMINISTRATION")): ?>
+	<?php if ($courseAdmin || $siteAdmin): ?>
 		<div class="section">
 		<h3>Admin</h3>
-	
-		<p>
-			<a class="classicLink" href="/admin/admin.php">Admin</a>
-		</p>
 		
-		<p>
-			<a class="classicLink" href="/admin/adminPermissions.php">Permissions</a>
-		</p>
+		<?php if ($courseAdmin): ?>
+			<p>
+				<a class="classicLink" href="/admin/admin.php">Course Admin</a>
+			</p>
+		<?php endif; ?>
+		
+		<?php if ($siteAdmin): ?>
+			<p>
+				<a class="classicLink" href="/admin/adminPermissions.php">Permissions</a>
+			</p>
+		<?php endif; ?>
 		</div>
 	<?php endif; ?>
 </div>
