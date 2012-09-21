@@ -56,7 +56,7 @@ if ($which == "courses")
 	if ($course === false && $dept !== false)
 	{
 		//New Course
-		Courses:Create($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
+		Courses::Create($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
 	}
 	else if ($course !== false && $dept !== false)
 	{

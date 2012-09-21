@@ -134,14 +134,19 @@ VALUES ($accountID, $courseID)");
 		$courseCode = SQL::SafeInt($courseCode);
 		$parentCourseID = SQL::SafeInt($parentCourseID);
 		
-		if ($departmentID === false || $coureseCode === false || $parentCourseID === false)
+		if ($parentCourseID === false)
+		{
+			$parentCourseID = "NULL";
+		}
+		
+		if ($departmentID === false || $courseCode === false)
 		{
 			return false;
 		}
 	
 		return SQL::SingleQuery("INSERT INTO courses
 (departmentID, courseCode, courseName, description, location, courseUrl, displayName, parentCourse)
-VALUES ($dept, $courseCode, " . SQL::Safe($courseName) . ",
+VALUES ($departmentID, $courseCode, " . SQL::Safe($courseName) . ",
 " . SQL::Safe($courseDesc) . ",
 " . SQL::Safe($location) . ",
 " . SQL::Safe($url) . ",
