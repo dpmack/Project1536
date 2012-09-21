@@ -160,7 +160,12 @@ VALUES ($departmentID, $courseCode, " . SQL::Safe($courseName) . ",
 		$courseCode = SQL::SafeInt($courseCode);
 		$parentCourseID = SQL::SafeInt($parentCourseID);
 		
-		if ($departmentID === false || $courseID === false || $coureseCode === false || $parentCourseID === false)
+		if ($parentCourseID === false)
+		{
+			$parentCourseID = "NULL";
+		}
+		
+		if ($departmentID === false || $courseID === false || $courseCode === false)
 		{
 			return false;
 		}
