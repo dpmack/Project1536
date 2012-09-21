@@ -1,12 +1,12 @@
 <div id="header">
 <div class="wrapper"><div class="wrapper">
 	<ul id="quickLinks">
-		<?php if (!$GLOBALS['loggedIn']): ?>
-		<li><a href="/myhub/login.php">log in</a></li>
-		<li><a href="/register.php">join</a></li>
+		<?php if (@$GLOBALS['loggedIn']): ?>
+			<li><a href="/myhub/logout.php">log out</a></li>
+			<li><a href="/myhub/index.php">MYHub</a></li>
 		<?php else: ?>
-		<li><a href="/myhub/logout.php">log out</a></li>
-		<li><a href="/myhub/index.php">MYHub</a></li>
+			<li><a href="/myhub/login.php">log in</a></li>
+			<li><a href="/register.php">join</a></li>
 		<?php endif; ?>
 	</ul>
 	<h1><a href="/">CSThub</a></h1>
