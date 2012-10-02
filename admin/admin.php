@@ -16,6 +16,8 @@ if (!Permissions::Has("COURSE_ADMINISTRATION"))
 
 $which = (isset($_POST['which'])) ? $_POST['which'] : false;
 
+$actionResult = "";
+
 //Depts
 if ($which == "departments")
 {
@@ -25,11 +27,25 @@ if ($which == "departments")
 	{
 		if($dept === false)
 		{
-			Departments::Create($deptName);
+			if (Permissions::Has("CREATE_DEPARTMENT"))
+			{
+				$actionResult = Departments::Create($deptName)? "Department Created": "Deparement Create Failed";
+			}
+			else
+			{
+				$actionResult = "You do not have permission to create deparments";
+			}
 		}
 		else
 		{
-			Departments::Rename($dept, $deptName);
+			if (Permissions::Has("CREATE_DEPARTMENT"))
+			{
+				$actionResult = Departments::Rename($dept, $deptName)? "Department rename successful" : "Department Rename failed";
+			}
+			else
+			{
+				$actionResult = "You do not have permission to edit deparments";
+			}
 		}
 	}
 }
@@ -55,18 +71,30 @@ if ($which == "courses")
 	
 	if ($course === false && $dept !== false)
 	{
-		//New Course
-		Courses::Create($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
+		if (Permissions::Has("CREATE_COURSE"))
+		{
+			$actionResult = Courses::Create($dept, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent)? "Course Created": "Course create failed";
+		}
+		else
+		{
+			$actionResult = "You do not have permission to create courses";
+		}
 	}
 	else if ($course !== false && $dept !== false)
 	{
-		//Update Course
 		if ($newDept !== false)
 		{
 			$dept = $newDept;
 		}
 		
-		Courses::Update($dept, $course, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent);
+		if (Permissions::Has("EDIT_COURSE"))
+		{
+			$actionResult = Courses::Update($dept, $course, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parent)? "Course Edit Saved": "Course Edit failed";
+		}
+		else
+		{
+			$actionResult = "You do not have permission to edit courses";
+		}
 	}
 }
 
@@ -98,12 +126,25 @@ if ($which == "sets")
 	
 	if ($set === false && $setName !== false)
 	{
-		//new set
-		Sets::Create($setName, $courses);
+		if (Permissions::Has("CREATE_SET"))
+		{
+			$actionResult = Sets::Create($setName, $courses)? "Set Created": "Set Create failed";
+		}
+		else
+		{
+			$actionResult = "You do not have permission to edit courses";
+		}
 	}
 	else if ($set !== false)
 	{
-		Sets::Update($set, $setName, $courses);
+		if (Permissions::Has("EDIT_SET"))
+		{
+			$actionResult = Sets::Update($set, $setName, $courses)? "Set Update Saved": "Set Create failed";
+		}
+		else
+		{
+			$actionResult = "You do not have permission to edit courses";
+		}
 	}
 }
 

@@ -11,14 +11,14 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 $whiteboardID = filter_input(INPUT_GET,"whiteboardID", FILTER_VALIDATE_INT);
 $addID = (isset($_POST["studentID"])) ? $_POST["studentID"] : null;
 
-$owner = isOwnerOfWhiteboard($whiteboardID, $GLOBALS["accountID"]);
+$owner = Whiteboards::IsOwner($whiteboardID, $GLOBALS["accountID"]);
 
 if ($addID != null && $owner)
 {
-	$addAccount = getAccountIDOf($addID);
+	$addAccount = Accounts::AccountID($addID);
 	if ($addAccount !== false)
 	{
-		addUserToWhiteboard($whiteboardID, $addAccount);
+		Whiteboards::AddUser($whiteboardID, $addAccount);
 	}
 }
 
@@ -26,10 +26,8 @@ $colors = array(array("Black","000000"), array("Red", "FF0000"));
 
 $crumbs = array(array("href" => "myhub.php", "name" => "MYHub"),
 				array("href" => "whiteboards.php", "name" => "Whiteboards"));
-?>
 
-<?php
-$headContent = "<script type='text/javascript' src='script/paper.js'></script>
+$headContent = "<script type='text/javascript' src='/script/paper.js'></script>
 <script type='text/javascript' src='/script/whiteboard.js'></script>
 <link rel='stylesheet' type='text/css' href='/css/whiteboard.css' />";
 echo buildHead("Whiteboard",$headContent);

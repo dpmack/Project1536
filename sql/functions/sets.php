@@ -61,7 +61,7 @@ VALUES ($setID, $courseID)");
 		
 		if ($sqlPassed === false)
 		{
-			$sql->save();
+			return $sql->save();
 		}
 	}
 
@@ -81,9 +81,10 @@ VALUES (" . SQL::Safe($setName) . ")");
 			
 			Sets::UpdateCourses($data["setID"], $courses, $sql);
 			
-			$sql->save();
+			return $sql->save();
 		}
 		$sql->cancel();
+		return false;
 	}
 
 	public static function Update($setID, $setName, $courses)
@@ -103,7 +104,7 @@ WHERE setID=$setID");
 		
 		Sets::UpdateCourses($setID, $courses, $sql);
 		
-		$sql->save();
+		return $sql->save();
 	}
 
 	public static function Name($setID)

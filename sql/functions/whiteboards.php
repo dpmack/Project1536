@@ -73,7 +73,7 @@ VALUES (" . SQL::Safe(HTML::Safe($title)) . ", " . SQL::SafeInt($GLOBALS["accoun
 JOIN accounts as owner on owner.accountID = whiteboards.accountID
 JOIN whiteboardsAccountsMapping as wbam on wbam.whiteboardID = whiteboards.whiteboardID
 JOIN accounts on accounts.accountID = wbam.accountID
-WHERE accounts.username=" . SQL::SingleQuery($GLOBALS["username"]) . "");
+WHERE accounts.username=" . SQL::Safe($GLOBALS["username"]) . "");
 
 		$whiteboards = array();
 

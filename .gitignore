@@ -1,2 +1,4 @@
 config/dev.config
 config/production.config
+config/staging.config
+*.pyc

@@ -10,25 +10,21 @@ if (!$GLOBALS["loggedIn"]) // this protects the page from all non auth ppl
 
 if (isset($_POST["title"]))
 {
-	//createWhiteboard($_POST["title"]);
+	Whiteboards::Create($_POST["title"]);
 }
 
-//$whiteboards = getMyWhiteboards();
+$whiteboards = Whiteboards::Mine();
 
 $crumbs = array(array("href" => "index.php", "name" => "MYHub"),
 				array("href" => "whiteboards.php", "name" => "Whiteboards"));
-?>
 
-<?php
-$headContent = ""; //if needing to add extra css files
-echo buildHead("Whiteboards",$headContent);
+echo buildHead("Whiteboards");
 ?>
 <body>
 <?php include "helpers/header.php"; ?>
 
 <br />
 
-<h2>Coming Soon!</h2><!--
 <h2>My whiteboards</h2>
 <table id="whiteboards">
 	<tr>
@@ -60,7 +56,7 @@ echo buildHead("Whiteboards",$headContent);
 	<label for="title">Title</label>
 	<input type="text" name="title" id="title" />
 	<input type="submit" value="Create" />
-</form>!-->
+</form>
 
 <?php
 if ($GLOBALS['sql_debug'] != 0)

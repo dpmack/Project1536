@@ -125,7 +125,7 @@ VALUES ($accountID, $courseID)");
 			}
 		}
 		
-		$sql->save();
+		return $sql->save();
 	}
 
 	public static function Create($departmentID, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parentCourseID)
@@ -150,7 +150,7 @@ VALUES ($departmentID, $courseCode, " . SQL::Safe($courseName) . ",
 " . SQL::Safe($courseDesc) . ",
 " . SQL::Safe($location) . ",
 " . SQL::Safe($url) . ",
-" . SQL::Safe($displayName) . ", $parentCourseID)");
+" . SQL::Safe($displayName) . ", $parentCourseID)") !== false;
 	}
 
 	public static function Update($departmentID, $courseID, $courseCode, $courseName, $courseDesc, $location, $url, $displayName, $parentCourseID)
@@ -179,7 +179,7 @@ location=" . SQL::Safe($location) . ",
 courseUrl=" . SQL::Safe($url) . ",
 displayName=" . SQL::Safe($displayName) . ",
 parentCourse=$parentCourseID
-WHERE courseID=$courseID");
+WHERE courseID=$courseID") !== false;
 	}
 
 	public static function Info($courseID)

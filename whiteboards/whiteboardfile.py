@@ -116,7 +116,6 @@ class WhiteboardFiles:
 
     def close(self):
         print "Closing whiteboard file."
-        self.gc.stop()
         for whiteboard in self.whiteboards:
             whiteboard.flush()
         self.whiteboards = {}

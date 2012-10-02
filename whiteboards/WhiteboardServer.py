@@ -35,6 +35,12 @@ class WhiteboardServer:
         
         self.clients.pop(client)
 
+    def shutdown(self):
+        for client in self.clients.keys():
+            self.close(client)
+
+        self.whiteboards.close()
+
     def joined(self, client, boardID):
         clientData = self.clients[client]
         clientData["whiteboard"] = boardID

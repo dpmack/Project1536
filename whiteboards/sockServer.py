@@ -40,6 +40,7 @@ def main(curDir):
     reactor.listenTCP(8080, web)
 
     #threading.Thread(None, reactor.run, None).start()
+    print "Starting websocket server"
     reactor.run()
 
-    whiteboard.close()
+    whiteboard.shutdown()

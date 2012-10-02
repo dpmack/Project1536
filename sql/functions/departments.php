@@ -16,9 +16,9 @@ class Departments
 
 	public static function Create($name)
 	{
-		SQL::SingleQuery("INSERT INTO departments
+		return SQL::SingleQuery("INSERT INTO departments
 (departmentName)
-VALUES (" . SQL::Safe($name) . ")");
+VALUES (" . SQL::Safe($name) . ")") !== false;
 	}
 
 	public static function Rename($departmentID, $name)
@@ -30,9 +30,9 @@ VALUES (" . SQL::Safe($name) . ")");
 			return false;
 		}
 		
-		SQL::SingleQuery("UPDATE departments
+		return SQL::SingleQuery("UPDATE departments
 SET departmentName=". SQL::Safe($name) . "
-WHERE departmentID=$departmentID");
+WHERE departmentID=$departmentID") !== false;
 	} 
 }
 ?>

@@ -163,7 +163,9 @@ VALUES(NOW(), " . SQL::Safe($linkErrorMessage) . ", " . SQL::Safe($query) . ")",
 		{
 			mysql_query("COMMIT", $this->transactionLink);
 			$this->close();
+			return true;
 		}
+		return false;
 	}
 
 	public static function SafeInt($content)
